@@ -9,13 +9,13 @@
    [:head
     [:title "arenaverse"]
     (include-css
-     "http://fonts.googleapis.com/css?family=Just+Another+Hand"
+     "http://fonts.googleapis.com/css?family=Bangers"
      "/stylesheets/screen/ie.css"
      "/stylesheets/screen.css")]
    [:body
     [:div#arenaverse
      [:header
-      [:h1 "Arenaverse!"]]
+      [:img {:src "/img/_ui/logo.png"}]]
      [:nav
       [:ul
        [:li [:a {:href (url-for-r :arenas/shiny)} "New Arena"]]

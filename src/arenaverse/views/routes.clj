@@ -4,8 +4,9 @@
 (defn- throwf [msg & args]
   (throw (Exception. (apply format msg args))))
 
-(def routes '{:arenas/shiny [shiny "/arenas/new"]
-              :arenas/edit  [[:get "/arenas/edit/:id"]]})
+(def routes '{:arenas/shiny  ["/arenas/new"]
+              :arenas/edit   [[:get "/arenas/edit/:id"]]
+              :arenas/create [[:post "/arenas"]]})
 
 (defn url-for-r
   ([route-name] (url-for-r route-name {}))

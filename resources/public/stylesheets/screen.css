@@ -67,18 +67,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 26, ../../compass/sass/screen.scss */
+/* line 25, ../../compass/sass/screen.scss */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: url("http://subtlepatterns.com/patterns/45degreee_fabric.png");
+  background: url("http://subtlepatterns.com/patterns/connect.png");
 }
 
-/* line 31, ../../compass/sass/screen.scss */
+/* line 30, ../../compass/sass/screen.scss */
 #arenaverse {
   *zoom: 1;
   margin: auto;
   width: 61em;
   max-width: 100%;
+  background: white;
+  -webkit-box-shadow: 0 0 20px 3px #999999;
+  -moz-box-shadow: 0 0 20px 3px #999999;
+  box-shadow: 0 0 20px 3px #999999;
+  margin-top: 1.5em;
 }
 /* line 38, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 #arenaverse:after {
@@ -86,13 +91,15 @@ body {
   display: table;
   clear: both;
 }
-/* line 33, ../../compass/sass/screen.scss */
-#arenaverse header, #arenaverse footer {
+/* line 35, ../../compass/sass/screen.scss */
+#arenaverse header {
   clear: both;
   border-top: 4px solid #6fc0e7;
+  text-align: center;
+  background: url("/img/_ui/header-bg.png") repeat-x;
 }
 
-/* line 39, ../../compass/sass/screen.scss */
+/* line 43, ../../compass/sass/screen.scss */
 h1 {
   font-family: 'Just Another Hand';
   font-size: 6em;
@@ -103,32 +110,36 @@ h1 {
   color: #6fc0e7;
 }
 
-/* line 48, ../../compass/sass/screen.scss */
+/* line 52, ../../compass/sass/screen.scss */
+h2 {
+  font-size: 2.5em;
+  line-height: 1.2em;
+  font-family: Bangers, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 0.6em;
+  color: #ffb57b;
+}
+
+/* line 59, ../../compass/sass/screen.scss */
 p {
   margin-bottom: 1.5em;
 }
 
-/* line 52, ../../compass/sass/screen.scss */
+/* line 63, ../../compass/sass/screen.scss */
 nav {
   overflow: hidden;
   *zoom: 1;
-  background: #f2f9fd;
-  -webkit-border-radius: 10px 10px 0 0;
-  -moz-border-radius: 10px 10px 0 0;
-  -ms-border-radius: 10px 10px 0 0;
-  -o-border-radius: 10px 10px 0 0;
-  border-radius: 10px 10px 0 0;
+  background: #e2fbe9;
 }
-/* line 57, ../../compass/sass/screen.scss */
+/* line 67, ../../compass/sass/screen.scss */
 nav ul {
   list-style: none;
 }
-/* line 59, ../../compass/sass/screen.scss */
+/* line 69, ../../compass/sass/screen.scss */
 nav ul li {
   display: block;
   float: left;
 }
-/* line 62, ../../compass/sass/screen.scss */
+/* line 72, ../../compass/sass/screen.scss */
 nav ul li a {
   display: block;
   padding: 1em;
@@ -136,7 +147,7 @@ nav ul li a {
   width: auto;
 }
 
-/* line 72, ../../compass/sass/screen.scss */
+/* line 82, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;
