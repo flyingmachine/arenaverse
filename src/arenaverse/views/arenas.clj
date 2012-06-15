@@ -11,10 +11,10 @@
 (defpartial arena-fields [{:keys [name description]}]
   [:table
    [:tr
-    [:td (label "name" "Name: ")]
+    [:td (label "name" "Name")]
     [:td (text-field "name" name)]]
    [:tr
-    [:td (label "description" "Description: ")]
+    [:td (label "description" "Description")]
     [:td (text-field "description" description)]]])
 
 (defpage-r shiny {:as arena}
@@ -24,6 +24,7 @@
             (arena-fields arena)
             (submit-button "Create Arena"))))
 
-(defpage-r create {:as arena})
+(defpage-r create {:as arena}
+  )
 
 (defpage-r edit [id])

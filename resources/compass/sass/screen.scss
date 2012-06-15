@@ -27,9 +27,6 @@ $sans-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 // #Forms
 // ================================================== //
 
-form, fieldset {
-  margin-bottom: 20px; 
-}
 
 input[type="number"] {
   -webkit-apperance: none;
@@ -42,7 +39,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
   color: #777;
   display: block;
   font: 13px $sans-family;
-  margin: 0 0 20px;
+
   max-width: 100%;
   outline: none;
   padding: 6px 4px;
@@ -67,22 +64,12 @@ textarea {
   min-height: 60px; 
 }
 
-label, legend {
-  display: block;
-  font-weight: bold;
-  font-size: 13px;  
-}
-
 input[type="checkbox"] {
   display: inline; 
 }
 
-label span, legend span {
-  font-weight: normal;
-  font-size: 13px;
-  color: #444; 
-}
-
+// #Oooh Custom
+// ================================= //
 body {
   font-family: $sans-family;
   background: url("http://subtlepatterns.com/patterns/connect.png")
@@ -147,4 +134,17 @@ nav {
   @include padding-trailer(1);
   background:white;
   border-bottom: 4px solid $primary-color;
+}
+
+form table {
+  td {
+    height: 100%;
+    vertical-align: middle;
+
+    label {
+      display:block;
+      text-align: right;
+      margin-right: 1em;
+    }
+  }
 }
