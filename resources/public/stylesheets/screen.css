@@ -131,11 +131,12 @@ nav ul li {
 /* line 62, ../../compass/sass/screen.scss */
 nav ul li a {
   display: block;
-  padding: 1em 25%;
+  padding: 1em;
   white-space: nowrap;
+  width: auto;
 }
 
-/* line 71, ../../compass/sass/screen.scss */
+/* line 72, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;

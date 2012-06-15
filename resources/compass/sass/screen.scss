@@ -61,8 +61,9 @@ nav {
       float:left;
       a {
         display:block;
-        padding: 1em gutter(1);
+        padding: 1em;
         white-space:nowrap;
+        width:auto;
       }
     }
   }
