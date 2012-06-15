@@ -17,8 +17,9 @@ $grid-padding   : $gutter-width;  // grid-padding equal to gutters
 $base-font-size : 16px;
 $base-line-height : 24px;
 
-$primary-color: #6fc0e7;
+$primary-color: #2493C8;
 $secondary-color: #ffb57b;
+$tertiary-color: #97d4ec;
 
 $sans-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -30,13 +31,15 @@ body {
 #arenaverse {
   @include container;
   background: white;
-  @include single-box-shadow(#999, 0, 0, 20px, 3px);
+
   @include leader;
+  border-left:1em dashed $secondary-color;
+  border-right:1em dashed $secondary-color;
   header{
     clear: both;
     border-top: 4px solid $primary-color;
     text-align: center;
-    background: url("/img/_ui/header-bg.png") repeat-x;
+    background: $tertiary-color url("/img/_ui/header-bg.png") repeat-x;
   }
 }
 
