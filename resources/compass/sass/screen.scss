@@ -23,10 +23,9 @@ $primary-color: #6fc0e7;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@include font-face("Trinigan", font-files("/fonts/Trinigan.ttf"));
-
 body {
   @include sans-family;
+  background:url("http://subtlepatterns.com/patterns/45degreee_fabric.png")
 }
 
 #brainsinvats {
@@ -38,12 +37,11 @@ body {
 }
 
 h1 {
-  font-family: 'Trinigan';
-  border-top: 2px solid black;
-  @include adjust-font-size-to(80px);
+  font-family: 'Just Another Hand';
+  @include adjust-font-size-to(96px);
   @include trailer(1, 80px);
   @include leader(1, 80px, padding);
-  @include single-text-shadow(black, -2px, -2px, 0px);
+  @include single-text-shadow(black, 2px, 2px, 2px);
   color: $primary-color;
 }
 

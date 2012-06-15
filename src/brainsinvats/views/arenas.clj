@@ -10,6 +10,6 @@
 
 (defpage-r shiny {}
   (common/layout
-   [:p "Welcome to brainsinvats"]))
+   [:h2 "Create an Arena"]))
 
 (defpage-r edit [id])

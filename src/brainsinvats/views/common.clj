@@ -1,17 +1,21 @@
 (ns brainsinvats.views.common
   (:use noir.core
         hiccup.core
-        hiccup.page-helpers))
+        hiccup.page-helpers
+        brainsinvats.views.routes))
 
 (defpartial layout [& content]
   (html5
    [:head
     [:title "brainsinvats"]
-    (include-css "/stylesheets/screen/ie.css" "/stylesheets/screen.css")]
+    (include-css
+     "http://fonts.googleapis.com/css?family=Just+Another+Hand"
+     "/stylesheets/screen/ie.css"
+     "/stylesheets/screen.css")]
    [:body
     [:div#brainsinvats
      [:header
-      [:h1 "Brains In Vats"]]
+      [:h1 "Arenaverse!"]]
      [:nav
-      [:a {:href "/arenas/new"} "New Arena"]]
+      [:a {:href (url-forr :arenas/shiny)} "New Arena"]]
      content]]))

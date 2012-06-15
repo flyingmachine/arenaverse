@@ -67,17 +67,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-@font-face {
-  font-family: "Trinigan";
-  src: url(/fonts/Trinigan.ttf) format('truetype');
-}
-
-/* line 28, ../../compass/sass/screen.scss */
+/* line 26, ../../compass/sass/screen.scss */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: url("http://subtlepatterns.com/patterns/45degreee_fabric.png");
 }
 
-/* line 32, ../../compass/sass/screen.scss */
+/* line 31, ../../compass/sass/screen.scss */
 #brainsinvats {
   *zoom: 1;
   margin: auto;
@@ -90,30 +86,29 @@ body {
   display: table;
   clear: both;
 }
-/* line 34, ../../compass/sass/screen.scss */
+/* line 33, ../../compass/sass/screen.scss */
 #brainsinvats header, #brainsinvats footer {
   clear: both;
   border-top: 4px solid #6fc0e7;
 }
 
-/* line 40, ../../compass/sass/screen.scss */
+/* line 39, ../../compass/sass/screen.scss */
 h1 {
-  font-family: 'Trinigan';
-  border-top: 2px solid black;
-  font-size: 5em;
-  line-height: 1.2em;
+  font-family: 'Just Another Hand';
+  font-size: 6em;
+  line-height: 1.25em;
   margin-bottom: 0.3em;
   padding-top: 0.3em;
-  text-shadow: black -2px -2px 0px;
+  text-shadow: black 2px 2px 2px;
   color: #6fc0e7;
 }
 
-/* line 50, ../../compass/sass/screen.scss */
+/* line 48, ../../compass/sass/screen.scss */
 p {
   margin-bottom: 1.5em;
 }
 
-/* line 54, ../../compass/sass/screen.scss */
+/* line 52, ../../compass/sass/screen.scss */
 nav {
   background: white;
 }
