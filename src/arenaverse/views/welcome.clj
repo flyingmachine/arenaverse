@@ -8,5 +8,4 @@
 
 (defpage "/" []
   (common/layout
-   [:p "Welcome to arenaverse"]
-   [:p "You're really going to enjoy your time here"]))
+   [:p "Arenaverse! Arrsafrsafa!"]))

@@ -7,8 +7,8 @@
 (def routes '{:arenas/shiny [shiny "/arenas/new"]
               :arenas/edit  [[:get "/arenas/edit/:id"]]})
 
-(defn url-forr
-  ([route-name] (url-forr route-name {}))
+(defn url-for-r
+  ([route-name] (url-for-r route-name {}))
   ([route-name route-args]     
      (let [route (last (flatten (route-name routes)))
            route-arg-names (noir.core/route-arguments route)]

@@ -28,7 +28,7 @@ body {
   background:url("http://subtlepatterns.com/patterns/45degreee_fabric.png")
 }
 
-#brainsinvats {
+#arenaverse {
   @include container;
   header, footer {
     clear: both;
@@ -50,5 +50,14 @@ p {
 }
 
 nav {
-  background: lighten($primary-color, 80%);
+  background: lighten($primary-color, 30%);
+  @include padding-leader(1);
+  @include padding-trailer(1);
+}
+
+#main {
+  @include padding-leader(1);
+  @include padding-trailer(1);
+  background:white;
+  border-bottom: 4px solid $primary-color;
 }

@@ -17,5 +17,6 @@
      [:header
       [:h1 "Arenaverse!"]]
      [:nav
-      [:a {:href (url-forr :arenas/shiny)} "New Arena"]]
-     content]]))
+      [:a {:href (url-for-r :arenas/shiny)} "New Arena"]]
+     [:div#main
+      content]]]))
