@@ -97,8 +97,8 @@ h1 {
   font-family: 'Just Another Hand';
   font-size: 6em;
   line-height: 1.25em;
-  margin-bottom: 0.3em;
-  padding-top: 0.3em;
+  line-height: 1em;
+  padding-top: 0.25em;
   text-shadow: black 2px 2px 2px;
   color: #6fc0e7;
 }
@@ -110,12 +110,32 @@ p {
 
 /* line 52, ../../compass/sass/screen.scss */
 nav {
+  overflow: hidden;
+  *zoom: 1;
   background: #f2f9fd;
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  -ms-border-radius: 10px 10px 0 0;
+  -o-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
+}
+/* line 57, ../../compass/sass/screen.scss */
+nav ul {
+  list-style: none;
+}
+/* line 59, ../../compass/sass/screen.scss */
+nav ul li {
+  display: block;
+  float: left;
+}
+/* line 62, ../../compass/sass/screen.scss */
+nav ul li a {
+  display: block;
+  padding: 1em 25%;
+  white-space: nowrap;
 }
 
-/* line 58, ../../compass/sass/screen.scss */
+/* line 71, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;

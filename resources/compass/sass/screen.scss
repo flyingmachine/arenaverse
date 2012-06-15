@@ -39,8 +39,8 @@ body {
 h1 {
   font-family: 'Just Another Hand';
   @include adjust-font-size-to(96px);
-  @include trailer(1, 80px);
-  @include leader(1, 80px, padding);
+  line-height:1em;
+  @include leader(1, 96px, padding);
   @include single-text-shadow(black, 2px, 2px, 2px);
   color: $primary-color;
 }
@@ -50,9 +50,22 @@ p {
 }
 
 nav {
+  @include clearfix;
   background: lighten($primary-color, 30%);
-  @include padding-leader(1);
-  @include padding-trailer(1);
+  @include border-radius(10px 10px 0 0);
+
+  ul {
+    list-style:none;
+    li {
+      display:block;
+      float:left;
+      a {
+        display:block;
+        padding: 1em gutter(1);
+        white-space:nowrap;
+      }
+    }
+  }
 }
 
 #main {
