@@ -1,5 +1,5 @@
-(ns brainsinvats.views.welcome
-  (:require [brainsinvats.views.common :as common]
+(ns arenaverse.views.welcome
+  (:require [arenaverse.views.common :as common]
             [noir.content.pages :as pages])
   
   (:use noir.core
@@ -8,5 +8,5 @@
 
 (defpage "/" []
   (common/layout
-   [:p "Welcome to brainsinvats"]
+   [:p "Welcome to arenaverse"]
    [:p "You're really going to enjoy your time here"]))

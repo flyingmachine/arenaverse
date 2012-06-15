@@ -1,4 +1,4 @@
-(ns brainsinvats.views.routes
+(ns arenaverse.views.routes
   (require [clojure.string :as string]))
 
 (defn- throwf [msg & args]

@@ -1,11 +1,11 @@
-(ns brainsinvats.views.arenas
-  (:require [brainsinvats.views.common :as common]
+(ns arenaverse.views.arenas
+  (:require [arenaverse.views.common :as common]
             [noir.content.pages :as pages])
   
   (:use noir.core
         hiccup.core
         hiccup.page-helpers
-        brainsinvats.views.routes))
+        arenaverse.views.routes))
 
 
 (defpage-r shiny {}
