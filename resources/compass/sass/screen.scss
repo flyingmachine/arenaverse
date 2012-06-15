@@ -1,0 +1,56 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3";
+@import "compass/typography/vertical_rhythm";
+@import "blueprint/colors";
+
+@import "susy";
+
+$total-columns  : 12;             // a 12-column grid
+$column-width   : 4em;            // each column is 4em wide
+$gutter-width   : 1em;            // 1em gutters between columns
+$grid-padding   : $gutter-width;  // grid-padding equal to gutters
+$base-font-size : 16px;
+$base-line-height : 24px;
+
+$primary-color: #6fc0e7;
+
+@mixin sans-family {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+@include font-face("Trinigan", font-files("/fonts/Trinigan.ttf"));
+
+body {
+  @include sans-family;
+}
+
+#brainsinvats {
+  @include container;
+  header, footer {
+    clear: both;
+    border-top: 4px solid $primary-color;
+  }
+}
+
+h1 {
+  font-family: 'Trinigan';
+  border-top: 2px solid black;
+  @include adjust-font-size-to(80px);
+  @include trailer(1, 80px);
+  @include leader(1, 80px, padding);
+  @include single-text-shadow(black, -2px, -2px, 0px);
+  color: $primary-color;
+}
+
+p {
+  @include trailer;
+}
+
+nav {
+  background: lighten($primary-color, 80%);
+}

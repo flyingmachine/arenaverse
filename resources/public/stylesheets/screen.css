@@ -1,0 +1,119 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: "Trinigan";
+  src: url(/fonts/Trinigan.ttf) format('truetype');
+}
+
+/* line 28, ../../compass/sass/screen.scss */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* line 32, ../../compass/sass/screen.scss */
+#brainsinvats {
+  *zoom: 1;
+  margin: auto;
+  width: 61em;
+  max-width: 100%;
+}
+/* line 38, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#brainsinvats:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 34, ../../compass/sass/screen.scss */
+#brainsinvats header, #brainsinvats footer {
+  clear: both;
+  border-top: 4px solid #6fc0e7;
+}
+
+/* line 40, ../../compass/sass/screen.scss */
+h1 {
+  font-family: 'Trinigan';
+  border-top: 2px solid black;
+  font-size: 5em;
+  line-height: 1.2em;
+  margin-bottom: 0.3em;
+  padding-top: 0.3em;
+  text-shadow: black -2px -2px 0px;
+  color: #6fc0e7;
+}
+
+/* line 50, ../../compass/sass/screen.scss */
+p {
+  margin-bottom: 1.5em;
+}
+
+/* line 54, ../../compass/sass/screen.scss */
+nav {
+  background: white;
+}
