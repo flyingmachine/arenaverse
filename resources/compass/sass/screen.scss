@@ -117,6 +117,7 @@ p {
 }
 
 nav {
+  margin-top: .5em;
   @include clearfix;
   @include border-radius(10px 10px 0 0);
   background: #e2fbe9;
