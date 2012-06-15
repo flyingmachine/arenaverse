@@ -67,13 +67,80 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 26, ../../compass/sass/screen.scss */
+/* line 30, ../../compass/sass/screen.scss */
+form, fieldset {
+  margin-bottom: 20px;
+}
+
+/* line 34, ../../compass/sass/screen.scss */
+input[type="number"] {
+  -webkit-apperance: none;
+}
+
+/* line 38, ../../compass/sass/screen.scss */
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #777;
+  display: block;
+  font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0 0 20px;
+  max-width: 100%;
+  outline: none;
+  padding: 6px 4px;
+  width: 210px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+/* line 53, ../../compass/sass/screen.scss */
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+  border: 1px solid #aaa;
+  color: #444;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+/* line 61, ../../compass/sass/screen.scss */
+select {
+  padding: 0;
+  width: 220px;
+}
+
+/* line 66, ../../compass/sass/screen.scss */
+textarea {
+  min-height: 60px;
+}
+
+/* line 70, ../../compass/sass/screen.scss */
+label, legend {
+  display: block;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* line 76, ../../compass/sass/screen.scss */
+input[type="checkbox"] {
+  display: inline;
+}
+
+/* line 80, ../../compass/sass/screen.scss */
+label span, legend span {
+  font-weight: normal;
+  font-size: 13px;
+  color: #444;
+}
+
+/* line 86, ../../compass/sass/screen.scss */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: url("http://subtlepatterns.com/patterns/connect.png");
 }
 
-/* line 31, ../../compass/sass/screen.scss */
+/* line 91, ../../compass/sass/screen.scss */
 #arenaverse {
   *zoom: 1;
   margin: auto;
@@ -90,7 +157,7 @@ body {
   display: table;
   clear: both;
 }
-/* line 38, ../../compass/sass/screen.scss */
+/* line 98, ../../compass/sass/screen.scss */
 #arenaverse header {
   clear: both;
   border-top: 4px solid #2493c8;
@@ -98,7 +165,7 @@ body {
   background: #97d4ec url("/img/_ui/header-bg.png") repeat-x;
 }
 
-/* line 46, ../../compass/sass/screen.scss */
+/* line 106, ../../compass/sass/screen.scss */
 h1 {
   font-family: 'Just Another Hand';
   font-size: 6em;
@@ -109,7 +176,7 @@ h1 {
   color: #2493c8;
 }
 
-/* line 55, ../../compass/sass/screen.scss */
+/* line 115, ../../compass/sass/screen.scss */
 h2 {
   font-size: 2.5em;
   line-height: 1.2em;
@@ -118,27 +185,27 @@ h2 {
   color: #ffb57b;
 }
 
-/* line 62, ../../compass/sass/screen.scss */
+/* line 122, ../../compass/sass/screen.scss */
 p {
   margin-bottom: 1.5em;
 }
 
-/* line 66, ../../compass/sass/screen.scss */
+/* line 126, ../../compass/sass/screen.scss */
 nav {
   overflow: hidden;
   *zoom: 1;
   background: #e2fbe9;
 }
-/* line 70, ../../compass/sass/screen.scss */
+/* line 130, ../../compass/sass/screen.scss */
 nav ul {
   list-style: none;
 }
-/* line 72, ../../compass/sass/screen.scss */
+/* line 132, ../../compass/sass/screen.scss */
 nav ul li {
   display: block;
   float: left;
 }
-/* line 75, ../../compass/sass/screen.scss */
+/* line 135, ../../compass/sass/screen.scss */
 nav ul li a {
   display: block;
   padding: 1em;
@@ -146,7 +213,7 @@ nav ul li a {
   width: auto;
 }
 
-/* line 85, ../../compass/sass/screen.scss */
+/* line 145, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;

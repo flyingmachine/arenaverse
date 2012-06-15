@@ -9,10 +9,13 @@
         arenaverse.views.routes))
 
 (defpartial arena-fields [{:keys [name description]}]
-  (label "name" "Name: ")
-  (text-field "name" name)
-  (label "description" "Description: ")
-  (text-field "description" description))
+  [:table
+   [:tr
+    [:td (label "name" "Name: ")]
+    [:td (text-field "name" name)]]
+   [:tr
+    [:td (label "description" "Description: ")]
+    [:td (text-field "description" description)]]])
 
 (defpage-r shiny {:as arena}
   (common/layout
