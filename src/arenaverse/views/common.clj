@@ -13,12 +13,14 @@
      "/stylesheets/screen/ie.css"
      "/stylesheets/screen.css")]
    [:body
-    [:div#arenaverse
+    [:div#banner
      [:header
-      [:img {:src "/img/_ui/logo.png"}]]
-     [:nav
+      [:img {:src "/img/_ui/logo.png"}]
+      [:nav
       [:ul
        [:li [:a {:href (url-for-r :arenas/shiny)} "New Arena"]]
-       [:li [:a {:href "#"} "Another Link"]]]]
+       [:li [:a {:href "#"} "Another Link"]]]]]]
+    [:div#arenaverse
+     
      [:div#main
       content]]]))

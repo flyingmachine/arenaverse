@@ -75,19 +75,23 @@ body {
   background: url("http://subtlepatterns.com/patterns/connect.png")
 }
 
+#banner{
+  width: 100%;
+  border-top: 4px solid $primary-color;
+  background: $tertiary-color url("/img/_ui/header-bg.png") repeat-x;
+  
+  header{
+    @include container;
+    clear: both;
+    text-align: center;
+  }
+}
+
 #arenaverse {
   @include container;
   background: white;
-
-  @include leader;
   border-left:1em dashed $secondary-color;
   border-right:1em dashed $secondary-color;
-  header{
-    clear: both;
-    border-top: 4px solid $primary-color;
-    text-align: center;
-    background: $tertiary-color url("/img/_ui/header-bg.png") repeat-x;
-  }
 }
 
 h1 {
@@ -104,14 +108,17 @@ h2 {
   font-family: Bangers, $sans-family;
   @include trailer(1, 40px);
   color: $secondary-color;
+  padding-left: 16px;
 }
 
 p {
   @include trailer;
+  padding: 0 $gutter-width;
 }
 
 nav {
   @include clearfix;
+  @include border-radius(10px 10px 0 0);
   background: #e2fbe9;
 
   ul {
@@ -136,15 +143,18 @@ nav {
   border-bottom: 4px solid $primary-color;
 }
 
-form table {
-  td {
-    height: 100%;
-    vertical-align: middle;
+form {
+  padding: 0 1em;
+  table {
+    td {
+      height: 100%;
+      vertical-align: middle;
 
-    label {
-      display:block;
-      text-align: right;
-      margin-right: 1em;
+      label {
+        display:block;
+        text-align: right;
+        margin-right: 1em;
+      }
     }
   }
 }
