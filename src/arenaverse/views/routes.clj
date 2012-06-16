@@ -6,8 +6,9 @@
 
 (def routes '{:arenas/listing  "/arenas"
               :arenas/show     "/arenas/:id"
+              :arenas/edit     "/arenas/:id/edit"
+              :arenas/update   [:post "/arenas/:id"]
               :arenas/shiny    "/arenas/new"
-              :arenas/edit     [:get "/arenas/edit/:id"]
               :arenas/create   [:post "/arenas"]})
 
 (defn url-for-r
