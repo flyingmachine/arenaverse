@@ -5,6 +5,7 @@
 (server/load-views "src/arenaverse/views/")
 
 (mg/connect!)
+(mg/set-db! (mg/get-db "arenaverse-development"))
 
 (defn -main [& m]
   (let [mode (keyword (or (first m) :dev))

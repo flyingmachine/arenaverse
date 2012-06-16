@@ -20,6 +20,7 @@ $base-line-height : 24px;
 $primary-color: #2493C8;
 $secondary-color: #ffb57b;
 $tertiary-color: #97d4ec;
+$background-color: #fee0ec; // pink
 
 $sans-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -72,7 +73,7 @@ input[type="checkbox"] {
 // ================================= //
 body {
   font-family: $sans-family;
-  background: url("http://subtlepatterns.com/patterns/connect.png")
+  background: url("/img/_ui/bg.png")
 }
 
 #banner{
@@ -144,8 +145,14 @@ nav {
   border-bottom: 4px solid $primary-color;
 }
 
+table {
+  margin: 0 1em;
+  td {
+    padding-right:1em;
+  }
+}
+
 form {
-  padding: 0 1em;
   table {
     td {
       height: 100%;

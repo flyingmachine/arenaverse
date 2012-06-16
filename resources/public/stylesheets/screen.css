@@ -67,12 +67,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 31, ../../compass/sass/screen.scss */
+/* line 32, ../../compass/sass/screen.scss */
 input[type="number"] {
   -webkit-apperance: none;
 }
 
-/* line 35, ../../compass/sass/screen.scss */
+/* line 36, ../../compass/sass/screen.scss */
 input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
   background: #fff;
   border: 1px solid #ccc;
@@ -89,7 +89,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
   -o-border-radius: 2px;
   border-radius: 2px;
 }
-/* line 50, ../../compass/sass/screen.scss */
+/* line 51, ../../compass/sass/screen.scss */
 input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
   border: 1px solid #aaa;
   color: #444;
@@ -98,35 +98,35 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
-/* line 58, ../../compass/sass/screen.scss */
+/* line 59, ../../compass/sass/screen.scss */
 select {
   padding: 0;
   width: 220px;
 }
 
-/* line 63, ../../compass/sass/screen.scss */
+/* line 64, ../../compass/sass/screen.scss */
 textarea {
   min-height: 60px;
 }
 
-/* line 67, ../../compass/sass/screen.scss */
+/* line 68, ../../compass/sass/screen.scss */
 input[type="checkbox"] {
   display: inline;
 }
 
-/* line 73, ../../compass/sass/screen.scss */
+/* line 74, ../../compass/sass/screen.scss */
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: url("http://subtlepatterns.com/patterns/connect.png");
+  background: url("/img/_ui/bg.png");
 }
 
-/* line 78, ../../compass/sass/screen.scss */
+/* line 79, ../../compass/sass/screen.scss */
 #banner {
   width: 100%;
   border-top: 4px solid #2493c8;
   background: #97d4ec url("/img/_ui/header-bg.png") repeat-x;
 }
-/* line 83, ../../compass/sass/screen.scss */
+/* line 84, ../../compass/sass/screen.scss */
 #banner header {
   *zoom: 1;
   margin: auto;
@@ -142,7 +142,7 @@ body {
   clear: both;
 }
 
-/* line 90, ../../compass/sass/screen.scss */
+/* line 91, ../../compass/sass/screen.scss */
 #arenaverse {
   *zoom: 1;
   margin: auto;
@@ -159,7 +159,7 @@ body {
   clear: both;
 }
 
-/* line 97, ../../compass/sass/screen.scss */
+/* line 98, ../../compass/sass/screen.scss */
 h1 {
   font-family: 'Just Another Hand';
   font-size: 6em;
@@ -170,7 +170,7 @@ h1 {
   color: #2493c8;
 }
 
-/* line 106, ../../compass/sass/screen.scss */
+/* line 107, ../../compass/sass/screen.scss */
 h2 {
   font-size: 2.5em;
   line-height: 1.2em;
@@ -180,13 +180,13 @@ h2 {
   padding-left: 16px;
 }
 
-/* line 114, ../../compass/sass/screen.scss */
+/* line 115, ../../compass/sass/screen.scss */
 p {
   margin-bottom: 1.5em;
   padding: 0 1em;
 }
 
-/* line 119, ../../compass/sass/screen.scss */
+/* line 120, ../../compass/sass/screen.scss */
 nav {
   margin-top: .5em;
   overflow: hidden;
@@ -198,16 +198,16 @@ nav {
   border-radius: 10px 10px 0 0;
   background: #e2fbe9;
 }
-/* line 125, ../../compass/sass/screen.scss */
+/* line 126, ../../compass/sass/screen.scss */
 nav ul {
   list-style: none;
 }
-/* line 127, ../../compass/sass/screen.scss */
+/* line 128, ../../compass/sass/screen.scss */
 nav ul li {
   display: block;
   float: left;
 }
-/* line 130, ../../compass/sass/screen.scss */
+/* line 131, ../../compass/sass/screen.scss */
 nav ul li a {
   display: block;
   padding: 1em;
@@ -215,7 +215,7 @@ nav ul li a {
   width: auto;
 }
 
-/* line 140, ../../compass/sass/screen.scss */
+/* line 141, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;
@@ -223,16 +223,21 @@ nav ul li a {
   border-bottom: 4px solid #2493c8;
 }
 
-/* line 147, ../../compass/sass/screen.scss */
-form {
-  padding: 0 1em;
+/* line 148, ../../compass/sass/screen.scss */
+table {
+  margin: 0 1em;
 }
 /* line 150, ../../compass/sass/screen.scss */
+table td {
+  padding-right: 1em;
+}
+
+/* line 157, ../../compass/sass/screen.scss */
 form table td {
   height: 100%;
   vertical-align: middle;
 }
-/* line 154, ../../compass/sass/screen.scss */
+/* line 161, ../../compass/sass/screen.scss */
 form table td label {
   display: block;
   text-align: right;
