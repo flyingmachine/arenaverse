@@ -1,6 +1,7 @@
 (ns arenaverse.views.arenas
   (:require [arenaverse.views.common :as common]
             [noir.content.pages :as pages]
+            [noir.session :as session]
             [monger.collection :as mc])
   
   (:use noir.core
@@ -11,20 +12,21 @@
 
   (:import [org.bson.types ObjectId]))
 
+(declare show)
 
-(defpartial arena-fields [{:keys [name description]}]
+(defpartial arena-fields [{:keys [name fight-text]}]
   [:table
    [:tr
     [:td (label "name" "Name")]
     [:td (text-field "name" name)]]
    [:tr
-    [:td (label "description" "Description")]
-    [:td (text-field "description" description)]]])
+    [:td (label "fight-text" "Fight Text")]
+    [:td (text-field "fight-text" fight-text)]]])
 
-(defpartial arena-details [{:keys [name description _id]}]
+(defpartial arena-details [{:keys [name fight-text _id]}]
   [:tr
-   [:td [:a {:href (url-for-r :arenas/show {:id _id})} name]]
-   [:td description]])
+   [:td [:a {:href (url-for-r :arenas/show :id _id)} name]]
+   [:td fight-text]])
 
 (defpage-r listing []
   (common/layout
@@ -44,17 +46,32 @@
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. id))]
     (common/layout
      [:h2 (:name arena)]
-     [:p (:description arena)]
-     [:p
-      [:a {:href (url-for edit :id id)} "Edit"]])))
+     (if-let [msg (session/flash-get)]
+       [:p.info msg])
+     [:p [:a {:href (url-for edit :id id)} "Edit"]]
+     [:p (:fight-text arena)]
+     [:h3 "New Fighter"]
+     (form-to {:enctype "multipart/form-data"}
+              [:post (url-for-r :fighters/create)]
+              [:table
+               [:tr
+                [:td (label :name "Name")]
+                [:td (text-field :name)]]
+               [:tr
+                [:td (label :bio "Bio")]
+                [:td (text-field :bio)]]
+               [:tr
+                [:td (label :file "Pic")]
+                [:td (file-upload :file)]]
+               [:tr
+                [:td]
+                [:td (submit-button "Upload")]]]))))
 
-;; todo put name and description in separate map?
-(defpage-r update {:keys [id name description]}
-  (mc/update-by-id "arenas" (ObjectId. id) {:name name :description description})
-  (common/layout
-   [:h2 "Updated " name]
-   [:p
-    [:a {:href (url-for show :id id)} "Show"]]))
+;; todo put name and fight-text in separate map?
+(defpage-r update {:keys [id name fight-text]}
+  (mc/update-by-id "arenas" (ObjectId. id) {:name name :fight-text fight-text})
+  (session/flash-put! "Arena updated!")
+  (show {:id id}))
 
 (defpage-r shiny {:as arena}
   (common/layout
@@ -64,7 +81,7 @@
             [:p (submit-button "Create Arena")])))
 
 (defpage-r create {:as arena}
-  (insert "arenas" arena)
+  (mc/insert "arenas" arena)
   (common/layout
    [:h2 "Arena Created!"]
    [:table (arena-details arena)]))

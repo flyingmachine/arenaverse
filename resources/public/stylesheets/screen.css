@@ -181,12 +181,22 @@ h2 {
 }
 
 /* line 115, ../../compass/sass/screen.scss */
+h3 {
+  font-size: 1.875em;
+  line-height: 1.6em;
+  font-family: Bangers, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 0.8em;
+  color: #97d4ec;
+  padding-left: 16px;
+}
+
+/* line 123, ../../compass/sass/screen.scss */
 p {
   margin-bottom: 1.5em;
   padding: 0 1em;
 }
 
-/* line 120, ../../compass/sass/screen.scss */
+/* line 128, ../../compass/sass/screen.scss */
 nav {
   margin-top: .5em;
   overflow: hidden;
@@ -198,16 +208,16 @@ nav {
   border-radius: 10px 10px 0 0;
   background: #e2fbe9;
 }
-/* line 126, ../../compass/sass/screen.scss */
+/* line 134, ../../compass/sass/screen.scss */
 nav ul {
   list-style: none;
 }
-/* line 128, ../../compass/sass/screen.scss */
+/* line 136, ../../compass/sass/screen.scss */
 nav ul li {
   display: block;
   float: left;
 }
-/* line 131, ../../compass/sass/screen.scss */
+/* line 139, ../../compass/sass/screen.scss */
 nav ul li a {
   display: block;
   padding: 1em;
@@ -215,7 +225,7 @@ nav ul li a {
   width: auto;
 }
 
-/* line 141, ../../compass/sass/screen.scss */
+/* line 149, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;
@@ -223,23 +233,36 @@ nav ul li a {
   border-bottom: 4px solid #2493c8;
 }
 
-/* line 148, ../../compass/sass/screen.scss */
+/* line 156, ../../compass/sass/screen.scss */
 table {
   margin: 0 1em;
 }
-/* line 150, ../../compass/sass/screen.scss */
+/* line 158, ../../compass/sass/screen.scss */
 table td {
   padding-right: 1em;
 }
 
-/* line 157, ../../compass/sass/screen.scss */
+/* line 165, ../../compass/sass/screen.scss */
 form table td {
   height: 100%;
   vertical-align: middle;
 }
-/* line 161, ../../compass/sass/screen.scss */
+/* line 169, ../../compass/sass/screen.scss */
 form table td label {
   display: block;
   text-align: right;
+}
+
+/* line 177, ../../compass/sass/screen.scss */
+.info {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+  background: #97d4ec;
+  margin-left: 1em;
   margin-right: 1em;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
 }

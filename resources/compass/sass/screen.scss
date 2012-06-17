@@ -112,6 +112,14 @@ h2 {
   padding-left: 16px;
 }
 
+h3 {
+  @include adjust-font-size-to(30px);
+  font-family: Bangers, $sans-family;
+  @include trailer(1, 30px);
+  color: $tertiary-color;
+  padding-left: 16px;
+}
+
 p {
   @include trailer;
   padding: 0 $gutter-width;
@@ -161,8 +169,16 @@ form {
       label {
         display:block;
         text-align: right;
-        margin-right: 1em;
       }
     }
   }
+}
+
+.info {
+  @include padding-leader(.5);
+  @include padding-trailer(.5);
+  background: $tertiary-color;
+  margin-left: $gutter-width;
+  margin-right: $gutter-width;
+  @include border-radius(20px);
 }

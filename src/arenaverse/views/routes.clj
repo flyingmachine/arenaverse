@@ -9,13 +9,14 @@
               :arenas/edit     "/arenas/:id/edit"
               :arenas/update   [:post "/arenas/:id"]
               :arenas/shiny    "/arenas/new"
-              :arenas/create   [:post "/arenas"]})
+              :arenas/create   [:post "/arenas"]
+              :fighters/create [:post "/fighters"]})
 
 (defn url-for-r
-  ([route-name] (url-for-r route-name {}))
-  ([route-name route-args]     
+  ([route-name & route-args]     
      (let [entry (route-name routes)
            route (or (last (flatten entry)) entry)
+           route-args (if (empty? route-args) {} (apply assoc (cons {} route-args)))
            route-arg-names (noir.core/route-arguments route)]
        (when (nil? route)
          (throwf "missing route for %s" route-name))
