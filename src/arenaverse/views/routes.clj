@@ -13,10 +13,10 @@
               :fighters/create [:post "/fighters"]})
 
 (defn url-for-r
-  ([route-name & route-args]     
+  ([route-name] (url-for-r route-name {}))
+  ([route-name route-args]     
      (let [entry (route-name routes)
            route (or (last (flatten entry)) entry)
-           route-args (if (empty? route-args) {} (apply assoc (cons {} route-args)))
            route-arg-names (noir.core/route-arguments route)]
        (when (nil? route)
          (throwf "missing route for %s" route-name))

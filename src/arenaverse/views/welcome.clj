@@ -1,10 +1,8 @@
 (ns arenaverse.views.welcome
-  (:require [arenaverse.views.common :as common]
-            [noir.content.pages :as pages])
+  (:require [arenaverse.views.common :as common])
   
-  (:use noir.core
-        hiccup.core
-        hiccup.page-helpers))
+  (:use [noir.core :only [defpage]]
+        [hiccup.core :only [html]]))
 
 (defpage "/" []
   (common/layout

@@ -1,12 +1,10 @@
 (ns arenaverse.views.arenas
   (:require [arenaverse.views.common :as common]
-            [noir.content.pages :as pages]
             [noir.session :as session]
             [monger.collection :as mc])
   
   (:use noir.core
         hiccup.core
-        hiccup.page-helpers
         hiccup.form-helpers
         arenaverse.views.routes)
 
@@ -25,7 +23,7 @@
 
 (defpartial arena-details [{:keys [name fight-text _id]}]
   [:tr
-   [:td [:a {:href (url-for-r :arenas/show :id _id)} name]]
+   [:td [:a {:href (url-for-r :arenas/show {:id _id})} name]]
    [:td fight-text]])
 
 (defpage-r listing []
@@ -48,11 +46,12 @@
      [:h2 (:name arena)]
      (if-let [msg (session/flash-get)]
        [:p.info msg])
-     [:p [:a {:href (url-for edit :id id)} "Edit"]]
+     [:p [:a {:href (url-for edit {:id id})} "Edit"]]
      [:p (:fight-text arena)]
      [:h3 "New Fighter"]
      (form-to {:enctype "multipart/form-data"}
               [:post (url-for-r :fighters/create)]
+              (hidden-field :arena-id id)
               [:table
                [:tr
                 [:td (label :name "Name")]
@@ -65,7 +64,7 @@
                 [:td (file-upload :file)]]
                [:tr
                 [:td]
-                [:td (submit-button "Upload")]]]))))
+                [:td (submit-button "Create Fighter")]]]))))
 
 ;; todo put name and fight-text in separate map?
 (defpage-r update {:keys [id name fight-text]}

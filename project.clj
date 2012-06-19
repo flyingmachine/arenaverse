@@ -2,6 +2,7 @@
             :description "wooo!"
             :dependencies [[org.clojure/clojure "1.3.0"]
                            [noir "1.2.1" :exclusions [org.clojure/clojure]]
-                           [com.novemberain/monger "1.0.0-rc1"]]
+                           [com.novemberain/monger "1.0.0-rc1"]
+                           [clj-aws-s3 "0.3.1"]]
             :main arenaverse.server)
 
