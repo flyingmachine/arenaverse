@@ -1,7 +1,7 @@
 (ns arenaverse.models.fighter
   (:require [arenaverse.config :as config]
             [monger.collection :as mc]
-            [aws.sdk.s3 :as s3])
+            [arenaverse.lib.aws.s3 :as s3])
 
   (:import [org.bson.types ObjectId]))
 
@@ -24,6 +24,5 @@
                        "arenaverse-test"
                        filename
                        (:tempfile file)
-                       {:content-type (:content-type file)})))))
-
-(defn all [])
+                       {:content-type (:content-type file)}
+                       #(.withCannedAcl % com.amazonaws.services.s3.model.CannedAccessControlList/PublicRead)))))))
