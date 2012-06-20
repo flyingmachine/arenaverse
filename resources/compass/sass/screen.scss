@@ -7,7 +7,6 @@
 @import "compass/css3";
 @import "compass/typography/vertical_rhythm";
 @import "blueprint/colors";
-
 @import "susy";
 
 $total-columns  : 12;             // a 12-column grid
@@ -174,6 +173,10 @@ form {
   }
 }
 
+#fighters {
+  @include clearfix;
+}
+
 .info {
   @include padding-leader(.5);
   @include padding-trailer(.5);
@@ -184,9 +187,29 @@ form {
 }
 
 .fighter {
-  padding-left: $gutter-width;
-  .pic img {
-    max-width:200px;
-    max-height:100px;
+  @include columns(3, 12);
+  .card {
+    text-align:center;
+    margin-left: 1em;
+    padding: 1em;
+    background: lighten($tertiary-color, 20%);
+    @include border-radius(10px);
+    
+    .name {
+      font-weight: bold;
+      @include trailer(.5);
+    }
+
+    .bio {
+      color: #333;
+      font-style:italic;
+    }
+    
+    .pic img {
+      max-width:200px;
+      max-height:100px;
+      @include border-radius(10px);
+      @include trailer(.5)
+    }
   }
 }

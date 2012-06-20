@@ -15,7 +15,8 @@
 
 (defpartial fighter [record]
   [:div.fighter
-   [:div.name (:name record)]
-   [:div.bio (:bio record)]
-   [:div.pic
-    [:img {:src  (fighter/amazon-image-path record)}]]])
+   [:div.card
+    [:div.name (:name record)]
+    [:div.pic
+     [:img {:src  (fighter/amazon-image-path record)}]]
+    [:div.bio (:bio record)]]])

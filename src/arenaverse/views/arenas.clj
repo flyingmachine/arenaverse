@@ -51,25 +51,28 @@
      [:p [:a {:href (url-for edit {:id id})} "Edit"]]
      [:p (:fight-text arena)]
 
-     [:h3 "Fighters"]
-     (map fighters/fighter (fighter/all))
-     [:h3 "New Fighter"]
-     (form-to {:enctype "multipart/form-data"}
-              [:post (url-for-r :fighters/create)]
-              (hidden-field :arena-id id)
-              [:table
-               [:tr
-                [:td (label :name "Name")]
-                [:td (text-field :name)]]
-               [:tr
-                [:td (label :bio "Bio")]
-                [:td (text-field :bio)]]
-               [:tr
-                [:td (label :file "Pic")]
-                [:td (file-upload :file)]]
-               [:tr
-                [:td]
-                [:td (submit-button "Create Fighter")]]]))))
+     [:div#fighters
+      [:h3 "Fighters"]
+      (map fighters/fighter (fighter/all))]
+     
+     [:div#new-fighter
+      [:h3 "New Fighter"]
+      (form-to {:enctype "multipart/form-data"}
+               [:post (url-for-r :fighters/create)]
+               (hidden-field :arena-id id)
+               [:table
+                [:tr
+                 [:td (label :name "Name")]
+                 [:td (text-field :name)]]
+                [:tr
+                 [:td (label :bio "Bio")]
+                 [:td (text-field :bio)]]
+                [:tr
+                 [:td (label :file "Pic")]
+                 [:td (file-upload :file)]]
+                [:tr
+                 [:td]
+                 [:td (submit-button "Create Fighter")]]])])))
 
 ;; todo put name and fight-text in separate map?
 (defpage-r update {:keys [id name fight-text]}
