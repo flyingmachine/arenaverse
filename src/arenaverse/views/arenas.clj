@@ -1,5 +1,7 @@
 (ns arenaverse.views.arenas
   (:require [arenaverse.views.common :as common]
+            [arenaverse.views.fighters :as fighters]
+            [arenaverse.models.fighter :as fighter]
             [noir.session :as session]
             [monger.collection :as mc])
   
@@ -48,6 +50,9 @@
        [:p.info msg])
      [:p [:a {:href (url-for edit {:id id})} "Edit"]]
      [:p (:fight-text arena)]
+
+     [:h3 "Fighters"]
+     (map fighters/fighter (fighter/all))
      [:h3 "New Fighter"]
      (form-to {:enctype "multipart/form-data"}
               [:post (url-for-r :fighters/create)]

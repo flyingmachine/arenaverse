@@ -266,3 +266,13 @@ form table td label {
   -o-border-radius: 20px;
   border-radius: 20px;
 }
+
+/* line 186, ../../compass/sass/screen.scss */
+.fighter {
+  padding-left: 1em;
+}
+/* line 188, ../../compass/sass/screen.scss */
+.fighter .pic img {
+  max-width: 200px;
+  max-height: 100px;
+}

@@ -72,7 +72,7 @@
 
 (defn list-buckets
   "List all the S3 buckets for the supplied credentials. The buckets will be
-(i  returned as a seq of maps with the following keys:
+  returned as a seq of maps with the following keys:
     :name          - the bucket name
     :creation-date - the date when the bucket was created
     :owner         - the owner of the bucket"

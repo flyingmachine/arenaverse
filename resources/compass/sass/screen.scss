@@ -182,3 +182,11 @@ form {
   margin-right: $gutter-width;
   @include border-radius(20px);
 }
+
+.fighter {
+  padding-left: $gutter-width;
+  .pic img {
+    max-width:200px;
+    max-height:100px;
+  }
+}

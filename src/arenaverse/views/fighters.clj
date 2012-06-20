@@ -12,3 +12,10 @@
 (defpage-r create {:as fighter}
   (fighter/create-fighter fighter)
   (res/redirect (url-for-r :arenas/show {:id (:arena-id fighter)})))
+
+(defpartial fighter [record]
+  [:div.fighter
+   [:div.name (:name record)]
+   [:div.bio (:bio record)]
+   [:div.pic
+    [:img {:src  (fighter/amazon-image-path record)}]]])
