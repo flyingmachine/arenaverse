@@ -48,7 +48,7 @@
      [:h2 (:name arena)]
      (if-let [msg (session/flash-get)]
        [:p.info msg])
-     [:p [:a {:href (url-for edit {:id id})} "Edit"]]
+     [:p [:a {:href (url-for-r :arenas/edit {:id id})} "Edit"]]
      [:p (:fight-text arena)]
 
      [:div#fighters

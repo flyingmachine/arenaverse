@@ -27,4 +27,5 @@
                  (string/replace path (str k) (str v))) route route-args))))
 
 (defmacro defpage-r [route & body]
-  `(noir.core/defpage ~route ~((keyword (str (re-find #"[^.]*$" (str (ns-name *ns*))) "/" route)) routes) ~@body))
+  (let [ns-suffix# (re-find #"[^.]*$" (str (ns-name *ns*)))]
+    `(noir.core/defpage ~(symbol (str ns-suffix# "-" route)) ~((keyword (str ns-suffix# "/" route)) routes) ~@body)))

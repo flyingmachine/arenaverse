@@ -14,6 +14,16 @@
 (defn amazon-image-path [record]
   (str "https://s3.amazonaws.com/arenaverse-test" (image-path record)))
 
+(defn- save-image [image-fields file]
+  (let [filename (image-relative-path image-fields)]
+    (if (not (= "0" (:size file)))
+      (s3/put-object config/*aws-credentials*
+                     "arenaverse-test"
+                     filename
+                     (:tempfile file)
+                     {:content-type (:content-type file)}
+                     #(.withCannedAcl % com.amazonaws.services.s3.model.CannedAccessControlList/PublicRead)))))
+
 (defn create-fighter [attrs]
   (let [object-id (ObjectId.)
         file (:file attrs)
@@ -21,14 +31,8 @@
         image-fields {:_id object-id :image-extension image-extension}
         fields (merge (dissoc attrs :file) image-fields)]
     (mc/insert "fighters" fields)
-    (let [filename (image-relative-path image-fields)]
-      (if (not (= "0" (:size file)))
-        (s3/put-object config/*aws-credentials*
-                       "arenaverse-test"
-                       filename
-                       (:tempfile file)
-                       {:content-type (:content-type file)}
-                       #(.withCannedAcl % com.amazonaws.services.s3.model.CannedAccessControlList/PublicRead))))))
+    (save-image image-fields file)
+    fields))
 
 (defn all []
   (mc/find-maps "fighters"))
