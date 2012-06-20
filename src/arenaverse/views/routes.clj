@@ -12,6 +12,8 @@
               :arenas/create   [:post "/arenas"]
               :fighters/create [:post "/fighters"]})
 
+
+;; TODO handle symbols vs keywords?
 (defn url-for-r
   ([route-name] (url-for-r route-name {}))
   ([route-name route-args]     

@@ -274,13 +274,30 @@ form table td label {
 }
 
 /* line 189, ../../compass/sass/screen.scss */
+.row {
+  overflow: hidden;
+  *zoom: 1;
+}
+
+/* line 193, ../../compass/sass/screen.scss */
 .fighter {
   display: inline;
   float: left;
   width: 23.729%;
   margin-right: 1.695%;
 }
-/* line 191, ../../compass/sass/screen.scss */
+/* line 196, ../../compass/sass/screen.scss */
+.fighter:last-child {
+  display: inline;
+  float: left;
+  width: 23.729%;
+  margin-right: 1.695%;
+  display: inline;
+  float: right;
+  margin-right: 1.639%;
+  #margin-left: -1em;
+}
+/* line 201, ../../compass/sass/screen.scss */
 .fighter .card {
   text-align: center;
   margin-left: 1em;
@@ -292,17 +309,17 @@ form table td label {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 198, ../../compass/sass/screen.scss */
+/* line 208, ../../compass/sass/screen.scss */
 .fighter .card .name {
   font-weight: bold;
   margin-bottom: 0.75em;
 }
-/* line 203, ../../compass/sass/screen.scss */
+/* line 213, ../../compass/sass/screen.scss */
 .fighter .card .bio {
   color: #333;
   font-style: italic;
 }
-/* line 208, ../../compass/sass/screen.scss */
+/* line 218, ../../compass/sass/screen.scss */
 .fighter .card .pic img {
   max-width: 200px;
   max-height: 100px;

@@ -186,8 +186,18 @@ form {
   @include border-radius(20px);
 }
 
+.row {
+  @include clearfix;
+}
+
 .fighter {
   @include columns(3, 12);
+
+  &:last-child {
+    @include columns(3, 12);
+    @include omega();
+  }
+  
   .card {
     text-align:center;
     margin-left: 1em;

@@ -13,10 +13,15 @@
   (fighter/create-fighter fighter)
   (res/redirect (url-for-r :arenas/show {:id (:arena-id fighter)})))
 
-(defpartial fighter [record]
+(defpartial thumb [record]
   [:div.fighter
    [:div.card
     [:div.name (:name record)]
     [:div.pic
      [:img {:src  (fighter/amazon-image-path record)}]]
     [:div.bio (:bio record)]]])
+
+(defpartial thumbs []
+  (map (fn thumb-row [records]
+         (into [:div.row] (map thumb records)))
+       (partition 4 (fighter/all))))

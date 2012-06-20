@@ -53,8 +53,7 @@
 
      [:div#fighters
       [:h3 "Fighters"]
-      (map fighters/fighter (fighter/all))]
-     
+      (fighters/thumbs)]
      [:div#new-fighter
       [:h3 "New Fighter"]
       (form-to {:enctype "multipart/form-data"}
