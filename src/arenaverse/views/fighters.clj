@@ -54,7 +54,7 @@
     [:div.name
      [:a {:href (url-for-r :fighters/edit record)} (:name record)]]
     [:div.pic
-     [:img {:src  (fighter/amazon-image-path record)}]]
+     [:img {:src  (fighter/amazon-image-path "original" record)}]]
     [:div.bio (:bio record)]]])
 
 (defpartial thumbs [& [query-doc]]
