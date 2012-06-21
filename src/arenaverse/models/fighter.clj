@@ -34,5 +34,5 @@
     (save-image image-fields file)
     fields))
 
-(defn all []
-  (mc/find-maps "fighters"))
+(defn all [& [query-doc]]
+  (mc/find-maps "fighters" query-doc))

@@ -58,7 +58,7 @@
      [:img {:src  (fighter/amazon-image-path record)}]]
     [:div.bio (:bio record)]]])
 
-(defpartial thumbs []
+(defpartial thumbs [& [query-doc]]
   (map (fn thumb-row [records]
          (into [:div.row] (map thumb records)))
-       (partition 4 (fighter/all))))
+       (partition 4 (fighter/all query-doc))))

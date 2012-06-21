@@ -53,7 +53,7 @@
 
      [:div#fighters
       [:h3 "Fighters"]
-      (fighters/thumbs)]
+      (fighters/thumbs {:arena-id _id})]
      [:div#new-fighter
       [:h3 "New Fighter"]
       (form-to {:enctype "multipart/form-data"}
@@ -69,7 +69,7 @@
 (defpage-r update {:keys [_id name fight-text]}
   (mc/update-by-id "arenas" (ObjectId. _id) {:name name :fight-text fight-text})
   (session/flash-put! "Arena updated!")
-  (show {:_id _id}))
+  (arenas-show {:_id _id}))
 
 (defpage-r shiny {:as arena}
   (common/layout
