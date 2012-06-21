@@ -35,7 +35,8 @@
   (let [fighter (mc/find-map-by-id "fighters" (ObjectId. _id))]
     (common/layout
      [:h2 "Editing Fighter: " (:name fighter)]
-     (form-to [:post (url-for-r  :fighters/update {:_id _id})]
+     (form-to {:enctype "multipart/form-data"}
+              [:post (url-for-r  :fighters/update {:_id _id})]
               [:table
                (fighter-fields fighter)
                [:tr
@@ -43,9 +44,7 @@
                 [:td (submit-button "Update Fighter")]]]))))
 
 (defpage-r update {:as fighter}
-  (let [mongo-id (ObjectId. (:_id fighter))
-        record (mc/find-map-by-id "fighters" mongo-id)]
-    (mc/update-by-id "fighters" mongo-id (dissoc (merge record fighter) :_id))
+  (let [record (fighter/update-fighter fighter)]    
     (session/flash-put! "Fighter updated!")
     (redirect-to-arena record)))
 
@@ -61,4 +60,4 @@
 (defpartial thumbs [& [query-doc]]
   (map (fn thumb-row [records]
          (into [:div.row] (map thumb records)))
-       (partition 4 (fighter/all query-doc))))
+       (partition-all 4 (fighter/all query-doc))))
