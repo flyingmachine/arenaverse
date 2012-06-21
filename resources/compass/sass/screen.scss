@@ -17,18 +17,18 @@ $grid-padding   : $gutter-width;  // grid-padding equal to gutters
 $base-font-size : 16px;
 $base-line-height : 24px;
 
-$primary-color: #2493C8;
-$secondary-color: #ffb57b;
-$tertiary-color: #97d4ec;
+$primary-color: #2493C8; // Dark blue
+$secondary-color: #ffb57b; // orange
+$tertiary-color: #97d4ec; // light blue
 $background-color: #fee0ec; // pink
+$dark-green: #88efa5;
+$light-green: #e2fbe9;
 
 $sans-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 
 // #Forms
 // ================================================== //
-
-
 input[type="number"] {
   -webkit-apperance: none;
 }
@@ -98,27 +98,36 @@ body {
   border-right:1em dashed $secondary-color;
 }
 
-h1 {
-  font-family: 'Just Another Hand';
-  @include adjust-font-size-to(96px);
-  line-height:1em;
-  @include leader(1, 96px, padding);
-  @include single-text-shadow(black, 2px, 2px, 2px);
+// h1 {
+//   font-family: 'Just Another Hand';
+//   @include adjust-font-size-to(96px);
+//   line-height:1em;
+//   @include leader(1, 96px, padding);
+//   @include single-text-shadow(black, 2px, 2px, 2px);
+//   color: $primary-color;
+// }
+
+a {
+  text-decoration:none;
   color: $primary-color;
 }
 
-h2 {
+h1 {
   @include adjust-font-size-to(40px,1);
   font-family: Bangers, $sans-family;
+  letter-spacing:1px;
   @include trailer(1, 40px);
   color: $secondary-color;
+  @include single-text-shadow(lighten($secondary-color, 20%), 3px, 3px, 0);
 }
 
-h3 {
+h2 {
   @include adjust-font-size-to(30px, 1);
   font-family: Bangers, $sans-family;
   @include trailer(1, 30px);
-  color: $tertiary-color;
+  color: $primary-color;
+  @include single-text-shadow($tertiary-color, 2px, 2px, 0);
+  letter-spacing:3px;
 }
 
 p {
@@ -141,6 +150,11 @@ nav {
         padding: 1em;
         white-space:nowrap;
         width:auto;
+
+        &:hover {
+          background: $secondary-color;
+          color:white;
+        }
       }
     }
   }
@@ -162,12 +176,15 @@ table {
 form {
   table {
     td {
-      height: 100%;
-      vertical-align: middle;
+      vertical-align: top;
 
       label {
         display:block;
         text-align: right;
+      }
+
+      input[type=submit] {
+        @include leader(1);
       }
     }
   }
@@ -215,11 +232,22 @@ form {
       font-style:italic;
     }
     
-    .pic img {
-      max-width:200px;
-      max-height:100px;
-      @include border-radius(10px);
-      @include trailer(.5)
+    .pic {
+      width:12em;
+      height:12em;
+      line-height:12em;
+      @include trailer(.5);
+      img {
+        vertical-align:middle;
+        max-width:12em;
+        max-height:12em;
+        @include border-radius(10px);
+      }
     }
   }
+}
+
+
+#new-fighter {
+  @include trailer(1);
 }

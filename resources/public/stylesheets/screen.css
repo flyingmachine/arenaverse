@@ -156,41 +156,40 @@ body {
   clear: both;
 }
 
-/* line 101, ../../compass/sass/screen.scss */
-h1 {
-  font-family: 'Just Another Hand';
-  font-size: 6em;
-  line-height: 1.25em;
-  line-height: 1em;
-  padding-top: 0.25em;
-  text-shadow: black 2px 2px 2px;
+/* line 110, ../../compass/sass/screen.scss */
+a {
+  text-decoration: none;
   color: #2493c8;
 }
 
-/* line 110, ../../compass/sass/screen.scss */
-h2 {
+/* line 115, ../../compass/sass/screen.scss */
+h1 {
   font-size: 2.5em;
   line-height: 0.6em;
   font-family: Bangers, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
   margin-bottom: 0.6em;
   color: #ffb57b;
+  text-shadow: #ffeee1 3px 3px 0;
 }
 
-/* line 117, ../../compass/sass/screen.scss */
-h3 {
+/* line 124, ../../compass/sass/screen.scss */
+h2 {
   font-size: 1.875em;
   line-height: 0.8em;
   font-family: Bangers, "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 0.8em;
-  color: #97d4ec;
+  color: #2493c8;
+  text-shadow: #97d4ec 2px 2px 0;
+  letter-spacing: 3px;
 }
 
-/* line 124, ../../compass/sass/screen.scss */
+/* line 133, ../../compass/sass/screen.scss */
 p {
   margin-bottom: 1.5em;
 }
 
-/* line 128, ../../compass/sass/screen.scss */
+/* line 137, ../../compass/sass/screen.scss */
 nav {
   margin-top: .5em;
   overflow: hidden;
@@ -202,24 +201,29 @@ nav {
   border-radius: 10px 10px 0 0;
   background: #e2fbe9;
 }
-/* line 134, ../../compass/sass/screen.scss */
+/* line 143, ../../compass/sass/screen.scss */
 nav ul {
   list-style: none;
 }
-/* line 136, ../../compass/sass/screen.scss */
+/* line 145, ../../compass/sass/screen.scss */
 nav ul li {
   display: block;
   float: left;
 }
-/* line 139, ../../compass/sass/screen.scss */
+/* line 148, ../../compass/sass/screen.scss */
 nav ul li a {
   display: block;
   padding: 1em;
   white-space: nowrap;
   width: auto;
 }
+/* line 154, ../../compass/sass/screen.scss */
+nav ul li a:hover {
+  background: #ffb57b;
+  color: white;
+}
 
-/* line 149, ../../compass/sass/screen.scss */
+/* line 163, ../../compass/sass/screen.scss */
 #main {
   padding-top: 1.5em;
   padding-bottom: 1.5em;
@@ -227,29 +231,32 @@ nav ul li a {
   border-bottom: 4px solid #2493c8;
 }
 
-/* line 157, ../../compass/sass/screen.scss */
+/* line 171, ../../compass/sass/screen.scss */
 table td {
   padding-right: 1em;
 }
 
-/* line 164, ../../compass/sass/screen.scss */
+/* line 178, ../../compass/sass/screen.scss */
 form table td {
-  height: 100%;
-  vertical-align: middle;
+  vertical-align: top;
 }
-/* line 168, ../../compass/sass/screen.scss */
+/* line 181, ../../compass/sass/screen.scss */
 form table td label {
   display: block;
   text-align: right;
 }
+/* line 186, ../../compass/sass/screen.scss */
+form table td input[type=submit] {
+  margin-top: 1.5em;
+}
 
-/* line 176, ../../compass/sass/screen.scss */
+/* line 193, ../../compass/sass/screen.scss */
 #fighters {
   overflow: hidden;
   *zoom: 1;
 }
 
-/* line 180, ../../compass/sass/screen.scss */
+/* line 197, ../../compass/sass/screen.scss */
 .info {
   padding-top: 0.75em;
   padding-bottom: 0.75em;
@@ -263,21 +270,21 @@ form table td label {
   border-radius: 20px;
 }
 
-/* line 189, ../../compass/sass/screen.scss */
+/* line 206, ../../compass/sass/screen.scss */
 .row {
   overflow: hidden;
   *zoom: 1;
   margin-bottom: 1.5em;
 }
 
-/* line 194, ../../compass/sass/screen.scss */
+/* line 211, ../../compass/sass/screen.scss */
 .fighter {
   width: 23.729%;
   float: left;
   margin-right: 1.695%;
   display: inline;
 }
-/* line 197, ../../compass/sass/screen.scss */
+/* line 214, ../../compass/sass/screen.scss */
 .fighter:last-child {
   width: 23.729%;
   float: right;
@@ -289,7 +296,7 @@ form table td label {
   #margin-left: -1em;
   display: inline;
 }
-/* line 202, ../../compass/sass/screen.scss */
+/* line 219, ../../compass/sass/screen.scss */
 .fighter .card {
   text-align: center;
   padding: 1em;
@@ -300,24 +307,36 @@ form table td label {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 208, ../../compass/sass/screen.scss */
+/* line 225, ../../compass/sass/screen.scss */
 .fighter .card .name {
   font-weight: bold;
   margin-bottom: 0.75em;
 }
-/* line 213, ../../compass/sass/screen.scss */
+/* line 230, ../../compass/sass/screen.scss */
 .fighter .card .bio {
   color: #333;
   font-style: italic;
 }
-/* line 218, ../../compass/sass/screen.scss */
+/* line 235, ../../compass/sass/screen.scss */
+.fighter .card .pic {
+  width: 12em;
+  height: 12em;
+  line-height: 12em;
+  margin-bottom: 0.75em;
+}
+/* line 240, ../../compass/sass/screen.scss */
 .fighter .card .pic img {
-  max-width: 200px;
-  max-height: 100px;
+  vertical-align: middle;
+  max-width: 12em;
+  max-height: 12em;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   border-radius: 10px;
-  margin-bottom: 0.75em;
+}
+
+/* line 251, ../../compass/sass/screen.scss */
+#new-fighter {
+  margin-bottom: 1.5em;
 }

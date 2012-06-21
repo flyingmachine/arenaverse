@@ -10,7 +10,7 @@
            [java.awt.image BufferedImage]
            [org.apache.commons.io FilenameUtils]))
 
-(def image-versions [["card" 200]
+(def image-versions [["card" 192]
                      ["listing" 64]
                      ["battle" 464 638]])
 

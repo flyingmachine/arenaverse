@@ -20,21 +20,28 @@
   (fighter/create-fighter fighter)
   (redirect-to-arena fighter))
 
-(defpartial fighter-fields [{:keys [name bio]}]
+(defpartial fighter-img [version record]
+  [:img {:src  (fighter/amazon-image-path version record)}])
+
+(defpartial fighter-fields [record]
   [:tr
    [:td (label :name "Name")]
-   [:td (text-field :name name)]]
+   [:td (text-field :name (:name record))]]
   [:tr
    [:td (label :bio "Bio")]
-   [:td (text-field :bio bio)]]
+   [:td (text-field :bio (:bio record))]]
   [:tr
    [:td (label :file "Pic")]
-   [:td (file-upload :file)]])
+   [:td
+    (file-upload :file)
+    [:br]
+    (if (:_id record)
+      (fighter-img "card" record))]])
 
 (defpage-r edit {:keys [_id]}
   (let [fighter (mc/find-map-by-id "fighters" (ObjectId. _id))]
     (common/layout
-     [:h2 "Editing Fighter: " (:name fighter)]
+     [:h1 "Editing Fighter: " (:name fighter)]
      (form-to {:enctype "multipart/form-data"}
               [:post (url-for-r  :fighters/update {:_id _id})]
               [:table
@@ -54,7 +61,7 @@
     [:div.name
      [:a {:href (url-for-r :fighters/edit record)} (:name record)]]
     [:div.pic
-     [:img {:src  (fighter/amazon-image-path "original" record)}]]
+     (fighter-img "card" record)]
     [:div.bio (:bio record)]]])
 
 (defpartial thumbs [& [query-doc]]
