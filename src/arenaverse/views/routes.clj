@@ -5,12 +5,14 @@
   (throw (Exception. (apply format msg args))))
 
 (def routes '{:arenas/listing  "/arenas"
-              :arenas/show     "/arenas/:id"
-              :arenas/edit     "/arenas/:id/edit"
-              :arenas/update   [:post "/arenas/:id"]
+              :arenas/show     "/arenas/:_id"
+              :arenas/edit     "/arenas/:_id/edit"
+              :arenas/update   [:post "/arenas/:_id"]
               :arenas/shiny    "/arenas/new"
               :arenas/create   [:post "/arenas"]
-              :fighters/create [:post "/fighters"]})
+              :fighters/create [:post "/fighters"]
+              :fighters/edit   "/fighters/:_id/edit"
+              :fighters/update [:post "/fighters/:_id"]})
 
 
 ;; TODO handle symbols vs keywords?

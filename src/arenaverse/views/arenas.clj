@@ -25,7 +25,7 @@
 
 (defpartial arena-details [{:keys [name fight-text _id]}]
   [:tr
-   [:td [:a {:href (url-for-r :arenas/show {:id _id})} name]]
+   [:td [:a {:href (url-for-r :arenas/show {:_id _id})} name]]
    [:td fight-text]])
 
 (defpage-r listing []
@@ -34,21 +34,21 @@
    [:table
     (map arena-details (mc/find-maps "arenas"))]))
 
-(defpage-r edit {:keys [id]}
-  (let [arena (mc/find-map-by-id "arenas" (ObjectId. id))]
+(defpage-r edit {:keys [_id]}
+  (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
     (common/layout
-     [:h2 "Editing " (:name arena)]
+     [:h2 "Editing Arena: " (:name arena)]
      (form-to [:post (str "/arenas/" (:_id arena))]
             (arena-fields arena)
             [:p (submit-button "Update Arena")]))))
 
-(defpage-r show {:keys [id]}
-  (let [arena (mc/find-map-by-id "arenas" (ObjectId. id))]
+(defpage-r show {:keys [_id]}
+  (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
     (common/layout
      [:h2 (:name arena)]
      (if-let [msg (session/flash-get)]
        [:p.info msg])
-     [:p [:a {:href (url-for-r :arenas/edit {:id id})} "Edit"]]
+     [:p [:a {:href (url-for-r :arenas/edit arena)} "Edit"]]
      [:p (:fight-text arena)]
 
      [:div#fighters
@@ -58,26 +58,18 @@
       [:h3 "New Fighter"]
       (form-to {:enctype "multipart/form-data"}
                [:post (url-for-r :fighters/create)]
-               (hidden-field :arena-id id)
+               (hidden-field :arena-id _id)
                [:table
-                [:tr
-                 [:td (label :name "Name")]
-                 [:td (text-field :name)]]
-                [:tr
-                 [:td (label :bio "Bio")]
-                 [:td (text-field :bio)]]
-                [:tr
-                 [:td (label :file "Pic")]
-                 [:td (file-upload :file)]]
+                (fighters/fighter-fields {})
                 [:tr
                  [:td]
                  [:td (submit-button "Create Fighter")]]])])))
 
 ;; todo put name and fight-text in separate map?
-(defpage-r update {:keys [id name fight-text]}
-  (mc/update-by-id "arenas" (ObjectId. id) {:name name :fight-text fight-text})
+(defpage-r update {:keys [_id name fight-text]}
+  (mc/update-by-id "arenas" (ObjectId. _id) {:name name :fight-text fight-text})
   (session/flash-put! "Arena updated!")
-  (show {:id id}))
+  (show {:_id _id}))
 
 (defpage-r shiny {:as arena}
   (common/layout
