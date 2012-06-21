@@ -10,6 +10,10 @@
            [java.awt.image BufferedImage]
            [org.apache.commons.io FilenameUtils]))
 
+(def image-versions [["card" 200]
+                     ["listing" 64]
+                     ["battle" 464 638]])
+
 (defn image-relative-path [version {:keys [_id image-extension]}]
   (str "fighters/" _id "/" version "." image-extension))
 
@@ -52,7 +56,7 @@
       ;; save original
       (save-image (image-relative-path "original" img-fields) file content-type)
       (let [buff-img (ImageIO/read file)]
-        (doseq [[version & dim] [["thumb" 200] ["battle" 464 638]]]
+        (doseq [[version & dim] image-versions]
           (save-image (image-relative-path version img-fields)
                       (buffered-image->input-stream (apply resize (cons buff-img dim)) extension)
                       version))))))

@@ -108,14 +108,14 @@ h1 {
 }
 
 h2 {
-  @include adjust-font-size-to(40px);
+  @include adjust-font-size-to(40px,1);
   font-family: Bangers, $sans-family;
   @include trailer(1, 40px);
   color: $secondary-color;
 }
 
 h3 {
-  @include adjust-font-size-to(30px);
+  @include adjust-font-size-to(30px, 1);
   font-family: Bangers, $sans-family;
   @include trailer(1, 30px);
   color: $tertiary-color;
