@@ -3,11 +3,12 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
+@import "susy";
 @import "compass/reset";
 @import "compass/css3";
 @import "compass/typography/vertical_rhythm";
 @import "blueprint/colors";
-@import "susy";
+
 
 $total-columns  : 12;             // a 12-column grid
 $column-width   : 4em;            // each column is 4em wide
@@ -81,7 +82,10 @@ body {
   background: $tertiary-color url("/img/_ui/header-bg.png") repeat-x;
   
   header{
-    @include container;
+    _width: 61em;
+    max-width:61em;
+    margin: 0 auto;
+    padding:0;
     clear: both;
     text-align: center;
   }
@@ -108,7 +112,6 @@ h2 {
   font-family: Bangers, $sans-family;
   @include trailer(1, 40px);
   color: $secondary-color;
-  padding-left: 16px;
 }
 
 h3 {
@@ -116,12 +119,10 @@ h3 {
   font-family: Bangers, $sans-family;
   @include trailer(1, 30px);
   color: $tertiary-color;
-  padding-left: 16px;
 }
 
 p {
   @include trailer;
-  padding: 0 $gutter-width;
 }
 
 nav {
@@ -153,7 +154,6 @@ nav {
 }
 
 table {
-  margin: 0 1em;
   td {
     padding-right:1em;
   }
@@ -188,19 +188,19 @@ form {
 
 .row {
   @include clearfix;
+  @include trailer;
 }
 
 .fighter {
-  @include columns(3, 12);
+  @include span-columns(3, 12);
 
   &:last-child {
-    @include columns(3, 12);
+    @include span-columns(3 omega, 12);
     @include omega();
   }
   
   .card {
     text-align:center;
-    margin-left: 1em;
     padding: 1em;
     background: lighten($tertiary-color, 20%);
     @include border-radius(10px);
