@@ -4,7 +4,7 @@
             [arenaverse.lib.aws.s3 :as s3])
 
   (:import [org.bson.types ObjectId]
-           [org.imgscalr Scalr]
+           [org.imgscalr Scalr Scalr$Method Scalr$Mode]
            [javax.imageio ImageIO]
            [java.awt.image BufferedImageOp]
            [java.awt.image BufferedImage]
@@ -40,9 +40,12 @@
 
 (defn- resize
   ([image box]
-     (Scalr/resize image box (into-array BufferedImageOp [])))
-  ([image width height]
-     (Scalr/resize image width height (into-array BufferedImageOp []))))
+     (resize image box box))
+  ([image target-width target-height]
+     (let [width  (.getWidth image)
+           height (.getHeight image)
+           fit (if (> (/ target-width width) (/ target-height height)) Scalr$Mode/FIT_TO_HEIGHT Scalr$Mode/FIT_TO_WIDTH)]
+       (Scalr/resize image Scalr$Method/ULTRA_QUALITY fit target-width target-height (into-array BufferedImageOp [])))))
 
 (defn- buffered-image->input-stream [buffered-image extension]
   (let [os (java.io.ByteArrayOutputStream.)]

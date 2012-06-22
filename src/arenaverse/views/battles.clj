@@ -31,7 +31,10 @@
      [:p.fight-text (:fight-text arena)]
      (let [[left-f right-f] (random-fighters (.toString (:_id arena)))]
        [:div#battle
-        [:div.left
-         (:name left-f)]
-        [:div.right
-         (:name right-f)]]))))
+        [:div.fighter
+         [:div.name (:name left-f)]
+         [:div.pic (fighters/fighter-img "battle" left-f)]]
+        
+        [:div.fighter
+         [:div.name (:name right-f)]
+         [:div.pic (fighters/fighter-img "battle" right-f)]]]))))
