@@ -17,7 +17,7 @@
   (res/redirect (url-for-r :arenas/show {:_id (:arena-id fighter)})))
 
 (defpage-r create {:as fighter}
-  (fighter/create-fighter fighter)
+  (fighter/create fighter)
   (redirect-to-arena fighter))
 
 (defpartial fighter-img [version record]
@@ -48,12 +48,20 @@
                (fighter-fields fighter)
                [:tr
                 [:td]
-                [:td (submit-button "Update Fighter")]]]))))
+                [:td (submit-button "Update Fighter")]]])
+     (form-to [:post (url-for-r :fighters/destroy {:_id _id})]
+              (hidden-field :arena-id (:arena-id fighter))
+              (submit-button "Delete Fighter")))))
 
+;; TODO possibly do nested route so arena id is present
 (defpage-r update {:as fighter}
-  (let [record (fighter/update-fighter fighter)]    
+  (let [record (fighter/update fighter)]
     (session/flash-put! "Fighter updated!")
     (redirect-to-arena record)))
+
+(defpage-r destroy {:keys [_id arena-id]}
+  (fighter/destroy _id)
+  (redirect-to-arena {:arena-id arena-id}))
 
 (defpartial thumb [record]
   [:div.fighter

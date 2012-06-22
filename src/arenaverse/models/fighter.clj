@@ -10,9 +10,11 @@
            [java.awt.image BufferedImage]
            [org.apache.commons.io FilenameUtils]))
 
-(def image-versions [["card" 192]
-                     ["listing" 64]
-                     ["battle" 464 638]])
+(def *image-versions [["card" 192]
+                      ["listing" 64]
+                      ["battle" 464 638]])
+
+(def *collection "fighters")
 
 (defn image-relative-path [version {:keys [_id image-extension]}]
   (str "fighters/" _id "/" version "." image-extension))
@@ -61,24 +63,31 @@
                       (buffered-image->input-stream (apply resize (cons buff-img dim)) extension)
                       version))))))
 
+(defn delete-images [record]
+  (doseq [[vname] (conj *image-versions ["original"])]
+    (s3/delete-object config/*aws-credentials* "arenaverse-test" (image-relative-path vname record))))
 
 ;; (Scalr/resize (ImageIO/read (java.io.File. "/Users/daniel/Desktop/dachshunds.jpg")) (int 150))
 
-(defn create-fighter [attrs]
+(defn create [attrs]
   (let [object-id (ObjectId.)
         file (:file attrs)
         fields (merge (dissoc attrs :file) (image-fields object-id file))]
-    (mc/insert "fighters" fields)
+    (mc/insert *collection fields)
     (resize-and-save-image object-id file)
     fields))
 
-(defn update-fighter [attrs]
-  (let [mongo-id (ObjectId. (:_id attrs))
-        record (mc/find-map-by-id "fighters" mongo-id)
+(defn update [attrs]
+  (let [bson-id (ObjectId. (:_id attrs))
+        record (mc/find-map-by-id *collection bson-id)
         updated-fields (dissoc (merge record attrs) :_id :file)]
-    (mc/update-by-id "fighters" mongo-id updated-fields)
+    (mc/update-by-id *collection bson-id updated-fields)
     (resize-and-save-image (:_id attrs) (:file attrs))
     updated-fields))
 
+(defn destroy [_id]
+  (delete-images (mc/find-map-by-id *collection (ObjectId. _id)))
+  (mc/remove-by-id *collection (ObjectId. _id)))
+
 (defn all [& [query-doc]]
-  (mc/find-maps "fighters" query-doc))
+  (mc/find-maps *collection query-doc))

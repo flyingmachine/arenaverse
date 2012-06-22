@@ -4,15 +4,16 @@
 (defn- throwf [msg & args]
   (throw (Exception. (apply format msg args))))
 
-(def routes '{:arenas/listing  "/arenas"
-              :arenas/show     "/arenas/:_id"
-              :arenas/edit     "/arenas/:_id/edit"
-              :arenas/update   [:post "/arenas/:_id"]
-              :arenas/shiny    "/arenas/new"
-              :arenas/create   [:post "/arenas"]
-              :fighters/create [:post "/fighters"]
-              :fighters/edit   "/fighters/:_id/edit"
-              :fighters/update [:post "/fighters/:_id"]})
+(def routes '{:arenas/listing   "/arenas"
+              :arenas/show      "/arenas/:_id"
+              :arenas/edit      "/arenas/:_id/edit"
+              :arenas/update    [:post "/arenas/:_id"]
+              :arenas/shiny     "/arenas/new"
+              :arenas/create    [:post "/arenas"]
+              :fighters/create  [:post "/fighters"]
+              :fighters/edit    "/fighters/:_id/edit"
+              :fighters/update  [:post "/fighters/:_id"]
+              :fighters/destroy [:post "/fighters/:_id/destroy"]})
 
 
 ;; TODO handle symbols vs keywords?
