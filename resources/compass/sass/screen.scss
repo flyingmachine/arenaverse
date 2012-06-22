@@ -17,12 +17,19 @@ $grid-padding   : $gutter-width;  // grid-padding equal to gutters
 $base-font-size : 16px;
 $base-line-height : 24px;
 
-$primary-color: #2493C8; // Dark blue
-$secondary-color: #ffb57b; // orange
-$tertiary-color: #97d4ec; // light blue
-$background-color: #fee0ec; // pink
+
+// Colors
+$dark-blue: #2493C8;
+$medium-blue: #97d4ec;
+$light-blue: lighten($medium-blue, 20%);
+
+$orange: #ffb57b;
+$light-orange: lighten($orange, 20%);
+
 $dark-green: #88efa5;
 $light-green: #e2fbe9;
+
+$background-color: #fee0ec; // pink
 
 $sans-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -78,8 +85,8 @@ body {
 
 #banner{
   width: 100%;
-  border-top: 4px solid $primary-color;
-  background: $tertiary-color url("/img/_ui/header-bg.png") repeat-x;
+  border-top: 4px solid $dark-blue;
+  background: $medium-blue url("/img/_ui/header-bg.png") repeat-x;
   
   header{
     _width: 61em;
@@ -94,8 +101,8 @@ body {
 #arenaverse {
   @include container;
   background: white;
-  border-left:1em dashed $secondary-color;
-  border-right:1em dashed $secondary-color;
+  border-left:1em dashed $orange;
+  border-right:1em dashed $orange;
 }
 
 // h1 {
@@ -104,12 +111,12 @@ body {
 //   line-height:1em;
 //   @include leader(1, 96px, padding);
 //   @include single-text-shadow(black, 2px, 2px, 2px);
-//   color: $primary-color;
+//   color: $dark-blue;
 // }
 
 a {
   text-decoration:none;
-  color: $primary-color;
+  color: $dark-blue;
 }
 
 h1 {
@@ -117,16 +124,16 @@ h1 {
   font-family: Bangers, $sans-family;
   letter-spacing:1px;
   @include trailer(1, 40px);
-  color: $secondary-color;
-  @include single-text-shadow(lighten($secondary-color, 20%), 3px, 3px, 0);
+  color: $orange;
+  @include single-text-shadow($light-orange, 3px, 3px, 0);
 }
 
 h2 {
   @include adjust-font-size-to(30px, 1);
   font-family: Bangers, $sans-family;
   @include trailer(1, 30px);
-  color: $primary-color;
-  @include single-text-shadow($tertiary-color, 2px, 2px, 0);
+  color: $dark-blue;
+  @include single-text-shadow($medium-blue, 2px, 2px, 0);
   letter-spacing:3px;
 }
 
@@ -138,7 +145,7 @@ nav {
   margin-top: .5em;
   @include clearfix;
   @include border-radius(10px 10px 0 0);
-  background: #e2fbe9;
+  background: $light-green;
 
   ul {
     list-style:none;
@@ -152,7 +159,7 @@ nav {
         width:auto;
 
         &:hover {
-          background: $secondary-color;
+          background: $orange;
           color:white;
         }
       }
@@ -164,7 +171,7 @@ nav {
   @include padding-leader(1);
   @include padding-trailer(1);
   background:white;
-  border-bottom: 4px solid $primary-color;
+  border-bottom: 4px solid $dark-blue;
 }
 
 table {
@@ -201,7 +208,7 @@ form {
   @include padding-trailer(.5);
   padding-left:1em;
   padding-right:1em;
-  background: $tertiary-color;
+  background: $light-blue;
   @include border-radius(20px);
 }
 
@@ -221,7 +228,7 @@ form {
   .card {
     text-align:center;
     padding: 1em;
-    background: lighten($tertiary-color, 20%);
+    background: $light-blue;
     @include border-radius(10px);
     
     .name {
