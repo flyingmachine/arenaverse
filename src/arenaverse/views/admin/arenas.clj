@@ -2,7 +2,9 @@
   (:require [arenaverse.views.common :as common]
             [arenaverse.views.admin.fighters :as fighters]
             [arenaverse.models.fighter :as fighter]
+            [arenaverse.models.arena :as arena]
             [noir.session :as session]
+            [noir.response :as res]
             [monger.collection :as mc])
   
   (:use noir.core
@@ -13,13 +15,12 @@
   (:import [org.bson.types ObjectId]))
 
 (defpartial arena-fields [{:keys [name fight-text]}]
-  [:table
-   [:tr
+  [:tr
     [:td (label "name" "Name")]
     [:td (text-field "name" name)]]
    [:tr
     [:td (label "fight-text" "Fight Text")]
-    [:td (text-field "fight-text" fight-text)]]])
+    [:td (text-field "fight-text" fight-text)]])
 
 (defpartial arena-details [{:keys [name fight-text _id]}]
   [:tr
@@ -36,16 +37,24 @@
   (common/layout
    [:h1 "Create an Arena"]
    (form-to [:post (url-for-r :admin/arenas/create)]
-            (arena-fields arena)
-            [:p (submit-button "Create Arena")])))
+            [:table
+             (arena-fields arena)
+             [:tr [:td] [:td (submit-button "Create Arena")]]])))
 
 (defpage-r edit {:keys [_id]}
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
     (common/layout
      [:h1 "Editing Arena: " (:name arena)]
      (form-to [:post (str "/arenas/" (:_id arena))]
-            (arena-fields arena)
-            [:p (submit-button "Update Arena")]))))
+              [:table
+               (arena-fields arena)
+               [:tr [:td] [:td (submit-button "Update Arena")]]])
+     (form-to [:post (url-for-r :admin/arenas/destroy {:_id _id})]
+              (submit-button "Delete Arena")))))
+
+(defpage-r destroy {:keys [_id]}
+  (arena/destroy _id)
+  (res/redirect (url-for-r :admin/arenas/listing)))
 
 (defpage-r show {:keys [_id]}
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]

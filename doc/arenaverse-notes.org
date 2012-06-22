@@ -3,3 +3,7 @@
 https://github.com/mmcgrana/weld/blob/14a26bf8105f768ede71dfe1724b8d1ea60283fa/src/weld/request.clj#L97
 ** change "put!" api to include name
 * How to create thumbnails?
+* Arenas
+** Which philosopher would you..
+** Which deity would you rather go bowling with?
+** Which creature would win in a fight?

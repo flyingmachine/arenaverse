@@ -7,14 +7,18 @@
 (def routes '{;; admin
               :admin/arenas/listing   "/admin"
               :admin/arenas/shiny     "/admin/arenas/new"
-              :admin/arenas/show      [:get ["/admin/arenas/:_id" :_id #"((?!new).)*"]]
+              :admin/arenas/show      [:get ["/admin/arenas/:_id" :_id #"[^/]*"]]
               :admin/arenas/edit      "/admin/arenas/:_id/edit"
               :admin/arenas/update    [:post "/admin/arenas/:_id"]
               :admin/arenas/create    [:post "/admin/arenas"]
+              :admin/arenas/destroy   [:post "/admin/arenas/:_id/destroy"]
+              
               :admin/fighters/create  [:post "/admin/fighters"]
               :admin/fighters/edit    "/admin/fighters/:_id/edit"
               :admin/fighters/update  [:post "/admin/fighters/:_id"]
-              :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]})
+              :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]
+
+              :battles/listing        "/"})
 
 
 ;; TODO handle symbols vs keywords?
