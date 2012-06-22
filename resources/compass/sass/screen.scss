@@ -120,10 +120,11 @@ a {
 }
 
 h1 {
-  @include adjust-font-size-to(40px,1);
+  @include adjust-font-size-to(50px,1);
   font-family: Bangers, $sans-family;
-  letter-spacing:1px;
-  @include trailer(1, 40px);
+  letter-spacing: 1px;
+  text-align: center;
+  @include trailer(1, 50px);
   color: $orange;
   @include single-text-shadow($light-orange, 3px, 3px, 0);
 }
@@ -258,5 +259,14 @@ form {
 
 
 #new-fighter {
+  @include trailer(1);
+}
+
+.fight-text {
+  text-align: center;
+  font-family: "Nothing You Could Do", $sans-family;
+  color: $dark-blue;
+  @include adjust-font-size-to(30px, 1);
+  @include leader(1);
   @include trailer(1);
 }

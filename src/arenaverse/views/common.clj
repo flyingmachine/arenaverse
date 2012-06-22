@@ -8,8 +8,8 @@
   (html5
    [:head
     [:title "arenaverse"]
+    [:link {:href "http://fonts.googleapis.com/css?family=Bangers|Nothing+You+Could+Do" :rel "stylesheet" :type "text/css"}]
     (include-css
-     "http://fonts.googleapis.com/css?family=Bangers"
      "/stylesheets/screen/ie.css"
      "/stylesheets/screen.css")]
    [:body
@@ -19,8 +19,7 @@
       [:nav
        [:ul
         [:li [:a {:href (url-for-r :admin/arenas/listing)} "Arenas"]]        
-        [:li [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]
-        [:li [:a {:href "#"} "Another Link"]]]]]]
+        [:li [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]]]]]
     [:div#arenaverse
      
      [:div#main

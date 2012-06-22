@@ -71,10 +71,13 @@
 
 (defn create [attrs]
   (let [object-id (ObjectId.)
-        file (:file attrs)
-        fields (merge (dissoc attrs :file) (image-fields object-id file))]
+        file-upload (:file attrs)
+        fields (merge
+                (dissoc attrs :file)
+                (image-fields object-id (FilenameUtils/getExtension (:filename file-upload))))]
+    (println fields)
     (mc/insert *collection fields)
-    (resize-and-save-image object-id file)
+    (resize-and-save-image object-id file-upload)
     fields))
 
 (defn update [attrs]
