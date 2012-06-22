@@ -4,16 +4,17 @@
 (defn- throwf [msg & args]
   (throw (Exception. (apply format msg args))))
 
-(def routes '{:arenas/listing   "/arenas"
-              :arenas/shiny     "/arenas/new"
-              :arenas/show      [:get "/arenas/:_id" :_id #"\d"]
-              :arenas/edit      "/arenas/:_id/edit"
-              :arenas/update    [:post "/arenas/:_id"]
-              :arenas/create    [:post "/arenas"]
-              :fighters/create  [:post "/fighters"]
-              :fighters/edit    "/fighters/:_id/edit"
-              :fighters/update  [:post "/fighters/:_id"]
-              :fighters/destroy [:post "/fighters/:_id/destroy"]})
+(def routes '{;; admin
+              :admin/arenas/listing   "/admin"
+              :admin/arenas/shiny     "/admin/arenas/new"
+              :admin/arenas/show      [:get ["/admin/arenas/:_id" :_id #"((?!new).)*"]]
+              :admin/arenas/edit      "/admin/arenas/:_id/edit"
+              :admin/arenas/update    [:post "/admin/arenas/:_id"]
+              :admin/arenas/create    [:post "/admin/arenas"]
+              :admin/fighters/create  [:post "/admin/fighters"]
+              :admin/fighters/edit    "/admin/fighters/:_id/edit"
+              :admin/fighters/update  [:post "/admin/fighters/:_id"]
+              :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]})
 
 
 ;; TODO handle symbols vs keywords?
@@ -31,6 +32,15 @@
                  (assert (keyword? k))
                  (string/replace path (str k) (str v))) route route-args))))
 
+(defn- view-ns [namespace]
+  ((re-find #"views\.(.*)$" (str (ns-name namespace))) 1))
+
+(defn- dashed [namespace]
+  (string/replace namespace "." "-")) ()
+
+(defn- slashed [namespace]
+  (string/replace namespace "." "/"))
+
 (defmacro defpage-r [route & body]
-  (let [ns-suffix# (re-find #"[^.]*$" (str (ns-name *ns*)))]
-    `(noir.core/defpage ~(symbol (str ns-suffix# "-" route)) ~((keyword (str ns-suffix# "/" route)) routes) ~@body)))
+  (let [ns-suffix# (view-ns *ns*)]
+    `(noir.core/defpage ~(symbol (str (dashed ns-suffix#) "-" route)) ~((keyword (str (slashed ns-suffix#) "/" route)) routes) ~@body)))

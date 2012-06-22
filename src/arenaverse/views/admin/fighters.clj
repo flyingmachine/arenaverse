@@ -1,4 +1,4 @@
-(ns arenaverse.views.fighters
+(ns arenaverse.views.admin.fighters
   (:require [arenaverse.views.common :as common]
             [arenaverse.models.fighter :as fighter]
             [noir.response :as res]
@@ -14,7 +14,7 @@
   (:import [org.bson.types ObjectId]))
 
 (defn redirect-to-arena [fighter]
-  (res/redirect (url-for-r :arenas/show {:_id (:arena-id fighter)})))
+  (res/redirect (url-for-r :admin/arenas/show {:_id (:arena-id fighter)})))
 
 (defpage-r create {:as fighter}
   (fighter/create fighter)
@@ -43,13 +43,13 @@
     (common/layout
      [:h1 "Editing Fighter: " (:name fighter)]
      (form-to {:enctype "multipart/form-data"}
-              [:post (url-for-r  :fighters/update {:_id _id})]
+              [:post (url-for-r  :admin/fighters/update {:_id _id})]
               [:table
                (fighter-fields fighter)
                [:tr
                 [:td]
                 [:td (submit-button "Update Fighter")]]])
-     (form-to [:post (url-for-r :fighters/destroy {:_id _id})]
+     (form-to [:post (url-for-r :admin/fighters/destroy {:_id _id})]
               (hidden-field :arena-id (:arena-id fighter))
               (submit-button "Delete Fighter")))))
 
@@ -67,7 +67,7 @@
   [:div.fighter
    [:div.card
     [:div.name
-     [:a {:href (url-for-r :fighters/edit record)} (:name record)]]
+     [:a {:href (url-for-r :admin/fighters/edit record)} (:name record)]]
     [:div.pic
      (fighter-img "card" record)]
     [:div.bio (:bio record)]]])

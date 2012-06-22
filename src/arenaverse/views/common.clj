@@ -18,8 +18,8 @@
       [:img {:src "/img/_ui/logo.png"}]
       [:nav
        [:ul
-        [:li [:a {:href (url-for-r :arenas/listing)} "Arenas"]]        
-        [:li [:a {:href (url-for-r :arenas/shiny)} "New Arena"]]
+        [:li [:a {:href (url-for-r :admin/arenas/listing)} "Arenas"]]        
+        [:li [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]
         [:li [:a {:href "#"} "Another Link"]]]]]]
     [:div#arenaverse
      

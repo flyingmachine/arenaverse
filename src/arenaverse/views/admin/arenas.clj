@@ -1,6 +1,6 @@
-(ns arenaverse.views.arenas
+(ns arenaverse.views.admin.arenas
   (:require [arenaverse.views.common :as common]
-            [arenaverse.views.fighters :as fighters]
+            [arenaverse.views.admin.fighters :as fighters]
             [arenaverse.models.fighter :as fighter]
             [noir.session :as session]
             [monger.collection :as mc])
@@ -11,8 +11,6 @@
         arenaverse.views.routes)
 
   (:import [org.bson.types ObjectId]))
-
-(declare show)
 
 (defpartial arena-fields [{:keys [name fight-text]}]
   [:table
@@ -25,7 +23,7 @@
 
 (defpartial arena-details [{:keys [name fight-text _id]}]
   [:tr
-   [:td [:a {:href (url-for-r :arenas/show {:_id _id})} name]]
+   [:td [:a {:href (url-for-r :admin/arenas/show {:_id _id})} name]]
    [:td fight-text]])
 
 (defpage-r listing []
@@ -37,7 +35,7 @@
 (defpage-r shiny {:as arena}
   (common/layout
    [:h1 "Create an Arena"]
-   (form-to [:post "/arenas"]
+   (form-to [:post (url-for-r :admin/arenas/create)]
             (arena-fields arena)
             [:p (submit-button "Create Arena")])))
 
@@ -55,13 +53,13 @@
      [:h1 (:name arena)]
      (if-let [msg (session/flash-get)]
        [:p.info msg])
-     [:p [:a {:href (url-for-r :arenas/edit arena)} "Edit"]]
+     [:p [:a {:href (url-for-r :admin/arenas/edit arena)} "Edit"]]
      [:p (:fight-text arena)]
 
      [:div#new-fighter
       [:h2 "New Fighter"]
       (form-to {:enctype "multipart/form-data"}
-               [:post (url-for-r :fighters/create)]
+               [:post (url-for-r :admin/fighters/create)]
                (hidden-field :arena-id _id)
                [:table
                 (fighters/fighter-fields {})
@@ -77,7 +75,7 @@
 (defpage-r update {:keys [_id name fight-text]}
   (mc/update-by-id "arenas" (ObjectId. _id) {:name name :fight-text fight-text})
   (session/flash-put! "Arena updated!")
-  (arenas-show {:_id _id}))
+  (admin-arenas-show {:_id _id}))
 
 (defpage-r create {:as arena}
   (mc/insert "arenas" arena)
