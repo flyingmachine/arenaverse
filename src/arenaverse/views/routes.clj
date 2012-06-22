@@ -5,10 +5,10 @@
   (throw (Exception. (apply format msg args))))
 
 (def routes '{:arenas/listing   "/arenas"
-              :arenas/show      "/arenas/:_id"
+              :arenas/shiny     "/arenas/new"
+              :arenas/show      [:get "/arenas/:_id" :_id #"\d"]
               :arenas/edit      "/arenas/:_id/edit"
               :arenas/update    [:post "/arenas/:_id"]
-              :arenas/shiny     "/arenas/new"
               :arenas/create    [:post "/arenas"]
               :fighters/create  [:post "/fighters"]
               :fighters/edit    "/fighters/:_id/edit"
@@ -21,7 +21,7 @@
   ([route-name] (url-for-r route-name {}))
   ([route-name route-args]     
      (let [entry (route-name routes)
-           route (or (last (flatten entry)) entry)
+           route  (or (first (filter string? (flatten entry))) entry)
            route-arg-names (noir.core/route-arguments route)]
        (when (nil? route)
          (throwf "missing route for %s" route-name))

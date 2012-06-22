@@ -58,7 +58,7 @@
       ;; save original
       (save-image (image-relative-path "original" img-fields) file content-type)
       (let [buff-img (ImageIO/read file)]
-        (doseq [[version & dim] image-versions]
+        (doseq [[version & dim] *image-versions]
           (save-image (image-relative-path version img-fields)
                       (buffered-image->input-stream (apply resize (cons buff-img dim)) extension)
                       version))))))

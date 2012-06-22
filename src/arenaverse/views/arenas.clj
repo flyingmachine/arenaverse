@@ -34,6 +34,13 @@
    [:table
     (map arena-details (mc/find-maps "arenas"))]))
 
+(defpage-r shiny {:as arena}
+  (common/layout
+   [:h1 "Create an Arena"]
+   (form-to [:post "/arenas"]
+            (arena-fields arena)
+            [:p (submit-button "Create Arena")])))
+
 (defpage-r edit {:keys [_id]}
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
     (common/layout
@@ -71,13 +78,6 @@
   (mc/update-by-id "arenas" (ObjectId. _id) {:name name :fight-text fight-text})
   (session/flash-put! "Arena updated!")
   (arenas-show {:_id _id}))
-
-(defpage-r shiny {:as arena}
-  (common/layout
-   [:h1 "Create an Arena"]
-   (form-to [:post "/arenas"]
-            (arena-fields arena)
-            [:p (submit-button "Create Arena")])))
 
 (defpage-r create {:as arena}
   (mc/insert "arenas" arena)
