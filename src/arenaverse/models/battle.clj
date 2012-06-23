@@ -2,6 +2,8 @@
   (:require [arenaverse.config :as config]
             [monger.collection :as mc])
 
+  (:use monger.operators)
+
   (:import [org.bson.types ObjectId]))
 
 (def *collection "battles")
@@ -14,3 +16,15 @@
 
 (defn one []
   (mc/find-one-as-map *collection {}))
+
+(defn record-winner [opponents winner]
+  (if (some #(= winner %) opponents)
+    (let [loser (some #(and (not= winner %) %) opponents)]
+      (mc/update *collection
+
+                 {(first opponents)  {$exists true}
+                  (second opponents) {$exists true}}
+                 
+                 {$inc {winner 1 loser 0}}
+
+                 :upsert true))))

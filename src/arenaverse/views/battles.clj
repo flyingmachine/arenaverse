@@ -24,17 +24,25 @@
         [(nth fighters left) (nth fighters right)])
       [])))
 
+(defpartial card [record]
+  [:div.name (:name record)]
+  [:div.pic
+   [:a {:href (url-for-r :battles/winner {:_id (fighter/idstr record)})}
+    (fighters/fighter-img "battle" record)]])
+
 (defpage-r listing []
-  (let [arena (arena/one)]
+  (let [arena (arena/one)
+        [left-f right-f] (random-fighters (arena/idstr arena))]
+    (session/put! :_ids (map arena/idstr [left-f right-f]))
     (common/layout
      [:h1 (:name arena)]
      [:div.fight-text (:fight-text arena)]
-     (let [[left-f right-f] (random-fighters (.toString (:_id arena)))]
-       [:div#battle
-        [:div.fighter.a
-         [:div.name (:name left-f)]
-         [:div.pic (fighters/fighter-img "battle" left-f)]]
-        
-        [:div.fighter.b
-         [:div.name (:name right-f)]
-         [:div.pic (fighters/fighter-img "battle" right-f)]]]))))
+     [:div#battle
+      [:div.fighter.a
+       (card left-f)]
+      [:div.fighter.b
+       (card right-f)]])))
+
+(defpage-r winner {:keys [_id]}
+  (battle/record-winner (session/get :_ids) _id)
+  (battles-listing nil))

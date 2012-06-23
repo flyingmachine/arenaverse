@@ -214,7 +214,11 @@ form {
     .card {
       text-align:center;
       padding: 1em;
-      background: $light-blue url("/img/_ui/battle-bg.png");
+      background: $light-blue url("/img/_ui/battle-bg-card.png");
+
+      &:hover {
+        background: $light-orange url("/img/_ui/battle-bg-card.png");
+      }
       
       .name {
         font-weight: bold;
@@ -277,6 +281,10 @@ form {
     @include padding-trailer;
     background: $light-blue;
     
+    &:hover {
+      background: $light-orange;
+    }
+    
     .pic {
       text-align:center;
       @include trailer;
@@ -288,7 +296,7 @@ form {
       letter-spacing: 1px;
       color: $dark-blue;
       text-align: center;
-      background: white url("/img/_ui/battle-bg.png")  repeat-x left bottom;
+      background: url("/img/_ui/battle-bg.png")  repeat-x left top;
       @include padding-leader(1, 30px);
       @include padding-trailer(1, 30px);
     }

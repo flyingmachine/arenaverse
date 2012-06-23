@@ -283,26 +283,30 @@ form table td input[type=submit] {
 #fighters .fighter .card {
   text-align: center;
   padding: 1em;
-  background: #edf8fc url("/img/_ui/battle-bg.png");
+  background: #edf8fc url("/img/_ui/battle-bg-card.png");
 }
 /* line 219, ../../compass/sass/screen.scss */
+#fighters .fighter .card:hover {
+  background: #ffeee1 url("/img/_ui/battle-bg-card.png");
+}
+/* line 223, ../../compass/sass/screen.scss */
 #fighters .fighter .card .name {
   font-weight: bold;
   margin-bottom: 0.75em;
 }
-/* line 224, ../../compass/sass/screen.scss */
+/* line 228, ../../compass/sass/screen.scss */
 #fighters .fighter .card .bio {
   color: #333;
   font-style: italic;
 }
-/* line 229, ../../compass/sass/screen.scss */
+/* line 233, ../../compass/sass/screen.scss */
 #fighters .fighter .card .pic {
   width: 12em;
   height: 12em;
   line-height: 12em;
   margin-bottom: 0.75em;
 }
-/* line 234, ../../compass/sass/screen.scss */
+/* line 238, ../../compass/sass/screen.scss */
 #fighters .fighter .card .pic img {
   vertical-align: middle;
   max-width: 12em;
@@ -314,7 +318,7 @@ form table td input[type=submit] {
   border-radius: 10px;
 }
 
-/* line 245, ../../compass/sass/screen.scss */
+/* line 249, ../../compass/sass/screen.scss */
 .info {
   padding-top: 0.75em;
   padding-bottom: 0.75em;
@@ -328,19 +332,19 @@ form table td input[type=submit] {
   border-radius: 20px;
 }
 
-/* line 254, ../../compass/sass/screen.scss */
+/* line 258, ../../compass/sass/screen.scss */
 .row {
   overflow: hidden;
   *zoom: 1;
   margin-bottom: 1.5em;
 }
 
-/* line 260, ../../compass/sass/screen.scss */
+/* line 264, ../../compass/sass/screen.scss */
 #new-fighter {
   margin-bottom: 1.5em;
 }
 
-/* line 264, ../../compass/sass/screen.scss */
+/* line 268, ../../compass/sass/screen.scss */
 .fight-text {
   text-align: center;
   font-family: "Nothing You Could Do", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -350,22 +354,26 @@ form table td input[type=submit] {
   margin-top: 0.8em;
 }
 
-/* line 272, ../../compass/sass/screen.scss */
+/* line 276, ../../compass/sass/screen.scss */
 #battle {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 276, ../../compass/sass/screen.scss */
+/* line 280, ../../compass/sass/screen.scss */
 #battle .fighter {
   padding-bottom: 1.5em;
   background: #edf8fc;
 }
-/* line 280, ../../compass/sass/screen.scss */
+/* line 284, ../../compass/sass/screen.scss */
+#battle .fighter:hover {
+  background: #ffeee1;
+}
+/* line 288, ../../compass/sass/screen.scss */
 #battle .fighter .pic {
   text-align: center;
   margin-bottom: 1.5em;
 }
-/* line 285, ../../compass/sass/screen.scss */
+/* line 293, ../../compass/sass/screen.scss */
 #battle .fighter .name {
   font-size: 1.875em;
   line-height: 0.8em;
@@ -373,18 +381,18 @@ form table td input[type=submit] {
   letter-spacing: 1px;
   color: #2493c8;
   text-align: center;
-  background: white url("/img/_ui/battle-bg.png") repeat-x left bottom;
+  background: url("/img/_ui/battle-bg.png") repeat-x left top;
   padding-top: 0.8em;
   padding-bottom: 0.8em;
 }
-/* line 296, ../../compass/sass/screen.scss */
+/* line 304, ../../compass/sass/screen.scss */
 #battle .fighter.a {
   width: 49.153%;
   float: left;
   margin-right: 1.695%;
   display: inline;
 }
-/* line 299, ../../compass/sass/screen.scss */
+/* line 307, ../../compass/sass/screen.scss */
 #battle .fighter.b {
   width: 49.153%;
   float: right;

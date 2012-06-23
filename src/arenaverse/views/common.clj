@@ -15,7 +15,8 @@
    [:body
     [:div#banner
      [:header
-      [:img {:src "/img/_ui/logo.png"}]
+      [:a {:href "/"}
+       [:img {:src "/img/_ui/logo.png"}]]
       [:nav
        [:ul
         [:li [:a {:href (url-for-r :admin/arenas/listing)} "Arenas"]]        

@@ -18,7 +18,8 @@
               :admin/fighters/update  [:post "/admin/fighters/:_id"]
               :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]
 
-              :battles/listing        "/"})
+              :battles/listing        "/"
+              :battles/winner         "/winner/:_id"})
 
 
 ;; TODO handle symbols vs keywords?

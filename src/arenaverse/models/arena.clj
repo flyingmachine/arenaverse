@@ -14,3 +14,6 @@
 
 (defn one []
   (mc/find-one-as-map *collection {}))
+
+(defn idstr [record]
+  (.toString (:_id record)))

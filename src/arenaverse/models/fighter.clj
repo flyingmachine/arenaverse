@@ -97,3 +97,6 @@
 
 (defn all [& [query-doc]]
   (mc/find-maps *collection query-doc))
+
+(defn idstr [record]
+  (.toString (:_id record)))
