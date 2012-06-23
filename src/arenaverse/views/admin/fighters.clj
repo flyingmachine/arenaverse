@@ -76,7 +76,7 @@
      [:a {:href (url-for-r :admin/fighters/edit record)} (:name record)]]
     [:div.pic
      (fighter-img "card" record)]
-    [:div.caption (:caption record)]]])
+    [:div.team (:team record)]]])
 
 (defpartial thumbs [& [query-doc]]
   (map (fn thumb-row [records]

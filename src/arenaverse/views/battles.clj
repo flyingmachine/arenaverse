@@ -15,13 +15,24 @@
   (:import [org.bson.types ObjectId]))
 
 ;; TODO how to test this?
+(defn random-teamless-fighters [fighters]
+  (let [randomer #(rand-int (count fighters))
+        left (randomer)
+        right (first (filter #(not= % left) (repeatedly randomer)))]
+    [(nth fighters left) (nth fighters right)]))
+
+(defn random-team-fighters [fighters]
+  (let [teams (vals (group-by :team fighters))
+        left (rand-int (count (first teams)))
+        right (rand-int (count (second teams)))]
+    [(nth (first teams) left) (nth (second teams) right)]))
+
 (defn random-fighters [arena-id]
   (let [fighters (fighter/all {:arena-id arena-id})]
     (if (> (count fighters) 1)
-      (let [randomer #(rand-int (count fighters))
-            left (randomer)
-            right (first (filter #(not= % left) (repeatedly randomer)))]
-        [(nth fighters left) (nth fighters right)])
+      (if (some #(not (empty? (:team %))) fighters)
+        (random-team-fighters fighters)
+        (random-teamless-fighters fighters))
       [])))
 
 (defpartial card [record]
