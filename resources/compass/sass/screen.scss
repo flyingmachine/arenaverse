@@ -202,6 +202,45 @@ form {
 
 #fighters {
   @include clearfix;
+
+  .fighter {
+    @include span-columns(3, 12);
+
+    &:last-child {
+      @include span-columns(3 omega, 12);
+      @include omega();
+    }
+    
+    .card {
+      text-align:center;
+      padding: 1em;
+      background: $light-blue;
+      @include border-radius(10px);
+      
+      .name {
+        font-weight: bold;
+        @include trailer(.5);
+      }
+
+      .bio {
+        color: #333;
+        font-style:italic;
+      }
+      
+      .pic {
+        width:12em;
+        height:12em;
+        line-height:12em;
+        @include trailer(.5);
+        img {
+          vertical-align:middle;
+          max-width:12em;
+          max-height:12em;
+          @include border-radius(10px);
+        }
+      }
+    }
+  }
 }
 
 .info {
@@ -218,45 +257,6 @@ form {
   @include trailer;
 }
 
-.fighter {
-  @include span-columns(3, 12);
-
-  &:last-child {
-    @include span-columns(3 omega, 12);
-    @include omega();
-  }
-  
-  .card {
-    text-align:center;
-    padding: 1em;
-    background: $light-blue;
-    @include border-radius(10px);
-    
-    .name {
-      font-weight: bold;
-      @include trailer(.5);
-    }
-
-    .bio {
-      color: #333;
-      font-style:italic;
-    }
-    
-    .pic {
-      width:12em;
-      height:12em;
-      line-height:12em;
-      @include trailer(.5);
-      img {
-        vertical-align:middle;
-        max-width:12em;
-        max-height:12em;
-        @include border-radius(10px);
-      }
-    }
-  }
-}
-
 
 #new-fighter {
   @include trailer(1);
@@ -267,10 +267,38 @@ form {
   font-family: "Nothing You Could Do", $sans-family;
   color: $dark-blue;
   @include adjust-font-size-to(30px, 1);
-  @include leader(1);
-  @include trailer(1);
+  @include leader(1, 30px);
 }
 
 #battle {
+  @include clearfix;
+
   
+  .fighter {
+    @include padding-trailer;
+    background: $light-blue;
+    
+    .pic {
+      text-align:center;
+      @include trailer;
+    }
+
+    .name {
+      @include adjust-font-size-to (30px, 1);
+      font-family: Bangers, $sans-family;
+      letter-spacing: 1px;
+      color: $dark-blue;
+      text-align: center;
+      background: white url("/img/_ui/battle-bg.png")  repeat-x left bottom;
+      @include padding-leader(1, 30px);
+      @include padding-trailer(1, 30px);
+    }
+    
+    &.a {
+      @include span-columns(6, 12);
+    }
+    &.b {
+      @include span-columns(6 omega, 12);
+    }
+  }
 }

@@ -12,7 +12,7 @@
 
 (def *image-versions [["card" 192]
                       ["listing" 64]
-                      ["battle" 464 638]])
+                      ["battle" 432 638]])
 
 (def *collection "fighters")
 

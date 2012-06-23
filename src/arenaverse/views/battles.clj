@@ -28,13 +28,13 @@
   (let [arena (arena/one)]
     (common/layout
      [:h1 (:name arena)]
-     [:p.fight-text (:fight-text arena)]
+     [:div.fight-text (:fight-text arena)]
      (let [[left-f right-f] (random-fighters (.toString (:_id arena)))]
        [:div#battle
-        [:div.fighter
+        [:div.fighter.a
          [:div.name (:name left-f)]
          [:div.pic (fighters/fighter-img "battle" left-f)]]
         
-        [:div.fighter
+        [:div.fighter.b
          [:div.name (:name right-f)]
          [:div.pic (fighters/fighter-img "battle" right-f)]]]))))
