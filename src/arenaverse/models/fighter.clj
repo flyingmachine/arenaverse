@@ -27,7 +27,7 @@
 
 (defn- image-fields [object-id image-extension]
   {:_id object-id
-   :image-extension image-extension})
+   :image-extension (clojure.string/replace image-extension "jpeg" "jpg")})
 
 (defn- save-image [path file content-type]
   (println path)

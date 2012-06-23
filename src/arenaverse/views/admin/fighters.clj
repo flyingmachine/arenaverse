@@ -28,8 +28,14 @@
    [:td (label :name "Name")]
    [:td (text-field :name (:name record))]]
   [:tr
+   [:td (label :caption "Caption")]
+   [:td (text-field :caption (:caption record))]]
+  [:tr
+   [:td (label :bio "Team")]
+   [:td (text-field :bio (:team record))]]
+  [:tr
    [:td (label :bio "Bio")]
-   [:td (text-field :bio (:bio record))]]
+   [:td (text-area :bio (:bio record))]]
   [:tr
    [:td (label :file "Pic")]
    [:td
@@ -70,7 +76,7 @@
      [:a {:href (url-for-r :admin/fighters/edit record)} (:name record)]]
     [:div.pic
      (fighter-img "card" record)]
-    [:div.bio (:bio record)]]])
+    [:div.caption (:caption record)]]])
 
 (defpartial thumbs [& [query-doc]]
   (map (fn thumb-row [records]
