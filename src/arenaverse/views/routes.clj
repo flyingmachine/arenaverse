@@ -7,7 +7,7 @@
 (def routes '{;; admin
               :admin/arenas/listing   "/admin"
               :admin/arenas/shiny     "/admin/arenas/new"
-              :admin/arenas/show      [:get ["/admin/arenas/:_id" :_id #"[^/]*"]]
+              :admin/arenas/show      [:get ["/admin/arenas/:_id" :_id #"((?!new)[^/])*"]]
               :admin/arenas/edit      "/admin/arenas/:_id/edit"
               :admin/arenas/update    [:post "/admin/arenas/:_id"]
               :admin/arenas/create    [:post "/admin/arenas"]

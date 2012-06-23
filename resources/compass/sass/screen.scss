@@ -214,8 +214,7 @@ form {
     .card {
       text-align:center;
       padding: 1em;
-      background: $light-blue;
-      @include border-radius(10px);
+      background: $light-blue url("/img/_ui/battle-bg.png");
       
       .name {
         font-weight: bold;
