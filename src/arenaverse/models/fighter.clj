@@ -80,15 +80,18 @@
                 (image-fields object-id (FilenameUtils/getExtension (:filename file-upload))))]
     (println fields)
     (mc/insert *collection fields)
-    (resize-and-save-image object-id file-upload)
+    (future (resize-and-save-image object-id file-upload))
     fields))
 
 (defn update [attrs]
-  (let [bson-id (ObjectId. (:_id attrs))
+  (let [_id (:_id attrs)
+        bson-id (ObjectId. _id)
         record (mc/find-map-by-id *collection bson-id)
-        updated-fields (dissoc (merge record attrs) :_id :file)]
+        updated-fields (dissoc (merge record
+                                      attrs
+                                      (image-fields _id (FilenameUtils/getExtension (:filename (:file attrs))))) :_id :file)]
     (mc/update-by-id *collection bson-id updated-fields)
-    (resize-and-save-image (:_id attrs) (:file attrs))
+    (future (resize-and-save-image _id (:file attrs)))
     updated-fields))
 
 (defn destroy [_id]

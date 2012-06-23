@@ -32,7 +32,7 @@
    [:td (text-field :caption (:caption record))]]
   [:tr
    [:td (label :bio "Team")]
-   [:td (text-field :bio (:team record))]]
+   [:td (text-field :team (:team record))]]
   [:tr
    [:td (label :bio "Bio")]
    [:td (text-area :bio (:bio record))]]
