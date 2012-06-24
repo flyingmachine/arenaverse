@@ -22,17 +22,19 @@
 (defn image-path [version record]
   (str "/" (image-relative-path version record)))
 
+(defn bucket-name []
+  (str "arenaverse-" (name arenaverse.server/env)))
+
 (defn amazon-image-path [version record]
-  (str "https://s3.amazonaws.com/arenaverse-test" (image-path version record)))
+  (str "https://s3.amazonaws.com/" (bucket-name) (image-path version record)))
 
 (defn- image-fields [object-id image-extension]
   {:_id object-id
    :image-extension (clojure.string/replace image-extension "jpeg" "jpg")})
 
 (defn- save-image [path file content-type]
-  (println path)
   (s3/put-object config/*aws-credentials*
-                 "arenaverse-test"
+                 (bucket-name)
                  path
                  file
                  {:content-type content-type}
@@ -78,7 +80,6 @@
         fields (merge
                 (dissoc attrs :file)
                 (image-fields object-id (FilenameUtils/getExtension (:filename file-upload))))]
-    (println fields)
     (mc/insert *collection fields)
     (future (resize-and-save-image object-id file-upload))
     fields))
