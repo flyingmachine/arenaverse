@@ -62,7 +62,7 @@
        (card left-f "battle")]
       [:div.fighter.b
        (card right-f "battle")]
-      (when previous-fighters
+      (when (not (empty? previous-fighters))
         (let [wins (battle/record-for-pair (map :_id previous-fighters))]
           [:div.win-ratios
            [:h2 "Win Ratio"]

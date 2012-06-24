@@ -5,18 +5,18 @@
   (throw (Exception. (apply format msg args))))
 
 (def routes '{;; admin
-              :admin/arenas/listing   "/admin"
-              :admin/arenas/shiny     "/admin/arenas/new"
-              :admin/arenas/show      [:get ["/admin/arenas/:_id" :_id #"((?!new)[^/])*"]]
-              :admin/arenas/edit      "/admin/arenas/:_id/edit"
-              :admin/arenas/update    [:post "/admin/arenas/:_id"]
-              :admin/arenas/create    [:post "/admin/arenas"]
-              :admin/arenas/destroy   [:post "/admin/arenas/:_id/destroy"]
+              :admin/arenas/listing   "/admin-asdf"
+              :admin/arenas/shiny     "/admin-asdf/arenas/new"
+              :admin/arenas/show      [:get ["/admin-asdf/arenas/:_id" :_id #"((?!new)[^/])*"]]
+              :admin/arenas/edit      "/admin-asdf/arenas/:_id/edit"
+              :admin/arenas/update    [:post "/admin-asdf/arenas/:_id"]
+              :admin/arenas/create    [:post "/admin-asdf/arenas"]
+              :admin/arenas/destroy   [:post "/admin-asdf/arenas/:_id/destroy"]
               
-              :admin/fighters/create  [:post "/admin/fighters"]
-              :admin/fighters/edit    "/admin/fighters/:_id/edit"
-              :admin/fighters/update  [:post "/admin/fighters/:_id"]
-              :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]
+              :admin/fighters/create  [:post "/admin-asdf/fighters"]
+              :admin/fighters/edit    "/admin-asdf/fighters/:_id/edit"
+              :admin/fighters/update  [:post "/admin-asdf/fighters/:_id"]
+              :admin/fighters/destroy [:post "/admin-asdf/fighters/:_id/destroy"]
 
               :battles/listing        "/"
               :battles/winner         "/winner/:_id"})

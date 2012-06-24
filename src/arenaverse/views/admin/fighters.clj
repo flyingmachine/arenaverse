@@ -46,7 +46,7 @@
 
 (defpage-r edit {:keys [_id]}
   (let [fighter (mc/find-map-by-id "fighters" (ObjectId. _id))]
-    (common/layout
+    (common/admin-layout
      [:h1 "Editing Fighter: " (:name fighter)]
      (form-to {:enctype "multipart/form-data"}
               [:post (url-for-r  :admin/fighters/update {:_id _id})]

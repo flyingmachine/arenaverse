@@ -95,6 +95,7 @@ body {
     padding:0;
     clear: both;
     text-align: center;
+    line-height: 0;
   }
 }
 
@@ -143,10 +144,10 @@ p {
 }
 
 nav {
-  margin-top: .5em;
   @include clearfix;
   @include border-radius(10px 10px 0 0);
   background: $light-green;
+  line-height: 1;
 
   ul {
     list-style:none;

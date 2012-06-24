@@ -28,13 +28,13 @@
    [:td fight-text]])
 
 (defpage-r listing []
-  (common/layout
+  (common/admin-layout
    [:h1 "Arenas"]
    [:table
     (map arena-details (mc/find-maps "arenas"))]))
 
 (defpage-r shiny {:as arena}
-  (common/layout
+  (common/admin-layout
    [:h1 "Create an Arena"]
    (form-to [:post (url-for-r :admin/arenas/create)]
             [:table
@@ -43,7 +43,7 @@
 
 (defpage-r edit {:keys [_id]}
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
-    (common/layout
+    (common/admin-layout
      [:h1 "Editing Arena: " (:name arena)]
      (form-to [:post (str "/arenas/" (:_id arena))]
               [:table
@@ -58,7 +58,7 @@
 
 (defpage-r show {:keys [_id]}
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
-    (common/layout
+    (common/admin-layout
      [:h1 (:name arena)]
      (if-let [msg (session/flash-get)]
        [:p.info msg])
@@ -88,6 +88,6 @@
 
 (defpage-r create {:as arena}
   (mc/insert "arenas" arena)
-  (common/layout
+  (common/admin-layout
    [:h1 "Arena Created!"]
    [:table (arena-details arena)]))
