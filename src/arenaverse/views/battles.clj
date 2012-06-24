@@ -49,27 +49,29 @@
      (card fighter "card")
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
+
+;; TODO using apply here is really ugly
 (defpage-r listing []
   (let [arena (arena/one)]
-    (common/layout
-     (when arena
-       (let [previous-fighters (map #(mc/find-map-by-id fighter/*collection (ObjectId. %)) (session/get :_ids))
-             [left-f right-f] (random-fighters (arena/idstr arena))]
-         (session/put! :_ids (map fighter/idstr [left-f right-f]))
-         [:h1 (:name arena)]
-         [:div.fight-text (:fight-text arena)]
-         (when (and left-f right-f)
-           [:div#battle
-            [:div.fighter.a
-             (card left-f "battle")]
-            [:div.fighter.b
-             (card right-f "battle")]
-            (when (not (empty? previous-fighters))
-              (let [wins (battle/record-for-pair (map :_id previous-fighters))]
-                [:div.win-ratios
-                 [:h2 "Win Ratio"]
-                 (win-ratio (first previous-fighters) wins)
-                 (win-ratio (second previous-fighters) wins)]))]))))))
+    (when arena
+      (apply common/layout 
+             (let [previous-fighters (map #(mc/find-map-by-id fighter/*collection (ObjectId. %)) (session/get :_ids))
+                   [left-f right-f] (random-fighters (arena/idstr arena))]
+               (session/put! :_ids (map fighter/idstr [left-f right-f]))
+               [[:h1 (:name arena)]
+                [:div.fight-text (:fight-text arena)]
+                (when (and left-f right-f)
+                  [:div#battle
+                   [:div.fighter.a
+                    (card left-f "battle")]
+                   [:div.fighter.b
+                    (card right-f "battle")]
+                   (when (not (empty? previous-fighters))
+                     (let [wins (battle/record-for-pair (map :_id previous-fighters))]
+                       [:div.win-ratios
+                        [:h2 "Win Ratio"]
+                        (win-ratio (first previous-fighters) wins)
+                        (win-ratio (second previous-fighters) wins)]))])])))))
 
 (defpage-r winner {:keys [_id]}
   (battle/record-winner (session/get :_ids) _id)

@@ -45,7 +45,7 @@
   (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
     (common/admin-layout
      [:h1 "Editing Arena: " (:name arena)]
-     (form-to [:post (str "/arenas/" (:_id arena))]
+     (form-to [:post (url-for-r :admin/fighters/update {:_id _id})]
               [:table
                (arena-fields arena)
                [:tr [:td] [:td (submit-button "Update Arena")]]])
