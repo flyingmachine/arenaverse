@@ -23,7 +23,7 @@
   (str "/" (image-relative-path version record)))
 
 (defn bucket-name []
-  (str "arenaverse-" (name arenaverse.server/env)))
+  (str "arenaverse-" (name config/env)))
 
 (defn amazon-image-path [version record]
   (str "https://s3.amazonaws.com/" (bucket-name) (image-path version record)))

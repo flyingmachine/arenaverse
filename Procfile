@@ -1,1 +1,1 @@
-web: lein run production
+web: SERVER_ENV=production lein trampoline run -m arenaverse.server 
