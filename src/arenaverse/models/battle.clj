@@ -11,11 +11,16 @@
 (defn destroy [_id]
   (mc/remove-by-id *collection (ObjectId. _id)))
 
-(defn all []
-  (mc/find-maps *collection))
+(defn one [& [query-doc]]
+  (mc/find-one-as-map *collection query-doc))
 
-(defn one []
-  (mc/find-one-as-map *collection {}))
+(defn all [& [query-doc]]
+  (mc/find-maps *collection query-doc))
+
+(defn record-for-pair [_ids]
+  (dissoc (one {(.toString (first _ids))  {$exists true}
+                (.toString (second _ids)) {$exists true}})
+          :_id))
 
 (defn record-winner [opponents winner]
   (if (some #(= winner %) opponents)

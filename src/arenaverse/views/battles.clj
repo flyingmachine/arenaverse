@@ -35,24 +35,39 @@
         (random-teamless-fighters fighters))
       [])))
 
-(defpartial card [record]
+(defpartial card [record, img-version]
   [:div.name (:name record)]
   [:div.pic
    [:a {:href (url-for-r :battles/winner {:_id (fighter/idstr record)})}
-    (fighters/fighter-img "battle" record)]])
+    (fighters/fighter-img img-version record)]])
+
+(defn win-ratio [fighter wins]
+  (let [bouts (reduce + (vals wins))
+        _id (keyword (.toString (:_id fighter)))
+        ratio (* 100 (if (= 0 bouts) 1 (/ (_id wins) bouts)))]
+    [:div.ratio-card
+     (card fighter "card")
+     [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
 (defpage-r listing []
   (let [arena (arena/one)
+        previous-fighters (map #(mc/find-map-by-id fighter/*collection (ObjectId. %)) (session/get :_ids))
         [left-f right-f] (random-fighters (arena/idstr arena))]
-    (session/put! :_ids (map arena/idstr [left-f right-f]))
+    (session/put! :_ids (map fighter/idstr [left-f right-f]))
     (common/layout
      [:h1 (:name arena)]
      [:div.fight-text (:fight-text arena)]
      [:div#battle
       [:div.fighter.a
-       (card left-f)]
+       (card left-f "battle")]
       [:div.fighter.b
-       (card right-f)]])))
+       (card right-f "battle")]
+      (when previous-fighters
+        (let [wins (battle/record-for-pair (map :_id previous-fighters))]
+          [:div.win-ratios
+           [:h2 "Win Ratio"]
+           (win-ratio (first previous-fighters) wins)
+           (win-ratio (second previous-fighters) wins)]))])))
 
 (defpage-r winner {:keys [_id]}
   (battle/record-winner (session/get :_ids) _id)

@@ -288,6 +288,10 @@ form {
     .pic {
       text-align:center;
       @include trailer;
+
+      img {
+        max-width: 352px;
+      }
     }
 
     .name {
@@ -302,10 +306,25 @@ form {
     }
     
     &.a {
-      @include span-columns(6, 12);
+      @include span-columns(5, 12);
     }
     &.b {
-      @include span-columns(6 omega, 12);
+      @include span-columns(5, 12);
     }
+  }
+}
+
+.win-ratios {
+  text-align: center;
+  @include span-columns(2 omega, 12);
+
+  h2 {
+    color: $dark-green;
+    text-shadow: none;
+    @include leader(1, 30px);
+  }
+
+  .ratio-card {
+    @include trailer;
   }
 }

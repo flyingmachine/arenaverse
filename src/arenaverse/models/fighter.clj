@@ -106,6 +106,9 @@
   (delete-images (mc/find-map-by-id *collection (ObjectId. _id)))
   (mc/remove-by-id *collection (ObjectId. _id)))
 
+(defn one [& [query-doc]]
+  (mc/find-one-as-map *collection query-doc))
+
 (defn all [& [query-doc]]
   (mc/find-maps *collection query-doc))
 

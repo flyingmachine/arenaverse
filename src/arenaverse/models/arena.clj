@@ -12,8 +12,8 @@
 (defn all []
   (mc/find-maps *collection))
 
-(defn one []
-  (mc/find-one-as-map *collection {}))
+(defn one [& [query-doc]]
+  (mc/find-one-as-map *collection query-doc))
 
 (defn idstr [record]
   (.toString (:_id record)))

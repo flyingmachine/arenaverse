@@ -373,7 +373,11 @@ form table td input[type=submit] {
   text-align: center;
   margin-bottom: 1.5em;
 }
-/* line 293, ../../compass/sass/screen.scss */
+/* line 292, ../../compass/sass/screen.scss */
+#battle .fighter .pic img {
+  max-width: 352px;
+}
+/* line 297, ../../compass/sass/screen.scss */
 #battle .fighter .name {
   font-size: 1.875em;
   line-height: 0.8em;
@@ -385,18 +389,37 @@ form table td input[type=submit] {
   padding-top: 0.8em;
   padding-bottom: 0.8em;
 }
-/* line 304, ../../compass/sass/screen.scss */
+/* line 308, ../../compass/sass/screen.scss */
 #battle .fighter.a {
-  width: 49.153%;
+  width: 40.678%;
   float: left;
   margin-right: 1.695%;
   display: inline;
 }
-/* line 307, ../../compass/sass/screen.scss */
+/* line 311, ../../compass/sass/screen.scss */
 #battle .fighter.b {
-  width: 49.153%;
+  width: 40.678%;
+  float: left;
+  margin-right: 1.695%;
+  display: inline;
+}
+
+/* line 317, ../../compass/sass/screen.scss */
+.win-ratios {
+  text-align: center;
+  width: 15.254%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
   display: inline;
+}
+/* line 321, ../../compass/sass/screen.scss */
+.win-ratios h2 {
+  color: #88efa5;
+  text-shadow: none;
+  margin-top: 0.8em;
+}
+/* line 327, ../../compass/sass/screen.scss */
+.win-ratios .ratio-card {
+  margin-bottom: 1.5em;
 }
