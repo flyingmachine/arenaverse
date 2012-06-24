@@ -81,7 +81,7 @@
                 (dissoc attrs :file)
                 (image-fields object-id (FilenameUtils/getExtension (:filename file-upload))))]
     (mc/insert *collection fields)
-    (resize-and-save-image object-id file-upload)
+    (future (resize-and-save-image object-id file-upload))
     fields))
 
 (defn image-extension-for-update [attrs record]
@@ -100,7 +100,7 @@
                                :_id
                                :file)]
     (mc/update-by-id *collection bson-id updated-fields)
-    (resize-and-save-image _id (:file attrs))
+    (future (resize-and-save-image _id (:file attrs)))
     updated-fields))
 
 (defn destroy [_id]
