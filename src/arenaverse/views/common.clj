@@ -18,7 +18,7 @@
 (defpartial common-layout [nav & [content]]
   (html5
    [:head
-    [:title "arenaverse"]
+    [:title "OMG! SMACKDOWN!!!"]
     [:link {:href "http://fonts.googleapis.com/css?family=Bangers|Nothing+You+Could+Do" :rel "stylesheet" :type "text/css"}]
     (include-css
      "/stylesheets/screen/ie.css"
