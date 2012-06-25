@@ -58,8 +58,7 @@
              (let [previous-fighters (map #(mc/find-map-by-id fighter/*collection (ObjectId. %)) (session/get :_ids))
                    [left-f right-f] (random-fighters (arena/idstr arena))]
                (session/put! :_ids (map fighter/idstr [left-f right-f]))
-               [[:h1 (:name arena)]
-                [:div.fight-text (:fight-text arena)]
+               [[:h1 (:fight-text arena)]
                 (when (and left-f right-f)
                   [:div#battle
                    [:div.fighter.a
