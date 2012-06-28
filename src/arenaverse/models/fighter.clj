@@ -70,9 +70,7 @@
 
 (defn delete-images [record]
   (doseq [[vname] (conj *image-versions ["original"])]
-    (s3/delete-object config/*aws-credentials* "arenaverse-test" (image-relative-path vname record))))
-
-;; (Scalr/resize (ImageIO/read (java.io.File. "/Users/daniel/Desktop/dachshunds.jpg")) (int 150))
+    (s3/delete-object config/*aws-credentials* (bucket-name) (image-relative-path vname record))))
 
 (defn create [attrs]
   (let [object-id (ObjectId.)
@@ -103,15 +101,6 @@
     (future (resize-and-save-image _id (:file attrs)))
     updated-fields))
 
+
 (defn destroy [_id]
-  (delete-images (mc/find-map-by-id *collection (ObjectId. _id)))
-  (mc/remove-by-id *collection (ObjectId. _id)))
-
-(defn one [& [query-doc]]
-  (mc/find-one-as-map *collection query-doc))
-
-(defn all [& [query-doc]]
-  (mc/find-maps *collection query-doc))
-
-(defn idstr [record]
-  (.toString (:_id record)))
+  (delete-images (mc/find-map-by-id *collection (ObjectId. _id))))
