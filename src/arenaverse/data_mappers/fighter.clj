@@ -13,7 +13,9 @@
 
 (declare one-by-id)
 
-(db/add-db-fns "fighters")
+(let [collection-name "fighters"]
+  (db/add-db-fns collection-name)
+  (db/add-finder-fns))
 
 (def *image-versions [["card" 192]
                       ["listing" 64]
@@ -101,7 +103,7 @@
      (image-fields object-id (input->image-extension input)))))
 
 (defn- update-input->db-fields [input]
-  (let [record (one-by-id (:_id input))
+  (let [record (db-one-by-id (:_id input))
         object-id (:_id record)
         ;; ensure that the user doesn't alter the arena id
         ;; and that image-extension isn't overwritten when no file is present
@@ -140,15 +142,3 @@
         record (db-one-by-id object-id)]
     (delete-images record)
     (db-destroy object-id)))
-
-(defn all [& [query-doc]]
-  (db-all query-doc))
-
-(defn one [& [query-doc]]
-  (db-one query-doc))
-
-(defn one-by-id [_id]
-  (db-one-by-id (ObjectId. _id)))
-
-(defn idstr [record]
-  (db-idstr (:_id record)))

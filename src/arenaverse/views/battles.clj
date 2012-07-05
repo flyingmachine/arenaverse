@@ -38,12 +38,12 @@
 (defpartial card [record, img-version]
   [:div.name (:name record)]
   [:div.pic
-   [:a {:href (url-for-r :battles/winner {:_id (fighter/idstr record)})}
+   [:a {:href (url-for-r :battles/winner {:_id record})}
     (fighters/fighter-img img-version record)]])
 
 (defn win-ratio [fighter wins]
   (let [bouts (reduce + (vals wins))
-        _id (keyword (fighter/idstr fighter))
+        _id (keyword (:_id fighter))
         ratio (* 100 (if (= 0 bouts) 1 (/ (_id wins) bouts)))]
     [:div.ratio-card
      (card fighter "card")
@@ -57,7 +57,7 @@
       (apply common/layout 
              (let [previous-fighters (map #(fighter/one-by-id %) (session/get :_ids))
                    [left-f right-f] (random-fighters (arena/idstr arena))]
-               (session/put! :_ids (map fighter/idstr [left-f right-f]))
+               (session/put! :_ids (map :_id [left-f right-f]))
                [[:h1 (:fight-text arena)]
                 (when (and left-f right-f)
                   [:div#battle

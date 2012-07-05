@@ -1,39 +1,57 @@
 (ns arenaverse.data-mappers.db)
 
+;; TODO ~' Insanity! #cthulhu
+;; These macros are meant to infect the namespace with functions. Why
+;; would I want to do this? Should I take heed of the fact that
+;; Clojure really doesn't want me to?
+
+;; I wrote these fucntions to avoid having to write collection-name
+;; all over the place
 (defmacro add-db-fns [collection-name]
-  ;; This repetitive mapping is necessary to avoid including the
-  ;; entire namespace in the function name, the result of syntax quoting
-  (let [db-destroy 'db-destroy
-        db-one 'db-one
-        db-one-by-id 'db-one-by-id
-        db-all 'db-all
-        db-idstr 'db-idstr
-        db-insert 'db-insert
-        db-update 'db-update]
-    `(let [collection-name# ~collection-name]
-       (require 'monger.collection)
+  `(let [collection-name# ~collection-name]
+     (require 'monger.collection)
+     
+     (import 'org.bson.types.ObjectId)
 
-       (import 'org.bson.types.ObjectId)
+     (defn ~'db-destroy [_id#]
+       (monger.collection/remove-by-id collection-name# _id#))
 
-       (defn ~db-destroy [_id#]
-         (monger.collection/remove-by-id collection-name# _id#))
+     (defn ~'db-one [& [query-doc#]]
+       (monger.collection/find-one-as-map collection-name# query-doc#))
 
-       (defn ~db-one [& [query-doc#]]
-         (monger.collection/find-one-as-map collection-name# query-doc#))
+     (defn ~'db-one-by-id [_id#]
+       (monger.collection/find-map-by-id collection-name# _id#))
 
-       (defn ~db-one-by-id [_id#]
-         (monger.collection/find-map-by-id collection-name# _id#))
+     (defn ~'db-all [& [query-doc#]]
+       (monger.collection/find-maps collection-name# query-doc#))
 
-       (defn ~db-all [& [query-doc#]]
-         (monger.collection/find-maps collection-name# query-doc#))
+     (defn ~'db-insert [fields#]
+       (monger.collection/insert collection-name# fields#))
 
-       ;; TODO this one doesn't really feel like it belongs here
-       ;; because it doesn't have to do with persistence
-       (defn ~db-idstr [_id#]
-         (.toString _id#))
+     (defn ~'db-update [_id#, fields#]
+       (monger.collection/update-by-id collection-name# _id# fields#))))
 
-       (defn ~db-insert [fields#]
-         (monger.collection/insert collection-name# fields#))
+;; TODO I don't like mapping in the all fn, feels wasteful.
 
-       (defn ~db-update [_id#, fields#]
-         (monger.collection/update-by-id collection-name# _id# fields#)))))
+;; These methods are meant to generate the representations which
+;; non-db parts of the code will use. They all convert ObjectId's to
+;; strings because no other part of the system should care about ObjectId's
+(defmacro add-finder-fns []
+  '(do
+     
+     ;; TODO this doesn't feel like it belongs here. It's a helper
+     ;; method. But this macro approach is infecting everything!
+     (defn idstr [record]
+       (.toString (:_id record)))
+     
+     (defn object-id->idstr [record]
+       (assoc record :_id (idstr record)))
+
+     (defn all [& [query-doc]]
+       (map object-id->idstr (db-all query-doc)))
+     
+     (defn one [& [query-doc]]
+       (object-id->idstr (db-one query-doc)))
+     
+     (defn one-by-id [_id]
+       (object-id->idstr (db-one-by-id (ObjectId. _id))))))
