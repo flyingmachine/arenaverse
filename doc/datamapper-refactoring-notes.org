@@ -1,0 +1,3 @@
+* views shouldn't care about ObjectId
+distinguish between _id and object-id in data mapper
+* views shouldn't be using monger methods directly

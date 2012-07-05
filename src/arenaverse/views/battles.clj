@@ -1,7 +1,7 @@
 (ns arenaverse.views.battles
   (:require [arenaverse.views.common :as common]
             [arenaverse.views.admin.fighters :as fighters]
-            [arenaverse.models.fighter :as fighter]
+            [arenaverse.data-mappers.fighter :as fighter]
             [arenaverse.models.arena :as arena]
             [arenaverse.models.battle :as battle]
             [noir.session :as session]
@@ -43,7 +43,7 @@
 
 (defn win-ratio [fighter wins]
   (let [bouts (reduce + (vals wins))
-        _id (keyword (.toString (:_id fighter)))
+        _id (keyword (fighter/idstr fighter))
         ratio (* 100 (if (= 0 bouts) 1 (/ (_id wins) bouts)))]
     [:div.ratio-card
      (card fighter "card")
@@ -55,7 +55,7 @@
   (let [arena (arena/one)]
     (when arena
       (apply common/layout 
-             (let [previous-fighters (map #(mc/find-map-by-id fighter/*collection (ObjectId. %)) (session/get :_ids))
+             (let [previous-fighters (map #(fighter/one-by-id %) (session/get :_ids))
                    [left-f right-f] (random-fighters (arena/idstr arena))]
                (session/put! :_ids (map fighter/idstr [left-f right-f]))
                [[:h1 (:fight-text arena)]
