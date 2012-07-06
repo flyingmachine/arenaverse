@@ -103,8 +103,8 @@
      (image-fields object-id (input->image-extension input)))))
 
 (defn- update-input->db-fields [input]
-  (let [record (db-one-by-id (:_id input))
-        object-id (:_id record)
+  (let [object-id (ObjectId. (:_id input))
+        record (db-one-by-id object-id)
         ;; ensure that the user doesn't alter the arena id
         ;; and that image-extension isn't overwritten when no file is present
         db-fields (merge
