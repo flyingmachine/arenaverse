@@ -7,29 +7,21 @@
 
 ;; I wrote these fucntions to avoid having to write collection-name
 ;; all over the place
+
+(defmacro add-db-reqs []
+  '(do
+     (require 'monger.collection)
+     (import 'org.bson.types.ObjectId)))
+
 (defmacro add-db-fns [collection-name]
   `(let [collection-name# ~collection-name]
-     (require 'monger.collection)
-     
-     (import 'org.bson.types.ObjectId)
-
-     (defn ~'db-destroy [_id#]
-       (monger.collection/remove-by-id collection-name# _id#))
-
-     (defn ~'db-one [& [query-doc#]]
-       (monger.collection/find-one-as-map collection-name# query-doc#))
-
-     (defn ~'db-one-by-id [_id#]
-       (monger.collection/find-map-by-id collection-name# _id#))
-
-     (defn ~'db-all [& [query-doc#]]
-       (monger.collection/find-maps collection-name# query-doc#))
-
-     (defn ~'db-insert [fields#]
-       (monger.collection/insert collection-name# fields#))
-
-     (defn ~'db-update [_id#, fields#]
-       (monger.collection/update-by-id collection-name# _id# fields#))))
+    (def ~'db-destroy (partial monger.collection/remove-by-id collection-name#))     
+    (def ~'db-one (partial monger.collection/find-one-as-map collection-name#))
+    (def ~'db-one-by-id (partial monger.collection/find-map-by-id collection-name#))
+    (def ~'db-all (partial monger.collection/find-maps collection-name#))
+    (def ~'db-insert (partial monger.collection/insert collection-name#))
+    (def ~'db-update-by-id (partial monger.collection/update-by-id collection-name#))
+    (def ~'db-update (partial monger.collection/update collection-name#))))
 
 ;; TODO I don't like mapping in the all fn, feels wasteful.
 

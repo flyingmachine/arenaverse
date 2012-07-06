@@ -1,8 +1,8 @@
 (ns arenaverse.views.admin.arenas
   (:require [arenaverse.views.common :as common]
             [arenaverse.views.admin.fighters :as fighters]
-            [arenaverse.models.fighter :as fighter]
-            [arenaverse.models.arena :as arena]
+            [arenaverse.data-mappers.fighter :as fighter]
+            [arenaverse.data-mappers.arena :as arena]
             [noir.session :as session]
             [noir.response :as res]
             [monger.collection :as mc])

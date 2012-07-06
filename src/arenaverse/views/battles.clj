@@ -2,8 +2,8 @@
   (:require [arenaverse.views.common :as common]
             [arenaverse.views.admin.fighters :as fighters]
             [arenaverse.data-mappers.fighter :as fighter]
-            [arenaverse.models.arena :as arena]
-            [arenaverse.models.battle :as battle]
+            [arenaverse.data-mappers.arena :as arena]
+            [arenaverse.data-mappers.battle :as battle]
             [noir.session :as session]
             [monger.collection :as mc])
   
@@ -38,7 +38,7 @@
 (defpartial card [record, img-version]
   [:div.name (:name record)]
   [:div.pic
-   [:a {:href (url-for-r :battles/winner {:_id record})}
+   [:a {:href (url-for-r :battles/winner {:_id (:_id record)})}
     (fighters/fighter-img img-version record)]])
 
 (defn win-ratio [fighter wins]

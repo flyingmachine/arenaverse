@@ -1,8 +1,7 @@
 (ns arenaverse.data-mappers.fighter
   (:require [arenaverse.data-mappers.db :as db]
             [arenaverse.lib.aws.s3 :as s3]
-            [arenaverse.config :as config]
-            [monger.collection])
+            [arenaverse.config :as config])
 
   (:import [org.bson.types ObjectId]
            [org.imgscalr Scalr Scalr$Method Scalr$Mode]
@@ -13,6 +12,7 @@
 
 (declare one-by-id)
 
+(db/add-db-reqs)
 (let [collection-name "fighters"]
   (db/add-db-fns collection-name)
   (db/add-finder-fns))
@@ -127,7 +127,7 @@
   (let [db-fields (update-input->db-fields input)
         object-id (ObjectId. (:_id input))
         record    (merge db-fields {:_id object-id})]
-    (db-update object-id db-fields)
+    (db-update-by-id object-id db-fields)
     (when (image-uploaded? input) (store-images input db-fields))
     db-fields))
 
