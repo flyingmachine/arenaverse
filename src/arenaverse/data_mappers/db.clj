@@ -30,7 +30,6 @@
 ;; strings because no other part of the system should care about ObjectId's
 (defmacro add-finder-fns []
   '(do
-     
      ;; TODO this doesn't feel like it belongs here. It's a helper
      ;; method. But this macro approach is infecting everything!
      (defn idstr [record]
@@ -43,7 +42,9 @@
        (map object-id->idstr (db-all query-doc)))
      
      (defn one [& [query-doc]]
-       (object-id->idstr (db-one query-doc)))
+       (if-let [r (db-one query-doc)]
+         (object-id->idstr r)))
      
      (defn one-by-id [_id]
-       (object-id->idstr (db-one-by-id (ObjectId. _id))))))
+       (if-let [r (db-one-by-id (ObjectId. _id))]
+         (object-id->idstr r)))))
