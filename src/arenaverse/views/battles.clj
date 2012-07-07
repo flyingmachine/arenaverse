@@ -49,10 +49,29 @@
      (card fighter "card")
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
+(defpartial minor-battle [arena]
+  (let [[left-f right-f] (random-fighters (arena/idstr arena))]
+    (when (and left-f right-f)
+      [:div.battle
+       [:h2 (:fight-text arena)]
+       [:div.fighter.a (card left-f "card")]
+       [:div.fighter.b (card right-f "card")]])))
+
+(defpartial minor-battles [arenas]
+  (loop [html [:div#minor-battles]
+         remaining-arenas arenas]
+    (if (empty? remaining-arenas)
+      html
+      (let [arena (first remaining-arenas)]
+        (if-let [minor-battle-html (minor-battle arena)]
+          (recur (conj html minor-battle-html)
+                 (rest remaining-arenas))
+          (recur html (rest remaining-arenas)))))))
 
 ;; TODO using apply here is really ugly
 (defpage-r listing []
-  (let [arena (arena/one)]
+  (let [arena (arena/one)
+        remaining-arenas (arena/all)]
     (when arena
       (apply common/layout 
              (let [previous-fighters (map #(fighter/one-by-id %) (session/get :_ids))
@@ -70,7 +89,8 @@
                        [:div.win-ratios
                         [:h2 "Win Ratio"]
                         (win-ratio (first previous-fighters) wins)
-                        (win-ratio (second previous-fighters) wins)]))])])))))
+                        (win-ratio (second previous-fighters) wins)]))])
+                (minor-battles remaining-arenas)])))))
 
 (defpage-r winner {:keys [_id]}
   (battle/record-winner (session/get :_ids) _id)

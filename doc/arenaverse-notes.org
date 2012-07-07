@@ -31,3 +31,6 @@ Kraken
 Brownie
 Goblin
 
+* Multiple arenas
+** modify session to include all pairs shown, keyed by arena id
+** create short id for arena

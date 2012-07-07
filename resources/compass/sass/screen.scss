@@ -1,3 +1,5 @@
+/* OMG! SMACKDOWN!!! */
+
 /* Welcome to Compass.
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
@@ -201,52 +203,6 @@ form {
   }
 }
 
-#fighters {
-  @include clearfix;
-
-  .fighter {
-    @include span-columns(3, 12);
-
-    &:last-child {
-      @include span-columns(3 omega, 12);
-      @include omega();
-    }
-    
-    .card {
-      text-align:center;
-      padding: 1em;
-      background: $light-blue url("/img/_ui/battle-bg-card.png");
-
-      &:hover {
-        background: $light-orange url("/img/_ui/battle-bg-card.png");
-      }
-      
-      .name {
-        font-weight: bold;
-        @include trailer(.5);
-      }
-
-      .bio {
-        color: #333;
-        font-style:italic;
-      }
-      
-      .pic {
-        width:12em;
-        height:12em;
-        line-height:12em;
-        @include trailer(.5);
-        img {
-          vertical-align:middle;
-          max-width:12em;
-          max-height:12em;
-          @include border-radius(10px);
-        }
-      }
-    }
-  }
-}
-
 .info {
   @include padding-leader(.5);
   @include padding-trailer(.5);
@@ -274,22 +230,76 @@ form {
   @include leader(1, 30px);
 }
 
-#battle {
+
+.fighter {
+  text-align: center;
+  background: $light-blue url("/img/_ui/battle-bg.png") repeat-x;
+  
+  &:hover {
+    background-color: $light-orange;
+  }
+
+  img {
+    vertical-align:middle;
+  }
+}
+
+#fighters {
   @include clearfix;
 
+  .fighter {
+    @include span-columns(3, 12);
+
+    &:last-child {
+      @include span-columns(3 omega, 12);
+      @include omega();
+    }
+    
+    .card {
+      text-align:center;
+      padding: 1em;
+      
+      .name {
+        font-weight: bold;
+        @include trailer(.5);
+      }
+
+      .bio {
+        color: #333;
+        font-style:italic;
+      }
+      
+      .pic {
+        width:12em;
+        height:12em;
+        line-height:12em;
+        @include trailer(.5);
+        
+        img {
+          max-width:12em;
+          max-height:12em;
+          @include border-radius(10px);
+        }
+      }
+    }
+  }
+}
+
+#battle {
+  @include clearfix;
   
   .fighter {
     @include padding-trailer;
-    background: $light-blue;
+    @include span-columns(5, 12);
+    height:638px;
     
     &:hover {
-      background: $light-orange;
+      background: $light-orange url("/img/_ui/battle-bg.png")  repeat-x left top;;
     }
     
     .pic {
-      text-align:center;
       @include trailer;
-
+      line-height: 566px;
       img {
         max-width: 352px;
       }
@@ -301,16 +311,41 @@ form {
       letter-spacing: 1px;
       color: $dark-blue;
       text-align: center;
-      background: url("/img/_ui/battle-bg.png")  repeat-x left top;
       @include padding-leader(1, 30px);
       @include padding-trailer(1, 30px);
     }
+  }
+}
+
+#minor-battles {
+  @include clearfix;
+  text-align: center;
+  .battle {
+    @include leader(1);
+    @include span-columns(5, 12);
     
-    &.a {
-      @include span-columns(5, 12);
-    }
-    &.b {
-      @include span-columns(5, 12);
+    .fighter {
+      width: 50%;
+      float:left;
+      height: 288px;
+
+      &:hover {
+        background: $light-orange;
+      }
+
+      .pic {
+        line-height:192px;
+        @include trailer;
+      }
+
+      .name {
+        @include adjust-font-size-to (20px, 1);
+        font-family: Bangers, $sans-family;
+        letter-spacing: 1px;
+        color: $dark-blue;
+        @include padding-leader(1, 30px);
+        @include padding-trailer(1, 30px);
+      }
     }
   }
 }

@@ -19,7 +19,7 @@
 
 (def *image-versions [["card" 192]
                       ["listing" 64]
-                      ["battle" 432 638]])
+                      ["battle" 352 638]])
 
 (defn image-relative-path [version {:keys [_id image-extension]}]
   (str "fighters/" _id "/" version "." image-extension))
