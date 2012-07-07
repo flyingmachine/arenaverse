@@ -289,13 +289,8 @@ form {
   @include clearfix;
   
   .fighter {
-    @include padding-trailer;
     @include span-columns(5, 12);
     height:638px;
-    
-    &:hover {
-      background: $light-orange url("/img/_ui/battle-bg.png")  repeat-x left top;;
-    }
     
     .pic {
       @include trailer;
@@ -321,17 +316,13 @@ form {
   @include clearfix;
   text-align: center;
   .battle {
-    @include leader(1);
+    @include leader(2);
     @include span-columns(5, 12);
     
     .fighter {
       width: 50%;
       float:left;
       height: 288px;
-
-      &:hover {
-        background: $light-orange;
-      }
 
       .pic {
         line-height:192px;

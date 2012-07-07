@@ -8,3 +8,6 @@
 
 (defn destroy [_id]
   (db-destroy (ObjectId. _id)))
+
+(defn update [_id, input]
+  (db-update-by-id (ObjectId. _id) input))
