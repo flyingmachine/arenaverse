@@ -34,3 +34,7 @@ Goblin
 * Multiple arenas
 ** modify session to include all pairs shown, keyed by arena id
 ** create short id for arena
+** add friend
+** allow users to create and admin their own arenas
+** randomize the arenas shown on the home page
+** when clicking on a battle, continue showing that battle

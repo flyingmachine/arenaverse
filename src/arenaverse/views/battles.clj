@@ -68,10 +68,11 @@
                  (rest remaining-arenas))
           (recur html (rest remaining-arenas)))))))
 
+
 ;; TODO using apply here is really ugly
 (defpage-r listing []
-  (let [arena (arena/one)
-        remaining-arenas (arena/all)]
+  (let [arenas (shuffle (into [] (arena/all)))
+        [arena, minor-arenas] [(first arenas) (rest arenas)]]
     (when arena
       (apply common/layout 
              (let [previous-fighters (map #(fighter/one-by-id %) (session/get :_ids))
@@ -90,7 +91,7 @@
                         [:h2 "Win Ratio"]
                         (win-ratio (first previous-fighters) wins)
                         (win-ratio (second previous-fighters) wins)]))])
-                (minor-battles remaining-arenas)])))))
+                (minor-battles minor-arenas)])))))
 
 (defpage-r winner {:keys [_id]}
   (battle/record-winner (session/get :_ids) _id)
