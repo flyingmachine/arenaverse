@@ -14,6 +14,7 @@
   
   (:import [org.bson.types ObjectId]))
 
+;; TODO use shuffle
 ;; TODO how to test this?
 (defn random-teamless-fighters [fighters]
   (let [randomer #(rand-int (count fighters))
@@ -56,53 +57,53 @@
                          {(keyword (first fids)) fids
                           (keyword (last fids)) fids}))))
 
-(defpartial minor-battle [arena]
-  (let [[left-f right-f] (random-fighters (arena/idstr arena))]
+(defpartial _minor-battle [battle]
+  (let [[left-f right-f] (:fighters battle)]
     (when (and left-f right-f)
-      (register-fighters! left-f right-f)
       [:div.battle
-       [:h2 (:fight-text arena)]
+       [:h2 (:fight-text (:arena battle))]
        [:div.fighter.a (card left-f "card")]
        [:div.fighter.b (card right-f "card")]])))
 
-(defpartial minor-battles [arenas]
+(defpartial _minor-battles [minor-battles]
+  (println minor-battles)
   (loop [html [:div#minor-battles]
-         remaining-arenas arenas]
-    (if (empty? remaining-arenas)
+         remaining-battles minor-battles]
+    (if (empty? remaining-battles)
       html
-      (let [arena (first remaining-arenas)]
-        (if-let [minor-battle-html (minor-battle arena)]
+      (let [battle (first remaining-battles)]
+        (if-let [minor-battle-html (_minor-battle battle)]
           (recur (conj html minor-battle-html)
-                 (rest remaining-arenas))
-          (recur html (rest remaining-arenas)))))))
+                 (rest remaining-battles))
+          (recur html (rest remaining-battles)))))))
 
 (defn clear-fighters! []
   (session/put! :battles {}))
 
+(defn battles []
+  (shuffle (filter #(not (empty? (:fighters %))) (map (fn [arena] {:arena arena :fighters (random-fighters (arena/idstr arena))}) (arena/all)))))
+
 ;; TODO using apply here is really ugly
 (defpage-r listing [& [prev-fighter-id-a prev-fighter-id-b]]
   (clear-fighters!)
-  (let [arenas (shuffle (into [] (arena/all)))
-        [arena, minor-arenas] [(first arenas) (rest arenas)]]
-    (when arena
+  (let [[main-battle & minor-battles] (battles)]
+    (when main-battle
       (apply common/layout 
-             (let [[left-f right-f] (random-fighters (arena/idstr arena))]
-               (register-fighters! left-f right-f)
-               [[:h1 (:fight-text arena)]
-                (when (and left-f right-f)
-                  [:div#battle
-                   [:div.fighter.a
-                    (card left-f "battle")]
-                   [:div.fighter.b
-                    (card right-f "battle")]
-                   (when (and prev-fighter-id-a prev-fighter-id-b)
-                     (let [previous-fighters (map #(fighter/one-by-id %) [prev-fighter-id-a prev-fighter-id-b])
-                           wins (battle/record-for-pair (map :_id previous-fighters))]
-                       [:div.win-ratios
-                        [:h2 "Win Ratio"]
-                        (win-ratio (first previous-fighters) wins)
-                        (win-ratio (second previous-fighters) wins)]))])
-                (minor-battles minor-arenas)])))))
+             (let [[left-f right-f] (:fighters main-battle)]
+               [[:h1 (:fight-text (:arena main-battle))]
+                [:div#battle
+                 [:div.fighter.a
+                  (card left-f "battle")]
+                 [:div.fighter.b
+                  (card right-f "battle")]
+                 (when (and prev-fighter-id-a prev-fighter-id-b)
+                   (let [previous-fighters (map #(fighter/one-by-id %) [prev-fighter-id-a prev-fighter-id-b])
+                         wins (battle/record-for-pair (map :_id previous-fighters))]
+                     [:div.win-ratios
+                      [:h2 "Win Ratio"]
+                      (win-ratio (first previous-fighters) wins)
+                      (win-ratio (second previous-fighters) wins)]))]
+                (_minor-battles minor-battles)])))))
 
 (defpage-r winner {:keys [_id]}
   (let [previous-fighter-ids ((keyword _id) (session/get :battles))]
