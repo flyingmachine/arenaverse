@@ -17,7 +17,7 @@
                 (second _ids) {$exists true}})
           :_id))
 
-(defn record-winner [opponents winner]
+(defn record-winner! [opponents winner]
   (if (some #(= winner %) opponents)
     (let [loser (some #(and (not= winner %) %) opponents)]
       (db-update

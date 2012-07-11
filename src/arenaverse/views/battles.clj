@@ -49,9 +49,17 @@
      (card fighter "card")
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
+(defn register-fighters! [fighter-a fighter-b]
+  (let [fids (into [] (map :_id [fighter-a fighter-b]))]
+    (session/put! :battles
+                  (merge (session/get :battles)
+                         {(keyword (first fids)) fids
+                          (keyword (last fids)) fids}))))
+
 (defpartial minor-battle [arena]
   (let [[left-f right-f] (random-fighters (arena/idstr arena))]
     (when (and left-f right-f)
+      (register-fighters! left-f right-f)
       [:div.battle
        [:h2 (:fight-text arena)]
        [:div.fighter.a (card left-f "card")]
@@ -68,16 +76,18 @@
                  (rest remaining-arenas))
           (recur html (rest remaining-arenas)))))))
 
+(defn clear-fighters! []
+  (session/put! :battles {}))
 
 ;; TODO using apply here is really ugly
-(defpage-r listing []
+(defpage-r listing [& [prev-fighter-id-a prev-fighter-id-b]]
+  (clear-fighters!)
   (let [arenas (shuffle (into [] (arena/all)))
         [arena, minor-arenas] [(first arenas) (rest arenas)]]
     (when arena
       (apply common/layout 
-             (let [previous-fighters (map #(fighter/one-by-id %) (session/get :_ids))
-                   [left-f right-f] (random-fighters (arena/idstr arena))]
-               (session/put! :_ids (map :_id [left-f right-f]))
+             (let [[left-f right-f] (random-fighters (arena/idstr arena))]
+               (register-fighters! left-f right-f)
                [[:h1 (:fight-text arena)]
                 (when (and left-f right-f)
                   [:div#battle
@@ -85,8 +95,9 @@
                     (card left-f "battle")]
                    [:div.fighter.b
                     (card right-f "battle")]
-                   (when (not (empty? previous-fighters))
-                     (let [wins (battle/record-for-pair (map :_id previous-fighters))]
+                   (when (and prev-fighter-id-a prev-fighter-id-b)
+                     (let [previous-fighters (map #(fighter/one-by-id %) [prev-fighter-id-a prev-fighter-id-b])
+                           wins (battle/record-for-pair (map :_id previous-fighters))]
                        [:div.win-ratios
                         [:h2 "Win Ratio"]
                         (win-ratio (first previous-fighters) wins)
@@ -94,5 +105,7 @@
                 (minor-battles minor-arenas)])))))
 
 (defpage-r winner {:keys [_id]}
-  (battle/record-winner (session/get :_ids) _id)
-  (battles-listing nil))
+  (let [previous-fighter-ids ((keyword _id) (session/get :battles))]
+    (battle/record-winner! previous-fighter-ids _id)
+    (println previous-fighter-ids)
+    (battles-listing previous-fighter-ids)))
