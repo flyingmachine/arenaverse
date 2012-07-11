@@ -50,13 +50,6 @@
      (card fighter "card")
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
-(defn register-fighters! [fighter-a fighter-b]
-  (let [fids (into [] (map :_id [fighter-a fighter-b]))]
-    (session/put! :battles
-                  (merge (session/get :battles)
-                         {(keyword (first fids)) fids
-                          (keyword (last fids)) fids}))))
-
 (defpartial _minor-battle [battle]
   (let [[left-f right-f] (:fighters battle)]
     (when (and left-f right-f)
@@ -66,7 +59,6 @@
        [:div.fighter.b (card right-f "card")]])))
 
 (defpartial _minor-battles [minor-battles]
-  (println minor-battles)
   (loop [html [:div#minor-battles]
          remaining-battles minor-battles]
     (if (empty? remaining-battles)
@@ -77,16 +69,32 @@
                  (rest remaining-battles))
           (recur html (rest remaining-battles)))))))
 
-(defn clear-fighters! []
+(defn clear-battles! []
   (session/put! :battles {}))
 
+(defn register-battles! [b]
+  (let [battles-processed (reduce (fn [m {:keys [arena fighters]}]
+                                    (let [fids (into [] (map fighter/idstr fighters))
+                                          aid (arena/idstr arena)]
+                                      (assoc m (first fids) (conj fids aid)
+                                               (last fids) (conj fids aid))))
+                                  {}
+                                  b)]
+    (session/put! :battles battles-processed)
+    (session/put! :main-battle-fighters (battles-processed (fighter/idstr (first (:fighters (first b))))))))
+
 (defn battles []
-  (shuffle (filter #(not (empty? (:fighters %))) (map (fn [arena] {:arena arena :fighters (random-fighters (arena/idstr arena))}) (arena/all)))))
+  (let [b (shuffle (filter #(not (empty? (:fighters %))) (map (fn [arena] {:arena arena :fighters (random-fighters (arena/idstr arena))}) (arena/all))))]
+    (register-battles! b)
+    b))
 
 ;; TODO using apply here is really ugly
-(defpage-r listing [& [prev-fighter-id-a prev-fighter-id-b]]
-  (clear-fighters!)
-  (let [[main-battle & minor-battles] (battles)]
+(defpage-r listing []
+  (clear-battles!)
+  ;; TODO the first assignment has to come before the second. any way
+  ;; to get around this?
+  (let [[prev-fighter-id-a prev-fighter-id-b] (session/get :main-battle-fighters)
+        [main-battle & minor-battles] (battles)]
     (when main-battle
       (apply common/layout 
              (let [[left-f right-f] (:fighters main-battle)]
@@ -99,6 +107,7 @@
                  (when (and prev-fighter-id-a prev-fighter-id-b)
                    (let [previous-fighters (map #(fighter/one-by-id %) [prev-fighter-id-a prev-fighter-id-b])
                          wins (battle/record-for-pair (map :_id previous-fighters))]
+                                              (println "MAPPED" previous-fighters)
                      [:div.win-ratios
                       [:h2 "Win Ratio"]
                       (win-ratio (first previous-fighters) wins)
@@ -106,7 +115,7 @@
                 (_minor-battles minor-battles)])))))
 
 (defpage-r winner {:keys [_id]}
-  (let [previous-fighter-ids ((keyword _id) (session/get :battles))]
-    (battle/record-winner! previous-fighter-ids _id)
-    (println previous-fighter-ids)
-    (battles-listing previous-fighter-ids)))
+  (let [selected-battle-fighter-ids (take 2 ((session/get :battles) _id))]
+    (battle/record-winner! selected-battle-fighter-ids _id)
+    ;; TODO why does battles-listing expect an argument here?
+    (battles-listing nil)))

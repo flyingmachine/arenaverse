@@ -13,8 +13,8 @@
   (db-destroy (ObjectId. _id)))
 
 (defn record-for-pair [_ids]
-  (dissoc (one {(first _ids)  {$exists true}
-                (second _ids) {$exists true}})
+  (dissoc (one { (first _ids)  {$exists true}
+                 (second _ids) {$exists true}})
           :_id))
 
 (defn record-winner! [opponents winner]
