@@ -128,4 +128,4 @@
         selected-battle-fighter-ids (take 2 previous-battle)]
     (battle/record-winner! selected-battle-fighter-ids _id)
     ;; TODO why does battles-listing expect an argument here?
-    (battles-listing previous-battle)))
+    (battles-listing (or previous-battle (session/get :main-battle)))))

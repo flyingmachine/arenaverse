@@ -42,5 +42,6 @@ randomize the arenas shown on the home page
 **** in the right column, always show the winner between the two people who were just in main area
 *** if on an arena page, always show random fighters from that arena in the main area
 **** in the right column, always show the winner between the two people who were just in main area
+*** use arena id in URL, send winner as post request. ensure that refreshing doesn't send var again
 ** when clicking on a battle, continue showing that battle; home page
 ** somehow pass previous fighters to listing function
