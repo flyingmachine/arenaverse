@@ -44,6 +44,5 @@
          (object-id->idstr r)))
      
      (defn one-by-id [_id]
-       (println _id)
        (if-let [r (db-one-by-id (ObjectId. _id))]
          (object-id->idstr r)))))
