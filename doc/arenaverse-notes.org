@@ -32,16 +32,7 @@ Brownie
 Goblin
 
 * Multiple arenas
-** create short id for arena
 ** add friend
 ** allow users to create and admin their own arenas
-** home page
-modify session to include all pairs shown, keyed by arena id
-randomize the arenas shown on the home page
-*** if on the home page, always show completely random people
-**** in the right column, always show the winner between the two people who were just in main area
-*** if on an arena page, always show random fighters from that arena in the main area
-**** in the right column, always show the winner between the two people who were just in main area
-*** use arena id in URL, send winner as post request. ensure that refreshing doesn't send var again
-** when clicking on a battle, continue showing that battle; home page
-** somehow pass previous fighters to listing function
+*** only show arenas belonging to a user when user logs in
+*** 

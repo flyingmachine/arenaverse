@@ -29,11 +29,11 @@
    [:td fight-text]])
 
 (defpage-r listing []
-  (friend/authorize #{"user"}
-   (common/admin-layout
-    [:h1 "Arenas"]
-    [:table
-     (map arena-details (mc/find-maps "arenas"))])))
+
+  (common/admin-layout
+   [:h1 "Arenas"]
+   [:table
+    (map arena-details (mc/find-maps "arenas"))]))
 
 (defpage-r shiny {:as arena}
   (common/admin-layout
@@ -89,7 +89,5 @@
   (admin-arenas-show {:_id _id}))
 
 (defpage-r create {:as arena}
-  (mc/insert "arenas" arena)
-  (common/admin-layout
-   [:h1 "Arena Created!"]
-   [:table (arena-details arena)]))
+  (arena/create arena)
+  (res/redirect (url-for-r :admin/arenas/listing)))

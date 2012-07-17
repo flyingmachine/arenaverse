@@ -27,6 +27,16 @@
 (defn credential-fn [username]
   (user/one {:username username}))
 
+
+(defn admin-authorize [handler]
+  (fn [request]
+    (if (re-find #"/admin" (:uri request))
+      (friend/authorize #{"user"}
+                        (handler request))
+      (handler request))))
+
+(server/add-middleware admin-authorize)
+
 (server/add-middleware 
       friend/authenticate 
       {:credential-fn (partial creds/bcrypt-credential-fn credential-fn)

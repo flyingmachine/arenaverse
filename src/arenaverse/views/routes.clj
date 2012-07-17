@@ -51,3 +51,4 @@
 (defmacro defpage-r [route & body]
   (let [ns-suffix# (view-ns *ns*)]
     `(noir.core/defpage ~(symbol (str (dashed ns-suffix#) "-" route)) ~((keyword (str (slashed ns-suffix#) "/" route)) routes) ~@body)))
+
