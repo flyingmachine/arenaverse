@@ -15,7 +15,7 @@
   (merge input
          {:_id (ObjectId.)
           :password (creds/hash-bcrypt (:password input))
-          :roles "user"}))
+          :roles ["user"]}))
 
 ;; TODO use threading macro
 (defn create [input]
