@@ -5,7 +5,8 @@
             [arenaverse.data-mappers.arena :as arena]
             [noir.session :as session]
             [noir.response :as res]
-            [monger.collection :as mc])
+            [monger.collection :as mc]
+            [cemerick.friend :as friend])
   
   (:use noir.core
         hiccup.core
@@ -28,10 +29,11 @@
    [:td fight-text]])
 
 (defpage-r listing []
-  (common/admin-layout
-   [:h1 "Arenas"]
-   [:table
-    (map arena-details (mc/find-maps "arenas"))]))
+  (friend/authorize #{"user"}
+   (common/admin-layout
+    [:h1 "Arenas"]
+    [:table
+     (map arena-details (mc/find-maps "arenas"))])))
 
 (defpage-r shiny {:as arena}
   (common/admin-layout
@@ -42,7 +44,7 @@
              [:tr [:td] [:td (submit-button "Create Arena")]]])))
 
 (defpage-r edit {:keys [_id]}
-  (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
+  (let [arena (arena/one-by-id _id)]
     (common/admin-layout
      [:h1 "Editing Arena: " (:name arena)]
      (form-to [:post (url-for-r :admin/arenas/update {:_id _id})]
@@ -57,7 +59,7 @@
   (res/redirect (url-for-r :admin/arenas/listing)))
 
 (defpage-r show {:keys [_id]}
-  (let [arena (mc/find-map-by-id "arenas" (ObjectId. _id))]
+  (let [arena (arena/one-by-id _id)]
     (common/admin-layout
      [:h1 (:name arena)]
      (if-let [msg (session/flash-get)]

@@ -6,3 +6,4 @@ pom.xml
 .sass-cache
 .DS_Store
 *#*
+/target

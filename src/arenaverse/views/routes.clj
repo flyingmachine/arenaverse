@@ -19,7 +19,9 @@
               :admin/fighters/destroy [:post "/admin-asdf/fighters/:_id/destroy"]
 
               :battles/listing        "/"
-              :battles/winner         "/winner/:_id"})
+              :battles/winner         "/winner/:_id"
+
+              :sessions/new           "/login"})
 
 
 ;; TODO handle symbols vs keywords?
