@@ -3,7 +3,8 @@
 (defmacro add-db-reqs []
   '(do
      (require 'monger.collection)
-     (import '(org.bson.types ObjectId))))
+     (import '(org.bson.types ObjectId))
+     (use 'monger.operators)))
 
 ;; TODO ~' Insanity! #cthulhu
 ;; These macros are meant to infect the namespace with functions. Why

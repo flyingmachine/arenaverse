@@ -3,6 +3,7 @@
             [arenaverse.views.admin.fighters :as fighters]
             [arenaverse.data-mappers.fighter :as fighter]
             [arenaverse.data-mappers.arena :as arena]
+            [arenaverse.models.permissions :as can]
             [noir.session :as session]
             [noir.response :as res]
             [monger.collection :as mc]
@@ -29,11 +30,10 @@
    [:td fight-text]])
 
 (defpage-r listing []
-
   (common/admin-layout
    [:h1 "Arenas"]
    [:table
-    (map arena-details (mc/find-maps "arenas"))]))
+    (map arena-details (arena/by-user (:_id (friend/current-authentication))))]))
 
 (defpage-r shiny {:as arena}
   (common/admin-layout
@@ -84,7 +84,8 @@
 
 ;; todo put name and fight-text in separate map?
 (defpage-r update {:keys [_id name fight-text]}
-  (mc/update-by-id "arenas" (ObjectId. _id) {:name name :fight-text fight-text})
+  (can/protect can/modify_arena? _id)
+  (arena/update _id {:name name :fight-text fight-text})
   (session/flash-put! "Arena updated!")
   (admin-arenas-show {:_id _id}))
 

@@ -19,4 +19,7 @@
   (db-destroy (ObjectId. _id)))
 
 (defn update [_id, input]
-  (db-update-by-id (ObjectId. _id) input))
+  (db-update-by-id (ObjectId. _id) {$set input}))
+
+(defn by-user [user_id]
+  (all {:user_id user_id}))
