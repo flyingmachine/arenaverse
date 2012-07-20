@@ -10,7 +10,7 @@
 (defn- create-input->db-fields [input]
   (merge input
          {:_id (ObjectId.)
-          :user_id (:_id (friend/current-authentication))}))
+          :user-id (:_id (friend/current-authentication))}))
 
 (defn create [input]
   (db-insert (create-input->db-fields input)))
@@ -21,5 +21,5 @@
 (defn update [_id, input]
   (db-update-by-id (ObjectId. _id) {$set input}))
 
-(defn by-user [user_id]
-  (all {:user_id user_id}))
+(defn by-user [user-id]
+  (all {:user-id user-id}))
