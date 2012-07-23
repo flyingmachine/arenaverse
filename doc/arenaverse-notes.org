@@ -36,3 +36,7 @@ Goblin
 ** allow users to create and admin their own arenas
 *** only show arenas belonging to a user when user logs in
 *** 
+* User management
+** login page
+** logout
+** create account page

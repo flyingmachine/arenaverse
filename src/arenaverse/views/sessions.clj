@@ -25,3 +25,9 @@
               [:td "Password"]
               [:td (password-field "password")]]
              [:tr [:td] [:td (submit-button "Log In!!!")]]])))
+
+(defn clear-identity [response]
+  (update-in response [:session] dissoc ::identity))
+
+(defpage-r destroy []
+  (clear-identity (res/redirect (url-for-r :battles/listing))))

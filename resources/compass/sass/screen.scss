@@ -145,14 +145,21 @@ p {
   @include trailer;
 }
 
+#logo-link {
+  height:96px;
+}
+
 nav {
   @include clearfix;
-  @include border-radius(10px 10px 0 0);
   background: $light-green;
   line-height: 1;
+  @include border-radius(10px 10px 0 0);
 
   ul {
     list-style:none;
+    &#utility {
+      float:right;
+    }
     li {
       display:block;
       float:left;

@@ -1,4 +1,5 @@
 (ns arenaverse.views.common
+  (:require [cemerick.friend :as friend])
   (:use noir.core
         hiccup.core
         hiccup.page-helpers
@@ -6,14 +7,15 @@
 
 
 (defpartial pub-nav []
-  [:ul
-   [:li [:a {:href "/"} "Home!"]]
-   [:li [:a {:href "http://twitter.com/omgsmackdown"} "Twitter!"]]])
+  [:ul#utility
+   [:li [:a {:href "/"} "Create Your Own Smackdown!"]]
+   [:li [:a {:href "/login"} "Sign In"]]])
 
 (defpartial admin-nav []
-  [:ul
-   [:li [:a {:href (url-for-r :admin/arenas/listing)} "Arenas"]]        
-   [:li [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]])
+  [:ul#utility
+   [:li [:a {:href (url-for-r :admin/arenas/listing)} "Your Arenas"]]
+   [:li [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]
+   [:li [:a {:href "/logout"} "Log Out"]]])
 
 (defpartial common-layout [nav & [content]]
   (html5
@@ -26,10 +28,15 @@
    [:body
     [:div#banner
      [:header
-      [:a {:href "/"}
+      [:a#logo-link {:href "/"}
        [:img {:src "/img/_ui/logo.png"}]]
       [:nav
-       (nav)]]]
+       [:ul
+        [:li [:a {:href "/"} "Home!"]]
+        [:li [:a {:href "http://twitter.com/omgsmackdown"} "Twitter!"]]]
+       (if (friend/current-authentication)
+         (admin-nav)
+         (pub-nav))]]]
     [:div#arenaverse     
      [:div#main
       content]]]))
