@@ -6,15 +6,12 @@
             [arenaverse.models.permissions :as can]
             [noir.session :as session]
             [noir.response :as res]
-            [monger.collection :as mc]
             [cemerick.friend :as friend])
   
   (:use noir.core
         hiccup.core
         hiccup.form-helpers
-        arenaverse.views.routes)
-
-  (:import [org.bson.types ObjectId]))
+        arenaverse.views.routes))
 
 (defpartial arena-fields [{:keys [name fight-text]}]
   [:tr

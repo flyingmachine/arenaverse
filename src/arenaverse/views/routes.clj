@@ -22,7 +22,9 @@
               :battles/winner         "/winner/:_id"
 
               :sessions/new           "/login"
-              :sessions/destroy       "/logout"})
+              :sessions/destroy       "/logout"
+
+              :users/shiny            "/signup"})
 
 
 ;; TODO handle symbols vs keywords?

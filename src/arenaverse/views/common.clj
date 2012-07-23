@@ -8,7 +8,7 @@
 
 (defpartial pub-nav []
   [:ul#utility
-   [:li [:a {:href "/"} "Create Your Own Smackdown!"]]
+   [:li [:a {:href (url-for-r :users/shiny)} "Create Your Own Smackdown!"]]
    [:li [:a {:href "/login"} "Sign In"]]])
 
 (defpartial admin-nav []
