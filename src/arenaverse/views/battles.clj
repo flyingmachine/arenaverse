@@ -4,8 +4,7 @@
             [arenaverse.data-mappers.fighter :as fighter]
             [arenaverse.data-mappers.arena :as arena]
             [arenaverse.data-mappers.battle :as battle]
-            [noir.session :as session]
-            [monger.collection :as mc])
+            [noir.session :as session])
   
   (:use noir.core
         hiccup.core

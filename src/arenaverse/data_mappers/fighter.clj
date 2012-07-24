@@ -37,9 +37,8 @@
 (defn- normalize-image-extension [extension]
   (clojure.string/replace extension "jpeg" "jpg"))
 
-(defn- image-fields [object-id image-extension]
-  {:_id object-id
-   :image-extension (normalize-image-extension image-extension)})
+(defn- image-fields [image-extension]
+  {:image-extension (and image-extension (normalize-image-extension image-extension))})
 
 (defn- resize
   ([image box]
@@ -63,24 +62,25 @@
 
 ;; TODO paul graham says this is crappy code - but is it easier to understand?
 (defn- input->images [input]
-  (let [file-upload   (:file input)
-        original-file (:tempfile file-upload)
-        content-type  (:content-type file-upload)
-        original-image {:version "original"
-                        :file original-file
-                        :content-type content-type}
-        image-extension (normalize-image-extension (input->image-extension input))
-        buff-img (ImageIO/read original-file)]
-    
-    ;; TODO make this a lazy seq
-    (conj (map (fn [[version & dim]]
-                 {:version version
-                  :file (buffered-image->input-stream
-                         (apply resize (cons buff-img dim))
-                         image-extension)
-                  :content-type content-type})
-               *image-versions)
-          original-image)))
+  (if (:file input)
+    (let [file-upload   (:file input)
+          original-file (:tempfile file-upload)
+          content-type  (:content-type file-upload)
+          original-image {:version "original"
+                          :file original-file
+                          :content-type content-type}
+          image-extension (normalize-image-extension (input->image-extension input))
+          buff-img (ImageIO/read original-file)]
+      
+      ;; TODO make this a lazy seq
+      (conj (map (fn [[version & dim]]
+                   {:version version
+                    :file (buffered-image->input-stream
+                           (apply resize (cons buff-img dim))
+                           image-extension)
+                    :content-type content-type})
+                 *image-versions)
+            original-image))))
 
 (defn- store-image [image, record]
   (s3/put-object config/*aws-credentials*
@@ -100,7 +100,8 @@
   (let [object-id (ObjectId.)]
     (merge
      (dissoc input :file)
-     (image-fields object-id (input->image-extension input)))))
+     {:_id object-id}
+     (image-fields (input->image-extension input)))))
 
 (defn- update-input->db-fields [input]
   (let [object-id (ObjectId. (:_id input))
@@ -110,9 +111,10 @@
         db-fields (merge
                    (select-keys record [:image-extension])
                    (dissoc input :_id :file)
+                   {:_id object-id}
                    (select-keys record [:arena-id]))]
     (if (image-uploaded? input)
-      (merge db-fields (image-fields object-id (input->image-extension input)))
+      (merge db-fields (image-fields (input->image-extension input)))
       db-fields)))
 
 (defn create [input]
