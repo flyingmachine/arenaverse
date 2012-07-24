@@ -29,6 +29,8 @@
 (defpage-r listing []
   (common/admin-layout
    [:h1 "Arenas"]
+   [:p
+    [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]
    [:table
     (map arena-details (arena/by-user (:_id (friend/current-authentication))))]))
 
