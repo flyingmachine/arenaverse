@@ -32,7 +32,7 @@ Brownie
 Goblin
 
 * Multiple arenas
-** add friend
+** arena URL
 ** allow users to create and admin their own arenas
 *** only show arenas belonging to a user when user logs in
 *** 

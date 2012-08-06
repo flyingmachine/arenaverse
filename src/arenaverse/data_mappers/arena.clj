@@ -7,10 +7,15 @@
   (db/add-db-fns collection-name)
   (db/add-finder-fns))
 
+(defn url-friendly [name]
+  (clojure.string/replace name #"[\W]" "-"))
+
 (defn- create-input->db-fields [input]
-  (merge input
-         {:_id (ObjectId.)
-          :user-id (:_id (friend/current-authentication))}))
+  (let [object-id (ObjectId.)]
+    (merge input
+           {:_id object-id
+            :user-id (:_id (friend/current-authentication))
+            :url-id (str (url-friendly name) " " (.substring (.toString object-id) 20))})))
 
 (defn create [input]
   (db-insert (create-input->db-fields input)))
