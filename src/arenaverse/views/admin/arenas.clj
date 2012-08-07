@@ -21,9 +21,9 @@
     [:td (label "fight-text" "Fight Text")]
     [:td (text-field "fight-text" fight-text)]])
 
-(defpartial arena-details [{:keys [name fight-text _id]}]
+(defpartial arena-details [{:keys [name fight-text shortname]}]
   [:tr
-   [:td [:a {:href (url-for-r :admin/arenas/show {:_id _id})} name]]
+   [:td [:a {:href (url-for-r :admin/arenas/show {:shortname shortname})} name]]
    [:td fight-text]])
 
 (defpage-r listing []
@@ -42,27 +42,27 @@
              (arena-fields arena)
              [:tr [:td] [:td (submit-button "Create Arena")]]])))
 
-(defpage-r edit {:keys [_id]}
-  (let [arena (arena/one-by-id _id)]
+(defpage-r edit {:keys [shortname]}
+  (let [arena (arena/one {:shortname shortname})]
     (can/protect
      (can/modify_arena? arena)
      (common/admin-layout
       [:h1 "Editing Arena: " (:name arena)]
-      (form-to [:post (url-for-r :admin/arenas/update {:_id _id})]
+      (form-to [:post (url-for-r :admin/arenas/update {:shortname shortname})]
                [:table
                 (arena-fields arena)
                 [:tr [:td] [:td (submit-button "Update Arena")]]])
-      (form-to [:post (url-for-r :admin/arenas/destroy {:_id _id})]
+      (form-to [:post (url-for-r :admin/arenas/destroy {:shortname shortname})]
                (submit-button "Delete Arena"))))))
 
-(defpage-r destroy {:keys [_id]}
+(defpage-r destroy {:keys [shortname]}
   (can/protect
-   (can/modify_arena? (arena/one-by-id _id))
-   (arena/destroy _id)
+   (can/modify_arena? (arena/one {:shortname shortname}))
+   (arena/destroy shortname)
    (res/redirect (url-for-r :admin/arenas/listing))))
 
-(defpage-r show {:keys [_id]}
-  (let [arena (arena/one-by-id _id)]
+(defpage-r show {:keys [shortname]}
+  (let [arena (arena/one {:shortname shortname})]
     (can/protect
      (can/modify_arena? arena)
      (common/admin-layout
@@ -76,7 +76,7 @@
        [:h2 "New Fighter"]
        (form-to {:enctype "multipart/form-data"}
                 [:post (url-for-r :admin/fighters/create)]
-                (hidden-field :arena-id _id)
+                (hidden-field :arena-id (:_id arena))
                 [:table
                  (fighters/fighter-fields {})
                  [:tr
@@ -85,15 +85,16 @@
       
       [:div#fighters
        [:h2 "Fighters"]
-       (fighters/thumbs {:arena-id _id})]))))
+       (fighters/thumbs {:arena-id (:_id arena)})]))))
 
 ;; todo put name and fight-text in separate map?
-(defpage-r update {:keys [_id name fight-text]}
-  (can/protect
-   (can/modify_arena? (arena/one-by-id _id))
-   (arena/update _id {:name name :fight-text fight-text})
-   (session/flash-put! "Arena updated!")
-   (admin-arenas-show {:_id _id})))
+(defpage-r update {:keys [shortname name fight-text]}
+  (let [arena (arena/one {:shortname shortname})]
+    (can/protect
+     (can/modify_arena? arena)
+     (arena/update (:_id arena) {:name name :fight-text fight-text})
+     (session/flash-put! "Arena updated!")
+     (admin-arenas-show {:shortname shortname}))))
 
 (defpage-r create {:as arena}
   (arena/create arena)

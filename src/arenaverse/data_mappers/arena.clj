@@ -10,18 +10,22 @@
 (defn url-friendly [name]
   (clojure.string/replace name #"[\W]" "-"))
 
+(defn shortname [name object-id]
+  (str (url-friendly name) "-" (.substring (.toString object-id) 20)))
+
 (defn- create-input->db-fields [input]
   (let [object-id (ObjectId.)]
     (merge input
            {:_id object-id
             :user-id (:_id (friend/current-authentication))
-            :url-id (str (url-friendly name) " " (.substring (.toString object-id) 20))})))
+            :shortname (shortname (:name input) object-id)})))
 
 (defn create [input]
   (db-insert (create-input->db-fields input)))
 
-(defn destroy [_id]
-  (db-destroy (ObjectId. _id)))
+(defn destroy [shortname]
+  (let [object-id (:_id (db-one {:shortname shortname}))]
+    (db-destroy object-id)))
 
 (defn update [_id, input]
   (db-update-by-id (ObjectId. _id) {$set input}))

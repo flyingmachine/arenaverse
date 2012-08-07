@@ -7,11 +7,11 @@
 (def routes '{;; admin
               :admin/arenas/listing   "/admin-asdf"
               :admin/arenas/shiny     "/admin-asdf/arenas/new"
-              :admin/arenas/show      [:get ["/admin-asdf/arenas/:_id" :_id #"((?!new)[^/])*"]]
-              :admin/arenas/edit      "/admin-asdf/arenas/:_id/edit"
-              :admin/arenas/update    [:post "/admin-asdf/arenas/:_id"]
+              :admin/arenas/show      [:get ["/admin-asdf/arenas/:shortname" :shortname #"((?!new)[^/])*"]]
+              :admin/arenas/edit      "/admin-asdf/arenas/:shortname/edit"
+              :admin/arenas/update    [:post "/admin-asdf/arenas/:shortname"]
               :admin/arenas/create    [:post "/admin-asdf/arenas"]
-              :admin/arenas/destroy   [:post "/admin-asdf/arenas/:_id/destroy"]
+              :admin/arenas/destroy   [:post "/admin-asdf/arenas/:shortname/destroy"]
               
               :admin/fighters/create  [:post "/admin-asdf/fighters"]
               :admin/fighters/edit    "/admin-asdf/fighters/:_id/edit"
