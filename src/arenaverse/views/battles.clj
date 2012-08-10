@@ -65,14 +65,13 @@
 (defn battles-without-main-arena-specified []
   (shuffle (battle-filter (map arena->battle (arena/all)))))
 
-(defn battles-with-main-arena-specified [main-arena-id]
-  (let [arena (arena/one-by-id main-arena-id)
-        arenas (remove #(= arena %) (arena/all))]
-    (reverse (conj (shuffle (battle-filter (map arena->battle arenas))) (arena->battle arena)))))
+(defn battles-with-main-arena-specified [main-arena]
+  (let [arenas (remove #(= main-arena %) (arena/all))]
+    (reverse (conj (shuffle (battle-filter (map arena->battle arenas))) (arena->battle main-arena)))))
 
-(defn battles [main-arena-id]
-  (let [b (if main-arena-id
-            (battles-with-main-arena-specified main-arena-id)
+(defn battles [main-arena]
+  (let [b (if main-arena
+            (battles-with-main-arena-specified main-arena)
             (battles-without-main-arena-specified))]
     (register-battles! b)
     b))
@@ -141,7 +140,8 @@
                             prev-fighter-id-b
                             prev-main-arena-shortname
                             main-arena-shortname]}]
-  (let [[main-battle & minor-battles] (battles false)]
+  (let [designated-main-battle (when main-arena-shortname (arena/one {:shortname main-arena-shortname}))
+        [main-battle & minor-battles] (battles designated-main-battle)]
     (when main-battle
       (let [[left-f right-f] (:fighters main-battle)
             arena (:arena main-battle)]
