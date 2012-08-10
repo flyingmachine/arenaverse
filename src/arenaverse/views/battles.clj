@@ -151,7 +151,7 @@
          (_minor-battles minor-battles))))))
 
 (defn session-battle->battle-map [session-battle]
-  (let [[prev-main-arena-shortname prev-fighter-id-a prev-fighter-id-b] (session/get :main-battle)]
+  (let [[prev-main-arena-shortname prev-fighter-id-a prev-fighter-id-b] session-battle]
     {:prev-main-arena-shortname prev-main-arena-shortname
      :prev-fighter-id-a prev-fighter-id-a
      :prev-fighter-id-b prev-fighter-id-b}))
@@ -161,10 +161,10 @@
 
 (defpage-r winner {:keys [arena-shortname _id]}
   (println ((session/get :battles) arena-shortname))
-  (let [previous-battle ((session/get :battles) arena-shortname)
-        selected-battle-fighter-ids (rest previous-battle)]
+  (let [selected-battle ((session/get :battles) arena-shortname)
+        selected-battle-fighter-ids (rest selected-battle)]
     (battle/record-winner! selected-battle-fighter-ids _id)
-    (let [battle-map (session-battle->battle-map (or previous-battle (session/get :main-battle)))]
+    (let [battle-map (session-battle->battle-map (or selected-battle (session/get :main-battle)))]
       (battle (assoc battle-map :main-arena-shortname (:prev-main-arena-shortname battle-map))))))
 
 (defpage-r arena {:keys [shortname]}
