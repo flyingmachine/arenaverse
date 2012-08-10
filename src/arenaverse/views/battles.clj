@@ -145,21 +145,21 @@
          (main-area arena left-f right-f prev-fighter-id-a prev-fighter-id-b)
          (_minor-battles minor-battles))))))
 
-(defpage-r listing []
-  ;; TODO the first assignment has to come before the second. any way
-  ;; to get around this?
-  (println (session/get :main-battle))
+(defn session-battle->battle-map [session-battle]
   (let [[prev-main-arena-shortname prev-fighter-id-a prev-fighter-id-b] (session/get :main-battle)]
-    (battle {:prev-main-arena-shortname prev-main-arena-shortname
-             :prev-fighter-id-a prev-fighter-id-a
-             :prev-fighter-id-b prev-fighter-id-b})))
+    {:prev-main-arena-shortname prev-main-arena-shortname
+     :prev-fighter-id-a prev-fighter-id-a
+     :prev-fighter-id-b prev-fighter-id-b}))
 
-(defpage-r winner {:keys [_id]}
-  (let [previous-battle ((session/get :battles) _id)
-        selected-battle-fighter-ids (take 2 previous-battle)]
+(defpage-r listing []
+  (battle (session-battle->battle-map (session/get :main-battle))))
+
+(defpage-r winner {:keys [arena-shortname _id]}
+  (let [previous-battle (some #(and (= arena-shortname %) arena-shortname) (session/get :battles))
+        selected-battle-fighter-ids (pop previous-battle)]
     (battle/record-winner! selected-battle-fighter-ids _id)
-    ;; TODO why does battles-listing expect an argument here?
-    (battle (or previous-battle (session/get :main-battle)))))
+    (let [battle-map (session-battle->battle-map (or previous-battle (session/get :main-battle)))]
+      (battle (assoc battle-map :main-arena-shortname (:prev-main-arena-shortname battle-map))))))
 
 (defpage-r arena {:keys [shortname]}
   (let [arena (arena/one {:shortname shortname})]
