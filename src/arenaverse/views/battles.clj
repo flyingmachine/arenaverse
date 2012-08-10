@@ -35,27 +35,28 @@
         (random-teamless-fighters fighters))
       [])))
 
-(defpartial card [record, img-version]
+(defpartial card [arena, record, img-version]
   [:div.name (:name record)]
   [:div.pic
-   [:a {:href (url-for-r :battles/winner {:_id (:_id record)})}
+   [:a {:href (url-for-r :battles/winner {:_id (:_id record) :arena-shortname (:shortname arena)})}
     (fighters/fighter-img img-version record)]])
 
-(defn win-ratio [fighter wins]
+(defn win-ratio [arena fighter wins]
   (let [bouts (reduce + (vals wins))
         _id (keyword (:_id fighter))
         ratio (* 100 (if (= 0 bouts) 1 (/ (_id wins) bouts)))]
     [:div.ratio-card
-     (card fighter "card")
+     (card arena fighter "card")
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
 (defpartial _minor-battle [battle]
-  (let [[left-f right-f] (:fighters battle)]
+  (let [[left-f right-f] (:fighters battle)
+        arena (:arena battle)]
     (when (and left-f right-f)
       [:div.battle
        [:h2 (:fight-text (:arena battle))]
-       [:div.fighter.a (card left-f "card")]
-       [:div.fighter.b (card right-f "card")]])))
+       [:div.fighter.a (card arena left-f "card")]
+       [:div.fighter.b (card arena right-f "card")]])))
 
 (defpartial _minor-battles [minor-battles]
   (loop [html [:div#minor-battles]
@@ -68,16 +69,14 @@
                  (rest remaining-battles))
           (recur html (rest remaining-battles)))))))
 
+;; Takes a seq of battles, which are a map of arena and two fighters
+;; for that arena
 (defn register-battles! [b]
-  (let [battles-processed (reduce (fn [m {:keys [arena fighters]}]
-                                    (let [fids (into [] (map fighter/idstr fighters))
-                                          aid (arena/idstr arena)]
-                                      (assoc m (first fids) (conj fids aid)
-                                               (last fids) (conj fids aid))))
-                                  {}
-                                  b)]
+  (let [battles-processed (map (fn [battle]
+                                 {(:shortname (:arena battle)) (map :_id (:fighters battle))})
+                               b)]
     (session/put! :battles battles-processed)
-    (session/put! :main-battle (battles-processed (fighter/idstr (first (:fighters (first b))))))))
+    (session/put! :main-battle (first battles-processed))))
 
 (defn arena->battle [arena]
   {:arena arena :fighters (random-fighters (arena/idstr arena))})
@@ -94,40 +93,53 @@
     (reverse (conj (shuffle (battle-filter (map arena->battle arenas))) (arena->battle arena)))))
 
 (defn battles [main-arena-id]
-  (let [b (if main-arena-id (battles-with-main-arena-specified main-arena-id) (battles-without-main-arena-specified))]
+  (let [b (if main-arena-id
+            (battles-with-main-arena-specified main-arena-id)
+            (battles-without-main-arena-specified))]
     (register-battles! b)
     b))
 
-;; TODO using apply here is really ugly
-(defpage-r listing [& last-selected-battle]
+(defn previous-battle-results [prev-fighter-id-a prev-fighter-id-b]
+  (when (and prev-fighter-id-a prev-fighter-id-b)
+    (let [previous-fighters (map #(fighter/one-by-id %) [prev-fighter-id-a prev-fighter-id-b])
+          wins (battle/record-for-pair (map :_id previous-fighters))]
+      [:div.win-ratios
+       [:h2 "Win Ratio"]
+       (win-ratio (first previous-fighters) wins)
+       (win-ratio (second previous-fighters) wins)])))
+
+(defpartial main-area [arena left-f right-f prev-fighter-id-a prev-fighter-id-b]
+  [:div#battle
+   [:div.fighter.a
+    (card arena left-f "battle")]
+   [:div.fighter.b
+    (card arena right-f "battle")]
+   (previous-battle-results prev-fighter-id-a prev-fighter-id-b)])
+
+(defpartial battle [{:keys [prev-fighter-id-a
+                            prev-fighter-id-b
+                            prev-main-arena-id
+                            main-arena-id]}]
+  (let [[main-battle & minor-battles] (battles false)]
+    (when main-battle
+      (let [[left-f right-f] (:fighters main-battle)
+            arena (:arena main-battle)]
+        (common/layout 
+         [:h1 (:fight-text (:arena main-battle))]
+         (main-area arena left-f right-f prev-fighter-id-a prev-fighter-id-b)
+         (_minor-battles minor-battles))))))
+
+(defpage-r listing []
   ;; TODO the first assignment has to come before the second. any way
   ;; to get around this?
-  (let [[prev-fighter-id-a prev-fighter-id-b previous-arena] (if last-selected-battle last-selected-battle (session/get :main-battle))
-        [main-battle & minor-battles] (battles (and last-selected-battle previous-arena))]
-    (when main-battle
-      (apply common/layout 
-             (let [[left-f right-f] (:fighters main-battle)]
-               [[:h1 (:fight-text (:arena main-battle))]
-                [:div#battle
-                 [:div.fighter.a
-                  (card left-f "battle")]
-                 [:div.fighter.b
-                  (card right-f "battle")]
-                 (when (and prev-fighter-id-a prev-fighter-id-b)
-                   (let [previous-fighters (map #(fighter/one-by-id %) [prev-fighter-id-a prev-fighter-id-b])
-                         wins (battle/record-for-pair (map :_id previous-fighters))]
-                     [:div.win-ratios
-                      [:h2 "Win Ratio"]
-                      (win-ratio (first previous-fighters) wins)
-                      (win-ratio (second previous-fighters) wins)]))]
-                (_minor-battles minor-battles)])))))
+  (battle (session/get :main-battle)))
 
 (defpage-r winner {:keys [_id]}
   (let [previous-battle ((session/get :battles) _id)
         selected-battle-fighter-ids (take 2 previous-battle)]
     (battle/record-winner! selected-battle-fighter-ids _id)
     ;; TODO why does battles-listing expect an argument here?
-    (battles-listing (or previous-battle (session/get :main-battle)))))
+    (battle (or previous-battle (session/get :main-battle)))))
 
 (defpage-r arena {:keys [shortname]}
   (let [arena (arena/one {:shortname shortname})]

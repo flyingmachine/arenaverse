@@ -19,8 +19,8 @@
               :admin/fighters/destroy [:post "/admin-asdf/fighters/:_id/destroy"]
 
               :battles/listing        "/"
-              :battles/winner         "/winner/:_id"
-              :battles/arena           "/arenas/:shortname"
+              :battles/winner         "/arenas/:arena-shortname/winner/:_id"
+              :battles/arena          "/arenas/:shortname"
 
               :sessions/new           "/login"
               :sessions/destroy       "/logout"
