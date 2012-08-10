@@ -42,14 +42,19 @@
 
 (defn battle->session-battle [battle]
   (let [shortname (:shortname (:arena battle))]
-    {shortname (conj (map :_id (:fighters battle)) shortname)}))
+    (conj (map :_id (:fighters battle)) shortname)))
 
 ;; Takes a seq of battles, which are a map of arena and two fighters
 ;; for that arena
 (defn register-battles! [b]
-  (let [battles-processed (map battle->session-battle b)]
+  (let [battles-processed (apply hash-map
+                                 (reduce (fn [list battle]
+                                           (let [bs (battle->session-battle battle)]
+                                             (conj list (first bs) bs)))
+                                         []
+                                         b))]
     (session/put! :battles battles-processed)
-    (session/put! :main-battle (first (vals (first battles-processed))))))
+    (session/put! :main-battle (battle->session-battle (first b)))))
 
 (defn arena->battle [arena]
   {:arena arena :fighters (random-fighters (arena/idstr arena))})
@@ -155,8 +160,9 @@
   (battle (session-battle->battle-map (session/get :main-battle))))
 
 (defpage-r winner {:keys [arena-shortname _id]}
-  (let [previous-battle (some #(and (= arena-shortname %) arena-shortname) (session/get :battles))
-        selected-battle-fighter-ids (pop previous-battle)]
+  (println ((session/get :battles) arena-shortname))
+  (let [previous-battle ((session/get :battles) arena-shortname)
+        selected-battle-fighter-ids (rest previous-battle)]
     (battle/record-winner! selected-battle-fighter-ids _id)
     (let [battle-map (session-battle->battle-map (or previous-battle (session/get :main-battle)))]
       (battle (assoc battle-map :main-arena-shortname (:prev-main-arena-shortname battle-map))))))
