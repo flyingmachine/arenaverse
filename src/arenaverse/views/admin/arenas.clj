@@ -3,7 +3,7 @@
             [arenaverse.views.admin.fighters :as fighters]
             [arenaverse.data-mappers.fighter :as fighter]
             [arenaverse.data-mappers.arena :as arena]
-            [arenaverse.models.permissions :as can]
+            [arenaverse.models.permissions :as permissions]
             [noir.session :as session]
             [noir.response :as res]
             [cemerick.friend :as friend])
@@ -44,8 +44,8 @@
 
 (defpage-r edit {:keys [shortname]}
   (let [arena (arena/one {:shortname shortname})]
-    (can/protect
-     (can/modify_arena? arena)
+    (permissions/protect
+     (permissions/modify_arena? arena)
      (common/admin-layout
       [:h1 "Editing Arena: " (:name arena)]
       (form-to [:post (url-for-r :admin/arenas/update {:shortname shortname})]
@@ -56,15 +56,15 @@
                (submit-button "Delete Arena"))))))
 
 (defpage-r destroy {:keys [shortname]}
-  (can/protect
-   (can/modify_arena? (arena/one {:shortname shortname}))
+  (permissions/protect
+   (permissions/modify_arena? (arena/one {:shortname shortname}))
    (arena/destroy shortname)
    (res/redirect (url-for-r :admin/arenas/listing))))
 
 (defpage-r show {:keys [shortname]}
   (let [arena (arena/one {:shortname shortname})]
-    (can/protect
-     (can/modify_arena? arena)
+    (permissions/protect
+     (permissions/modify_arena? arena)
      (common/admin-layout
       [:h1 (:name arena)]
       (if-let [msg (session/flash-get)]
@@ -90,8 +90,8 @@
 ;; todo put name and fight-text in separate map?
 (defpage-r update {:keys [shortname name fight-text]}
   (let [arena (arena/one {:shortname shortname})]
-    (can/protect
-     (can/modify_arena? arena)
+    (permissions/protect
+     (permissions/modify_arena? arena)
      (arena/update (:_id arena) {:name name :fight-text fight-text})
      (session/flash-put! "Arena updated!")
      (admin-arenas-show {:shortname shortname}))))

@@ -1,6 +1,8 @@
 (ns arenaverse.views.admin.fighters
   (:require [arenaverse.views.common :as common]
             [arenaverse.data-mappers.fighter :as fighter]
+            [arenaverse.data-mappers.arena :as arena]
+            [arenaverse.models.permissions :as permissions]
             [noir.response :as res]
             [noir.session :as session]
             [monger.collection :as mc])
@@ -14,11 +16,14 @@
   (:import [org.bson.types ObjectId]))
 
 (defn redirect-to-arena [fighter]
-  (res/redirect (url-for-r :admin/arenas/show {:_id (:arena-id fighter)})))
+  (let [arena (arena/one-by-id (:arena-id fighter))]
+    (res/redirect (url-for-r :admin/arenas/show {:shortname (:shortname arena)}))))
 
 (defpage-r create {:as fighter}
-  (fighter/create fighter)
-  (redirect-to-arena fighter))
+  (permissions/protect
+   (permissions/modify_fighter? fighter)
+   (fighter/create fighter)
+   (redirect-to-arena fighter)))
 
 (defpartial fighter-img [version record]
   [:img {:src  (fighter/amazon-image-path version record)}])
@@ -45,25 +50,30 @@
       (fighter-img "card" record))]])
 
 (defpage-r edit {:keys [_id]}
-  (let [fighter (mc/find-map-by-id "fighters" (ObjectId. _id))]
-    (common/admin-layout
-     [:h1 "Editing Fighter: " (:name fighter)]
-     (form-to {:enctype "multipart/form-data"}
-              [:post (url-for-r  :admin/fighters/update {:_id _id})]
-              [:table
-               (fighter-fields fighter)
-               [:tr
-                [:td]
-                [:td (submit-button "Update Fighter")]]])
-     (form-to [:post (url-for-r :admin/fighters/destroy {:_id _id})]
-              (hidden-field :arena-id (:arena-id fighter))
-              (submit-button "Delete Fighter")))))
+  (let [fighter (fighter/one-by-id _id)]
+    (permissions/protect
+     (permissions/modify_fighter? fighter)
+     (common/admin-layout
+      [:h1 "Editing Fighter: " (:name fighter)]
+      (form-to {:enctype "multipart/form-data"}
+               [:post (url-for-r  :admin/fighters/update {:_id _id})]
+               [:table
+                (fighter-fields fighter)
+                [:tr
+                 [:td]
+                 [:td (submit-button "Update Fighter")]]])
+      (form-to [:post (url-for-r :admin/fighters/destroy {:_id _id})]
+               (hidden-field :arena-id (:arena-id fighter))
+               (submit-button "Delete Fighter"))))))
 
 ;; TODO possibly do nested route so arena id is present
-(defpage-r update {:as fighter}
-  (let [record (fighter/update fighter)]
-    (session/flash-put! "Fighter updated!")
-    (redirect-to-arena record)))
+(defpage-r update {:as fighter-input}
+  (let [fighter (fighter/one-by-id (:_id fighter-input))]
+    (permissions/protect
+     (permissions/modify_fighter? fighter)
+     (let [record (fighter/update fighter-input)]
+       (session/flash-put! "Fighter updated!")
+       (redirect-to-arena record)))))
 
 (defpage-r destroy {:keys [_id arena-id]}
   (fighter/destroy _id)
