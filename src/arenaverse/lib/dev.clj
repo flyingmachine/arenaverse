@@ -4,7 +4,7 @@
    [arenaverse.data-mappers.arena :as arena]
    [arenaverse.data-mappers.user :as user]
    [monger.collection :as mc])
-
+  (:use monger.operators)
   (:import [org.bson.types ObjectId]))
 
 (defn mongo-connect! []
@@ -23,6 +23,10 @@
   (mc/remove "fighters")
   (mc/remove "arenas"))
 
+
+(defn add-shortnames []
+  (doseq [arena (arena/all {:shortname {$exists false}})]
+    (arena/update (:_id arena) (assoc arena :shortname (arena/shortname (:name arena) (:_id arena))))))
 
 (defn re-seed! []
   (clear-data!)

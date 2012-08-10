@@ -11,7 +11,7 @@
   (clojure.string/replace name #"[\W]" "-"))
 
 (defn shortname [name object-id]
-  (str (url-friendly name) "-" (.substring (.toString object-id) 20)))
+  (clojure.string/lower-case (str (url-friendly name) "-" (.substring (.toString object-id) 20))))
 
 (defn- create-input->db-fields [input]
   (let [object-id (ObjectId.)]
@@ -28,7 +28,7 @@
     (db-destroy object-id)))
 
 (defn update [_id, input]
-  (db-update-by-id (ObjectId. _id) {$set input}))
+  (db-update-by-id (ObjectId. _id) {$set (dissoc input :user-id :_id)}))
 
 (defn by-user [user-id]
   (all {:user-id user-id}))
