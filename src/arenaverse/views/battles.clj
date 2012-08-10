@@ -128,3 +128,7 @@
     (battle/record-winner! selected-battle-fighter-ids _id)
     ;; TODO why does battles-listing expect an argument here?
     (battles-listing (or previous-battle (session/get :main-battle)))))
+
+(defpage-r arena {:keys [shortname]}
+  (let [arena (arena/one {:shortname shortname})]
+    (battles-listing [nil nil (:_id arena)])))

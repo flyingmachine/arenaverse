@@ -20,12 +20,14 @@
 
               :battles/listing        "/"
               :battles/winner         "/winner/:_id"
+              :battles/arena           "/arenas/:shortname"
 
               :sessions/new           "/login"
               :sessions/destroy       "/logout"
 
               :users/shiny            "/signup"
-              :users/create           [:post "/users"]})
+              :users/create           [:post "/users"]}
+  )
 
 
 ;; TODO handle symbols vs keywords?
