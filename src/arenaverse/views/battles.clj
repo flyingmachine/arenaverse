@@ -9,7 +9,8 @@
   (:use noir.core
         hiccup.core
         hiccup.form-helpers
-        arenaverse.views.routes)
+        arenaverse.views.routes
+        monger.operators)
   
   (:import [org.bson.types ObjectId]))
 
@@ -32,7 +33,7 @@
     [(nth (first teams) left) (nth (second teams) right)]))
 
 (defn random-fighters [arena-id]
-  (let [fighters (fighter/all {:arena-id arena-id})]
+  (let [fighters (fighter/all {:arena-id arena-id, :hidden {$exists false}})]
     (if (> (count fighters) 1)
       (if (some #(not (empty? (:team %))) fighters)
         (random-team-fighters fighters)
@@ -62,11 +63,14 @@
 (defn battle-filter [battles]
   (filter #(not (empty? (:fighters %))) battles))
 
+(defn filtered-arenas []
+  (arena/all {:hidden {$exists false}}))
+
 (defn battles-without-main-arena-specified []
-  (shuffle (battle-filter (map arena->battle (arena/all)))))
+  (shuffle (battle-filter (map arena->battle (filtered-arenas)))))
 
 (defn battles-with-main-arena-specified [main-arena]
-  (let [arenas (remove #(= main-arena %) (arena/all))]
+  (let [arenas (remove #(= main-arena %) (filtered-arenas))]
     (reverse (conj (shuffle (battle-filter (map arena->battle arenas))) (arena->battle main-arena)))))
 
 (defn battles [main-arena]

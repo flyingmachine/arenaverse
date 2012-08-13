@@ -23,6 +23,7 @@
     (def ~'db-update-by-id (partial monger.collection/update-by-id collection-name#))
     (def ~'db-update (partial monger.collection/update collection-name#))))
 
+
 ;; These methods are meant to generate the representations which
 ;; non-db parts of the code will use. They all convert ObjectId's to
 ;; strings because no other part of the system should care about ObjectId's
@@ -46,4 +47,7 @@
      
      (defn one-by-id [_id]
        (if-let [r (db-one-by-id (ObjectId. _id))]
-         (object-id->idstr r)))))
+         (object-id->idstr r)))
+
+     (defn unset [_id field]
+       (db-update-by-id (ObjectId. _id) {$unset {field 1}}))))

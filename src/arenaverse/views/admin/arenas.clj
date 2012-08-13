@@ -28,7 +28,7 @@
 
 (defpage-r listing []
   (common/admin-layout
-   [:h1 "Arenas"]
+   [:h1 "Your Arenas"]
    [:p
     [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]
    [:table
@@ -45,7 +45,7 @@
 (defpage-r edit {:keys [shortname]}
   (let [arena (arena/one {:shortname shortname})]
     (permissions/protect
-     (permissions/modify_arena? arena)
+     (permissions/modify-arena? arena)
      (common/admin-layout
       [:h1 "Editing Arena: " (:name arena)]
       (form-to [:post (url-for-r :admin/arenas/update {:shortname shortname})]
@@ -57,14 +57,14 @@
 
 (defpage-r destroy {:keys [shortname]}
   (permissions/protect
-   (permissions/modify_arena? (arena/one {:shortname shortname}))
+   (permissions/modify-arena? (arena/one {:shortname shortname}))
    (arena/destroy shortname)
    (res/redirect (url-for-r :admin/arenas/listing))))
 
 (defpage-r show {:keys [shortname]}
   (let [arena (arena/one {:shortname shortname})]
     (permissions/protect
-     (permissions/modify_arena? arena)
+     (permissions/modify-arena? arena)
      (common/admin-layout
       [:h1 (:name arena)]
       (if-let [msg (session/flash-get)]
@@ -91,7 +91,7 @@
 (defpage-r update {:keys [shortname name fight-text]}
   (let [arena (arena/one {:shortname shortname})]
     (permissions/protect
-     (permissions/modify_arena? arena)
+     (permissions/modify-arena? arena)
      (arena/update (:_id arena) {:name name :fight-text fight-text})
      (session/flash-put! "Arena updated!")
      (admin-arenas-show {:shortname shortname}))))

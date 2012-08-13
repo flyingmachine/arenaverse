@@ -21,7 +21,7 @@
 
 (defpage-r create {:as fighter}
   (permissions/protect
-   (permissions/modify_fighter? fighter)
+   (permissions/modify-fighter? fighter)
    (fighter/create fighter)
    (redirect-to-arena fighter)))
 
@@ -52,7 +52,7 @@
 (defpage-r edit {:keys [_id]}
   (let [fighter (fighter/one-by-id _id)]
     (permissions/protect
-     (permissions/modify_fighter? fighter)
+     (permissions/modify-fighter? fighter)
      (common/admin-layout
       [:h1 "Editing Fighter: " (:name fighter)]
       (form-to {:enctype "multipart/form-data"}
@@ -70,7 +70,7 @@
 (defpage-r update {:as fighter-input}
   (let [fighter (fighter/one-by-id (:_id fighter-input))]
     (permissions/protect
-     (permissions/modify_fighter? fighter)
+     (permissions/modify-fighter? fighter)
      (let [record (fighter/update fighter-input)]
        (session/flash-put! "Fighter updated!")
        (redirect-to-arena record)))))

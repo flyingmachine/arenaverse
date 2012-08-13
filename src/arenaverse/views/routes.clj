@@ -18,6 +18,15 @@
               :admin/fighters/update  [:post "/admin/fighters/:_id"]
               :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]
 
+              ;; moderate
+              :moderate/arenas/listing "/moderate"
+              :moderate/arenas/show    [:get ["/moderate/arenas/:shortname" :shortname #"((?!new)[^/])*"]]
+              :moderate/arenas/hide    "/moderate/arenas/:shortname/hide"
+              :moderate/arenas/unhide  "/moderate/arenas/:shortname/unhide"
+
+              :moderate/fighters/hide    "/moderate/fighters/:_id/hide"
+              :moderate/fighters/unhide  "/moderate/fighters/:_id/unhide"
+              
               ;; battles
               :battles/listing        "/"
               :battles/winner         "/arenas/:arena-shortname/winner/:_id"

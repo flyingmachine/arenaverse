@@ -24,7 +24,7 @@
 
 (defn admin-authorize [handler]
   (fn [request]
-    (if (re-find #"/admin" (:uri request))
+    (if (re-find #"/admin|/moderate" (:uri request))
       (friend/authorize #{"user"}
                         (handler request))
       (handler request))))
