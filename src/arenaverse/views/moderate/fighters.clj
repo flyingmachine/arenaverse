@@ -17,7 +17,7 @@
 
 (defn redirect-to-arena [fighter]
   (let [arena (arena/one-by-id (:arena-id fighter))]
-    (res/redirect (url-for-r :admin/arenas/show {:shortname (:shortname arena)}))))
+    (res/redirect (url-for-r :moderate/arenas/show {:shortname (:shortname arena)}))))
 
 (defpartial fighter-img [version record]
   [:img {:src  (fighter/amazon-image-path version record)}])
@@ -45,17 +45,17 @@
      (map thumb fighters)]))
 
 (defpage-r hide {:keys [_id]}
-  (let [fighter (fighter/one {:_id _id})]
+  (let [fighter (fighter/one-by-id _id)]
     (permissions/protect
      (permissions/moderate-fighter? fighter)
-     (fighter/update _id {:_id _id, :hidden true})
+     (fighter/update _id {:hidden true})
      (session/flash-put! "Fighter hidden!")
-     (res/redirect (url-for-r :moderate/arenas/listing)))))
+     (redirect-to-arena fighter))))
 
 (defpage-r unhide {:keys [_id]}
-  (let [fighter (fighter/one {:_id _id})]
+  (let [fighter (fighter/one-by-id _id)]
     (permissions/protect
      (permissions/moderate-fighter? fighter)
      (fighter/unset _id :hidden)
      (session/flash-put! "Fighter unhidden!")
-     (res/redirect (url-for-r :moderate/arenas/listing)))))
+     (redirect-to-arena fighter))))
