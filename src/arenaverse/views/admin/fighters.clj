@@ -68,10 +68,11 @@
 
 ;; TODO possibly do nested route so arena id is present
 (defpage-r update {:as fighter-input}
-  (let [fighter (fighter/one-by-id (:_id fighter-input))]
+  (let [fighter-id (:_id fighter-input)
+        fighter (fighter/one-by-id fighter-id)]
     (permissions/protect
      (permissions/modify-fighter? fighter)
-     (let [record (fighter/update fighter-input)]
+     (let [record (fighter/update fighter-id (dissoc fighter-input :_id))]
        (session/flash-put! "Fighter updated!")
        (redirect-to-arena record)))))
 

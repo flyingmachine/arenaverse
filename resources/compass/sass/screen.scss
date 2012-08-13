@@ -254,7 +254,7 @@ form {
 #fighters {
   @include clearfix;
 
-  .fighter {
+  div.fighter {
     @include span-columns(3, 12);
 
     &:last-child {

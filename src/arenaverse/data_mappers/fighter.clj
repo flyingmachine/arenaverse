@@ -83,6 +83,7 @@
             original-image))))
 
 (defn- store-image [image, record]
+  (println (bucket-name))
   (s3/put-object config/*aws-credentials*
                  (bucket-name)
                  (image-relative-path (:version image) record)
@@ -104,15 +105,7 @@
      (image-fields (input->image-extension input)))))
 
 (defn- update-input->db-fields [input]
-  (let [object-id (ObjectId. (:_id input))
-        record (db-one-by-id object-id)
-        ;; ensure that the user doesn't alter the arena id
-        ;; and that image-extension isn't overwritten when no file is present
-        db-fields (merge
-                   (select-keys record [:image-extension])
-                   (dissoc input :_id :file)
-                   {:_id object-id}
-                   (select-keys record [:arena-id]))]
+  (let [db-fields (dissoc input :file)]
     (if (image-uploaded? input)
       (merge db-fields (image-fields (input->image-extension input)))
       db-fields)))
@@ -125,13 +118,13 @@
 
 ;; this is weird... i remove the object id in the ->db-fields method,
 ;; then add it back again
-(defn update [input]
-  (let [db-fields (update-input->db-fields input)
-        object-id (ObjectId. (:_id input))
-        record    (merge db-fields {:_id object-id})]
-    (db-update-by-id object-id db-fields)
-    (when (image-uploaded? input) (store-images input db-fields))
-    db-fields))
+(defn update [_id input]
+  (let [db-fields (update-input->db-fields input)]
+    (println db-fields)
+    (db-update-by-id (ObjectId. _id) {:$set db-fields})
+    (let [record (one-by-id _id)]
+      (when (image-uploaded? input) (store-images input record))
+      record)))
 
 ;; TODO query S3 first to avoid missing any images if i.e. image
 ;; version names change

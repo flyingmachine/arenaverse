@@ -32,15 +32,30 @@
 ;;        (redirect-to-arena record)))))
 
 (defpartial thumb [record]
-  [:div.fighter
-   [:div.card
-    [:div.name
-     [:a {:href (url-for-r :admin/fighters/edit record)} (:name record)]]
-    [:div.pic
-     (fighter-img "card" record)]
-    [:div.team (:team record)]]])
+  [:tr.fighter
+   [:td.pic (fighter-img "listing" record)]
+   [:td.name (:name record)]
+   (if (:hidden record)
+     [:td [:a {:href (url-for-r :moderate/fighters/unhide {:_id (:_id record)})} "Unhide"]]
+     [:td [:a {:href (url-for-r :moderate/fighters/hide {:_id (:_id record)})} "Hide"]])])
 
 (defpartial thumbs [& [query-doc]]
-  (map (fn thumb-row [records]
-         (into [:div.row] (map thumb records)))
-       (partition-all 4 (fighter/all query-doc))))
+  (let [fighters (fighter/all query-doc)]
+    [:table.moderate
+     (map thumb fighters)]))
+
+(defpage-r hide {:keys [_id]}
+  (let [fighter (fighter/one {:_id _id})]
+    (permissions/protect
+     (permissions/moderate-fighter? fighter)
+     (fighter/update _id {:_id _id, :hidden true})
+     (session/flash-put! "Fighter hidden!")
+     (res/redirect (url-for-r :moderate/arenas/listing)))))
+
+(defpage-r unhide {:keys [_id]}
+  (let [fighter (fighter/one {:_id _id})]
+    (permissions/protect
+     (permissions/moderate-fighter? fighter)
+     (fighter/unset _id :hidden)
+     (session/flash-put! "Fighter unhidden!")
+     (res/redirect (url-for-r :moderate/arenas/listing)))))

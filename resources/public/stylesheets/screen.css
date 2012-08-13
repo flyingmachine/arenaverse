@@ -322,14 +322,14 @@ form table td input[type=submit] {
   *zoom: 1;
 }
 /* line 257, ../../compass/sass/screen.scss */
-#fighters .fighter {
+#fighters div.fighter {
   width: 23.729%;
   float: left;
   margin-right: 1.695%;
   display: inline;
 }
 /* line 260, ../../compass/sass/screen.scss */
-#fighters .fighter:last-child {
+#fighters div.fighter:last-child {
   width: 23.729%;
   float: right;
   margin-right: 0;
@@ -341,29 +341,29 @@ form table td input[type=submit] {
   display: inline;
 }
 /* line 265, ../../compass/sass/screen.scss */
-#fighters .fighter .card {
+#fighters div.fighter .card {
   text-align: center;
   padding: 1em;
 }
 /* line 269, ../../compass/sass/screen.scss */
-#fighters .fighter .card .name {
+#fighters div.fighter .card .name {
   font-weight: bold;
   margin-bottom: 0.75em;
 }
 /* line 274, ../../compass/sass/screen.scss */
-#fighters .fighter .card .bio {
+#fighters div.fighter .card .bio {
   color: #333;
   font-style: italic;
 }
 /* line 279, ../../compass/sass/screen.scss */
-#fighters .fighter .card .pic {
+#fighters div.fighter .card .pic {
   width: 12em;
   height: 12em;
   line-height: 12em;
   margin-bottom: 0.75em;
 }
 /* line 285, ../../compass/sass/screen.scss */
-#fighters .fighter .card .pic img {
+#fighters div.fighter .card .pic img {
   max-width: 12em;
   max-height: 12em;
   -webkit-border-radius: 10px;
