@@ -37,4 +37,4 @@
        :workflows [(workflows/interactive-form)] 
        :login-uri "/login" 
        :unauthorized-redirect-uri "/login" 
-       :default-landing-uri "/admin-asdf"})
+       :default-landing-uri "/admin"})

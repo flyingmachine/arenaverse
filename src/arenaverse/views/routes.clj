@@ -5,26 +5,29 @@
   (throw (Exception. (apply format msg args))))
 
 (def routes '{;; admin
-              :admin/arenas/listing   "/admin-asdf"
-              :admin/arenas/shiny     "/admin-asdf/arenas/new"
-              :admin/arenas/show      [:get ["/admin-asdf/arenas/:shortname" :shortname #"((?!new)[^/])*"]]
-              :admin/arenas/edit      "/admin-asdf/arenas/:shortname/edit"
-              :admin/arenas/update    [:post "/admin-asdf/arenas/:shortname"]
-              :admin/arenas/create    [:post "/admin-asdf/arenas"]
-              :admin/arenas/destroy   [:post "/admin-asdf/arenas/:shortname/destroy"]
+              :admin/arenas/listing   "/admin"
+              :admin/arenas/shiny     "/admin/arenas/new"
+              :admin/arenas/show      [:get ["/admin/arenas/:shortname" :shortname #"((?!new)[^/])*"]]
+              :admin/arenas/edit      "/admin/arenas/:shortname/edit"
+              :admin/arenas/update    [:post "/admin/arenas/:shortname"]
+              :admin/arenas/create    [:post "/admin/arenas"]
+              :admin/arenas/destroy   [:post "/admin/arenas/:shortname/destroy"]
               
-              :admin/fighters/create  [:post "/admin-asdf/fighters"]
-              :admin/fighters/edit    "/admin-asdf/fighters/:_id/edit"
-              :admin/fighters/update  [:post "/admin-asdf/fighters/:_id"]
-              :admin/fighters/destroy [:post "/admin-asdf/fighters/:_id/destroy"]
+              :admin/fighters/create  [:post "/admin/fighters"]
+              :admin/fighters/edit    "/admin/fighters/:_id/edit"
+              :admin/fighters/update  [:post "/admin/fighters/:_id"]
+              :admin/fighters/destroy [:post "/admin/fighters/:_id/destroy"]
 
+              ;; battles
               :battles/listing        "/"
               :battles/winner         "/arenas/:arena-shortname/winner/:_id"
               :battles/arena          "/arenas/:shortname"
 
+              ;; sessions
               :sessions/new           "/login"
               :sessions/destroy       "/logout"
 
+              ;; users
               :users/shiny            "/signup"
               :users/create           [:post "/users"]}
   )
