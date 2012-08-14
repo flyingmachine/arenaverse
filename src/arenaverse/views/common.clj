@@ -39,7 +39,10 @@
          (pub-nav))]]]
     [:div#arenaverse     
      [:div#main
-      content]]]))
+      content]]
+    (include-js
+     "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+     "/js/application.js")]))
 
 (defpartial layout [& content]
   (common-layout pub-nav "" content))

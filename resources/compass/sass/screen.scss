@@ -257,6 +257,7 @@ form {
 .fighter {
   text-align: center;
   background: $light-blue url("/img/_ui/battle-bg.png") repeat-x;
+  cursor: pointer;
   
   &:hover {
     background-color: $light-orange;
