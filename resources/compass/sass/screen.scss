@@ -120,7 +120,12 @@ body {
 a {
   text-decoration:none;
   color: $dark-blue;
+
+  &:hover {
+    color: $orange;
+  }
 }
+
 
 h1 {
   @include adjust-font-size-to(50px,1);
@@ -130,6 +135,13 @@ h1 {
   @include trailer(1, 50px);
   color: $orange;
   @include single-text-shadow($light-orange, 3px, 3px, 0);
+
+  a {
+    @include adjust-font-size-to(16px, 1, 50px);
+    font-family: $sans-family;
+    @include single-text-shadow(none);
+    margin-left: 20px;
+  }
 }
 
 h2 {
@@ -194,21 +206,25 @@ table {
 form {
   @include trailer(1);
   
-  table {
-    td {
-      vertical-align: middle;
-
-      label {
-        display:block;
-        text-align: right;
-      }
-
-      input[type=submit] {
-        @include leader(1);
-      }
+  .control-group {
+    @include trailer;
+    
+    label {
+      display:block;
+    }
+    
+    input[type=submit] {
+      @include leader(1);
     }
   }
 }
+
+.help {
+  @include adjust-font-size-to(12px,1);
+  color: #999;
+  text-align: right;
+}
+    
 
 .info {
   @include padding-leader(.5);
@@ -360,5 +376,29 @@ form {
 
   .ratio-card {
     @include trailer;
+  }
+}
+
+.listing {
+  td {
+    padding: .5em;
+    border-bottom: 1px solid $light-orange;
+  }
+}
+
+// Admin stuff
+#admin  h1 {
+  text-align:left;
+}
+
+.new-arena {
+  background: $dark-blue;
+  color: $light-blue;
+  display: inline-block;
+  padding:5px 8px;
+  @include border-radius(10px);
+
+  &:hover {
+    @include single-box-shadow($orange, 0, 2px, 0, 0)
   }
 }

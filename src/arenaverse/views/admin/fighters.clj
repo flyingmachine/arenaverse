@@ -33,14 +33,8 @@
    [:td (label :name "Name")]
    [:td (text-field :name (:name record))]]
   [:tr
-   [:td (label :caption "Caption")]
-   [:td (text-field :caption (:caption record))]]
-  [:tr
    [:td (label :bio "Team")]
    [:td (text-field :team (:team record))]]
-  [:tr
-   [:td (label :bio "Bio")]
-   [:td (text-area :bio (:bio record))]]
   [:tr
    [:td (label :file "Pic")]
    [:td

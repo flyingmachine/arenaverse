@@ -17,7 +17,7 @@
    [:li [:a {:href (url-for-r :admin/arenas/shiny)} "New Arena"]]
    [:li [:a {:href "/logout"} "Log Out"]]])
 
-(defpartial common-layout [nav & [content]]
+(defpartial common-layout [nav body-id & [content]]
   (html5
    [:head
     [:title "OMG! SMACKDOWN!!!"]
@@ -25,7 +25,7 @@
     (include-css
      "/stylesheets/screen/ie.css"
      "/stylesheets/screen.css")]
-   [:body
+   [:body {:id body-id}
     [:div#banner
      [:header
       [:a#logo-link {:href "/"}
@@ -42,7 +42,7 @@
       content]]]))
 
 (defpartial layout [& content]
-  (common-layout pub-nav content))
+  (common-layout pub-nav "" content))
 
 (defpartial admin-layout [& content]
-  (common-layout admin-nav content))
+  (common-layout admin-nav "admin" content))

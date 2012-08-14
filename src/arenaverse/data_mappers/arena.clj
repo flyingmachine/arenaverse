@@ -21,7 +21,9 @@
             :shortname (shortname (:name input) object-id)})))
 
 (defn create [input]
-  (db-insert (create-input->db-fields input)))
+  (let [db-fields (create-input->db-fields input)]
+    (db-insert db-fields)
+    db-fields))
 
 (defn destroy [shortname]
   (let [object-id (:_id (db-one {:shortname shortname}))]
