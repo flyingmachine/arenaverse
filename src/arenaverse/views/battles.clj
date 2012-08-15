@@ -132,18 +132,14 @@
       [:div.win-ratios
        [:h2 "Win Ratio"]
        (win-ratio (first previous-fighters) wins)
-       (win-ratio (second previous-fighters) wins)
-       "<script type='text/javascript'><!--
-amazon_ad_tag = 'aflyingmachin-20'; amazon_ad_width = '120'; amazon_ad_height = '600'; amazon_color_border = 'FFFFFF'; amazon_color_link = '2493C8'; amazon_color_price = 'FFB57B'; amazon_color_logo = '2493C8';//--></script>
-<script type='text/javascript' src='http://www.assoc-amazon.com/s/ads.js'></script>"])))
+       (win-ratio (second previous-fighters) wins)])))
 
-(defpartial main-area [arena left-f right-f prev-fighter-id-a prev-fighter-id-b]
+(defpartial main-area [arena left-f right-f]
   [:div#battle
    [:div.fighter.a
     (when left-f (card arena left-f "battle"))]
    [:div.fighter.b
-    (when right-f (card arena right-f "battle"))]
-   (previous-battle-results prev-fighter-id-a prev-fighter-id-b)])
+    (when right-f (card arena right-f "battle"))]])
 
 (defpartial battle [{:keys [prev-fighter-id-a
                             prev-fighter-id-b
@@ -156,8 +152,14 @@ amazon_ad_tag = 'aflyingmachin-20'; amazon_ad_width = '120'; amazon_ad_height = 
             arena (:arena main-battle)]
         (common/layout 
          [:h1 (:fight-text (:arena main-battle))]
-         (main-area arena left-f right-f prev-fighter-id-a prev-fighter-id-b)
-         (_minor-battles minor-battles))))))
+         [:div#battles
+          (main-area arena left-f right-f)
+          (_minor-battles minor-battles)]
+         [:div#secondary
+          (previous-battle-results prev-fighter-id-a prev-fighter-id-b)
+          "<script type='text/javascript'><!--
+amazon_ad_tag = 'aflyingmachin-20'; amazon_ad_width = '120'; amazon_ad_height = '600'; amazon_color_border = 'FFFFFF'; amazon_color_link = '2493C8'; amazon_color_price = 'FFB57B'; amazon_color_logo = '2493C8';//--></script>
+<script type='text/javascript' src='http://www.assoc-amazon.com/s/ads.js'></script>"])))))
 
 (defn session-battle->battle-map [session-battle]
   (let [[prev-main-arena-shortname prev-fighter-id-a prev-fighter-id-b] session-battle]

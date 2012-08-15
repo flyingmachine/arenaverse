@@ -328,8 +328,11 @@ form {
   @include clearfix;
   
   .fighter {
-    @include span-columns(5, 12);
+    @include span-columns(5, 10);
     height:638px;
+    &:last-child {
+      @include span-columns(5 omega, 10);
+    }
     
     .pic {
       @include trailer;
@@ -356,7 +359,10 @@ form {
   text-align: center;
   .battle {
     @include leader(2);
-    @include span-columns(5, 12);
+    @include span-columns(5, 10);
+    &:last-child {
+      @include span-columns(5 omega, 10);
+    }
     
     .fighter {
       width: 50%;
@@ -380,9 +386,17 @@ form {
   }
 }
 
-.win-ratios {
+#battles {
+  @include span-columns(10, 12);
+}
+
+#secondary {
   text-align: center;
   @include span-columns(2 omega, 12);
+
+  img {
+    max-width:144px;
+  }
 
   h2 {
     color: $dark-green;

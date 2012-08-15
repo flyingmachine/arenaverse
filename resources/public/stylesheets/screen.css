@@ -420,22 +420,30 @@ form .control-group input[type=submit] {
 }
 /* line 330, ../../compass/sass/screen.scss */
 #battle .fighter {
-  width: 40.678%;
+  width: 48.98%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 2.041%;
   display: inline;
   height: 638px;
 }
-/* line 334, ../../compass/sass/screen.scss */
+/* line 333, ../../compass/sass/screen.scss */
+#battle .fighter:last-child {
+  width: 48.98%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
+/* line 337, ../../compass/sass/screen.scss */
 #battle .fighter .pic {
   margin-bottom: 1.5em;
   line-height: 566px;
 }
-/* line 337, ../../compass/sass/screen.scss */
+/* line 340, ../../compass/sass/screen.scss */
 #battle .fighter .pic img {
   max-width: 352px;
 }
-/* line 342, ../../compass/sass/screen.scss */
+/* line 345, ../../compass/sass/screen.scss */
 #battle .fighter .name {
   font-size: 1.875em;
   line-height: 0.8em;
@@ -447,32 +455,40 @@ form .control-group input[type=submit] {
   padding-bottom: 0.8em;
 }
 
-/* line 354, ../../compass/sass/screen.scss */
+/* line 357, ../../compass/sass/screen.scss */
 #minor-battles {
   overflow: hidden;
   *zoom: 1;
   text-align: center;
 }
-/* line 357, ../../compass/sass/screen.scss */
+/* line 360, ../../compass/sass/screen.scss */
 #minor-battles .battle {
   margin-top: 3em;
-  width: 40.678%;
+  width: 48.98%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 2.041%;
   display: inline;
 }
-/* line 361, ../../compass/sass/screen.scss */
+/* line 363, ../../compass/sass/screen.scss */
+#minor-battles .battle:last-child {
+  width: 48.98%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
+/* line 367, ../../compass/sass/screen.scss */
 #minor-battles .battle .fighter {
   width: 50%;
   float: left;
   height: 288px;
 }
-/* line 366, ../../compass/sass/screen.scss */
+/* line 372, ../../compass/sass/screen.scss */
 #minor-battles .battle .fighter .pic {
   line-height: 192px;
   margin-bottom: 1.5em;
 }
-/* line 371, ../../compass/sass/screen.scss */
+/* line 377, ../../compass/sass/screen.scss */
 #minor-battles .battle .fighter .name {
   font-size: 1.25em;
   line-height: 1.2em;
@@ -483,8 +499,16 @@ form .control-group input[type=submit] {
   padding-bottom: 0.8em;
 }
 
-/* line 383, ../../compass/sass/screen.scss */
-.win-ratios {
+/* line 389, ../../compass/sass/screen.scss */
+#battles {
+  width: 83.051%;
+  float: left;
+  margin-right: 1.695%;
+  display: inline;
+}
+
+/* line 393, ../../compass/sass/screen.scss */
+#secondary {
   text-align: center;
   width: 15.254%;
   float: right;
@@ -492,29 +516,33 @@ form .control-group input[type=submit] {
   #margin-left: -1em;
   display: inline;
 }
-/* line 387, ../../compass/sass/screen.scss */
-.win-ratios h2 {
+/* line 397, ../../compass/sass/screen.scss */
+#secondary img {
+  max-width: 144px;
+}
+/* line 401, ../../compass/sass/screen.scss */
+#secondary h2 {
   color: #88efa5;
   text-shadow: none;
   margin-top: 0.8em;
 }
-/* line 393, ../../compass/sass/screen.scss */
-.win-ratios .ratio-card {
+/* line 407, ../../compass/sass/screen.scss */
+#secondary .ratio-card {
   margin-bottom: 1.5em;
 }
 
-/* line 399, ../../compass/sass/screen.scss */
+/* line 413, ../../compass/sass/screen.scss */
 .listing td {
   padding: .5em;
   border-bottom: 1px solid #ffeee1;
 }
 
-/* line 406, ../../compass/sass/screen.scss */
+/* line 420, ../../compass/sass/screen.scss */
 #admin h1 {
   text-align: left;
 }
 
-/* line 410, ../../compass/sass/screen.scss */
+/* line 424, ../../compass/sass/screen.scss */
 #edit-arena {
   width: 49.153%;
   float: right;
@@ -526,7 +554,7 @@ form .control-group input[type=submit] {
   margin-left: -18px;
 }
 
-/* line 417, ../../compass/sass/screen.scss */
+/* line 431, ../../compass/sass/screen.scss */
 #new-fighter {
   width: 49.153%;
   float: left;
@@ -534,7 +562,7 @@ form .control-group input[type=submit] {
   display: inline;
 }
 
-/* line 421, ../../compass/sass/screen.scss */
+/* line 435, ../../compass/sass/screen.scss */
 .new-arena {
   background: #2493c8;
   color: #edf8fc;
@@ -546,7 +574,7 @@ form .control-group input[type=submit] {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 428, ../../compass/sass/screen.scss */
+/* line 442, ../../compass/sass/screen.scss */
 .new-arena:hover {
   -webkit-box-shadow: 0 2px 0 0 #ffb57b;
   -moz-box-shadow: 0 2px 0 0 #ffb57b;
