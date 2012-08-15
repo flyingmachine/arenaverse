@@ -33,7 +33,9 @@
     [(nth (first teams) left) (nth (second teams) right)]))
 
 (defn random-fighters [arena-id]
-  (let [fighters (fighter/all {:arena-id arena-id, :hidden {$exists false}})]
+  (let [fighters (fighter/all {:arena-id arena-id
+                               :hidden {$exists false}
+                               :image-extension {$exists true $ne ""}})]
     (if (> (count fighters) 1)
       (if (some #(not (empty? (:team %))) fighters)
         (random-team-fighters fighters)
@@ -135,9 +137,9 @@
 (defpartial main-area [arena left-f right-f prev-fighter-id-a prev-fighter-id-b]
   [:div#battle
    [:div.fighter.a
-    (card arena left-f "battle")]
+    (when left-f (card arena left-f "battle"))]
    [:div.fighter.b
-    (card arena right-f "battle")]
+    (when right-f (card arena right-f "battle"))]
    (previous-battle-results prev-fighter-id-a prev-fighter-id-b)])
 
 (defpartial battle [{:keys [prev-fighter-id-a
@@ -171,5 +173,4 @@
       (battle (assoc battle-map :main-arena-shortname (:prev-main-arena-shortname battle-map))))))
 
 (defpage-r arena {:keys [shortname]}
-  (let [arena (arena/one {:shortname shortname})]
-    (battles-listing [nil nil (:_id arena)])))
+  (battle {:main-arena-shortname shortname}))

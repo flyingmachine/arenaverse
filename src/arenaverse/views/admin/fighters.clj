@@ -5,7 +5,8 @@
             [arenaverse.models.permissions :as permissions]
             [noir.response :as res]
             [noir.session :as session]
-            [monger.collection :as mc])
+            [monger.collection :as mc]
+            [noir.validation :as vali])
   
   (:use noir.core
         hiccup.core
@@ -14,6 +15,14 @@
         arenaverse.views.routes)
 
   (:import [org.bson.types ObjectId]))
+
+(defn valid? [{:keys [name]}]
+  (vali/rule (vali/has-value? name)
+             [:name "You must enter a name"])
+  (not (vali/errors? :name)))
+
+(defpartial error-item [[first-error]]
+  [:p.error first-error])
 
 (defn redirect-to-arena [fighter]
   (let [arena (arena/one-by-id (:arena-id fighter))]
@@ -43,7 +52,8 @@
 
 (defpartial fighter-fields [record arena-id]
   [:div.control-group
-   (label :name "Name")
+   (vali/on-error :name error-item)
+   (label :name "Name (require)")
    [:div.controls (text-field :name (:name record))]]
   [:div.control-group
    (label :bio "Team")
@@ -54,6 +64,7 @@
      [:li (text-field {:placeholder "New team"} :new-team)]]]]
   [:div.control-group
    (label :file "Pic")
+   [:span.help "Fighters without a pic won't show up"]
    [:div.controls
     (file-upload :file)
     [:br]

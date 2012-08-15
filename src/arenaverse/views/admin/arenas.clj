@@ -21,7 +21,7 @@
              [:fight-text "You must enter some fight text"])
   (vali/rule (vali/max-length? fight-text 35)
              [:fight-text (str "Max 35 characters. You've entered " (count fight-text))])
-  (not (vali/errors? :name)))
+  (not (vali/errors? :name :fight-text)))
 
 (defpartial error-item [[first-error]]
   [:p.error first-error])
