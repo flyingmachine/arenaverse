@@ -430,6 +430,9 @@ form {
 
 #new-fighter {
   @include span-columns(6, 12);
+  form {
+    margin-right: 1em;
+  }
 }
 
 .new-arena {

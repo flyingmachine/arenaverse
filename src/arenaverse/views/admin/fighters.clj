@@ -51,6 +51,7 @@
   (map (partial team-selection selected) teams))
 
 (defpartial fighter-fields [record arena-id]
+  [:p "Please don't add anything NSFW (not safe for work) or NSFL (not safe for life)"]
   [:div.control-group
    (vali/on-error :name error-item)
    (label :name "Name (require)")

@@ -3,7 +3,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 17, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -25,45 +25,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -164,7 +164,7 @@ body {
   box-shadow: 0 4px 0 0 #ffb57b;
   background: white;
 }
-/* line 38, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+/* line 38, ../../../../../.rvm/gems/ree-1.8.7-2011.03/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 #arenaverse:after {
   content: "";
   display: table;
@@ -190,7 +190,7 @@ h1 {
   text-align: center;
   margin-bottom: 0.48em;
   color: #ffb57b;
-  text-shadow: #ffeee1 3px 3px 0;
+  text-shadow: 3px 3px 0 #ffeee1;
 }
 /* line 148, ../../compass/sass/screen.scss */
 h1 a {
@@ -208,7 +208,7 @@ h2 {
   font-family: Bangers, "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 0.8em;
   color: #2493c8;
-  text-shadow: #97d4ec 2px 2px 0;
+  text-shadow: 2px 2px 0 #97d4ec;
   letter-spacing: 3px;
 }
 
@@ -363,14 +363,14 @@ form .control-group input[type=submit] {
 }
 /* line 289, ../../compass/sass/screen.scss */
 #fighters div.fighter {
-  width: 23.729%;
+  width: 23.72881%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 /* line 292, ../../compass/sass/screen.scss */
 #fighters div.fighter:last-child {
-  width: 23.729%;
+  width: 23.72881%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -420,15 +420,15 @@ form .control-group input[type=submit] {
 }
 /* line 330, ../../compass/sass/screen.scss */
 #battle .fighter {
-  width: 48.98%;
+  width: 48.97959%;
   float: left;
-  margin-right: 2.041%;
+  margin-right: 2.04082%;
   display: inline;
   height: 638px;
 }
 /* line 333, ../../compass/sass/screen.scss */
 #battle .fighter:last-child {
-  width: 48.98%;
+  width: 48.97959%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -464,14 +464,14 @@ form .control-group input[type=submit] {
 /* line 360, ../../compass/sass/screen.scss */
 #minor-battles .battle {
   margin-top: 3em;
-  width: 48.98%;
+  width: 48.97959%;
   float: left;
-  margin-right: 2.041%;
+  margin-right: 2.04082%;
   display: inline;
 }
 /* line 363, ../../compass/sass/screen.scss */
 #minor-battles .battle:last-child {
-  width: 48.98%;
+  width: 48.97959%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -501,16 +501,16 @@ form .control-group input[type=submit] {
 
 /* line 389, ../../compass/sass/screen.scss */
 #battles {
-  width: 83.051%;
+  width: 83.05085%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 
 /* line 393, ../../compass/sass/screen.scss */
 #secondary {
   text-align: center;
-  width: 15.254%;
+  width: 15.25424%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -544,7 +544,7 @@ form .control-group input[type=submit] {
 
 /* line 424, ../../compass/sass/screen.scss */
 #edit-arena {
-  width: 49.153%;
+  width: 49.15254%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -556,13 +556,17 @@ form .control-group input[type=submit] {
 
 /* line 431, ../../compass/sass/screen.scss */
 #new-fighter {
-  width: 49.153%;
+  width: 49.15254%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
+/* line 433, ../../compass/sass/screen.scss */
+#new-fighter form {
+  margin-right: 1em;
+}
 
-/* line 435, ../../compass/sass/screen.scss */
+/* line 438, ../../compass/sass/screen.scss */
 .new-arena {
   background: #2493c8;
   color: #edf8fc;
@@ -574,7 +578,7 @@ form .control-group input[type=submit] {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 442, ../../compass/sass/screen.scss */
+/* line 445, ../../compass/sass/screen.scss */
 .new-arena:hover {
   -webkit-box-shadow: 0 2px 0 0 #ffb57b;
   -moz-box-shadow: 0 2px 0 0 #ffb57b;

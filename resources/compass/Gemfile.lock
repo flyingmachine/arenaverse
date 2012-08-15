@@ -1,16 +1,16 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    chunky_png (1.2.5)
-    compass (0.13.alpha.0)
+    chunky_png (1.2.6)
+    compass (0.12.2)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
-      sass (~> 3.2.0.alpha.93)
+      sass (~> 3.1)
     fssm (0.2.9)
-    sass (3.2.0.alpha.244)
-    susy (1.0.rc.1)
-      compass (>= 0.12.2.rc.0)
-      sass (>= 3.2.0.alpha.237)
+    sass (3.2.0)
+    susy (1.0)
+      compass (>= 0.12.2)
+      sass (>= 3.2.0)
 
 PLATFORMS
   ruby
