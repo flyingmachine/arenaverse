@@ -33,7 +33,7 @@
    (redirect-to-arena fighter)))
 
 (defpartial fighter-img [version record]
-  [:img {:src  (fighter/amazon-image-path version record)}])
+  [:img {:src (if (:image-extension record) (fighter/amazon-image-path version record) "/img/_ui/broken.png")}])
 
 (defpartial team-selection [selected team]
   [:li [:label (radio-button {} "team" (= selected team) team) team]])
