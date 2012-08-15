@@ -132,7 +132,10 @@
       [:div.win-ratios
        [:h2 "Win Ratio"]
        (win-ratio (first previous-fighters) wins)
-       (win-ratio (second previous-fighters) wins)])))
+       (win-ratio (second previous-fighters) wins)
+       "<script type='text/javascript'><!--
+amazon_ad_tag = 'aflyingmachin-20'; amazon_ad_width = '120'; amazon_ad_height = '600'; amazon_color_border = 'FFFFFF'; amazon_color_link = '2493C8'; amazon_color_price = 'FFB57B'; amazon_color_logo = '2493C8';//--></script>
+<script type='text/javascript' src='http://www.assoc-amazon.com/s/ads.js'></script>"])))
 
 (defpartial main-area [arena left-f right-f prev-fighter-id-a prev-fighter-id-b]
   [:div#battle
