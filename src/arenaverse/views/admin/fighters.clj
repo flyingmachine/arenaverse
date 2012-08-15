@@ -19,6 +19,13 @@
   (let [arena (arena/one-by-id (:arena-id fighter))]
     (res/redirect (url-for-r :admin/arenas/show {:shortname (:shortname arena)}))))
 
+(defn all-teams [fighters]
+  (disj
+   (apply sorted-set
+          (map #(when (:team %) clojure.string/lower-case (:team %))
+               fighters))
+   nil ""))
+
 (defpage-r create {:as fighter}
   (permissions/protect
    (permissions/modify-fighter? fighter)
@@ -28,13 +35,22 @@
 (defpartial fighter-img [version record]
   [:img {:src  (fighter/amazon-image-path version record)}])
 
-(defpartial fighter-fields [record]
+(defpartial team-selection [selected team]
+  [:li [:label (radio-button {} "team" (= selected team) team) team]])
+
+(defpartial team-selections [selected teams]
+  (map (partial team-selection selected) teams))
+
+(defpartial fighter-fields [record arena-id]
   [:tr
    [:td (label :name "Name")]
    [:td (text-field :name (:name record))]]
   [:tr
    [:td (label :bio "Team")]
-   [:td (text-field :team (:team record))]]
+   [:td
+    [:ul
+     (team-selections (:team record) (all-teams (fighter/all {:arena-id (:arena-id arena-id)})))
+     [:li (text-field {:placeholder "New team"} :new-team)]]]]
   [:tr
    [:td (label :file "Pic")]
    [:td
@@ -52,7 +68,7 @@
       (form-to {:enctype "multipart/form-data"}
                [:post (url-for-r  :admin/fighters/update {:_id _id})]
                [:table
-                (fighter-fields fighter)
+                (fighter-fields fighter (:arena-id fighter))
                 [:tr
                  [:td]
                  [:td (submit-button "Update Fighter")]]])

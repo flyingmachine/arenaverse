@@ -164,7 +164,6 @@
   (battle (session-battle->battle-map (session/get :main-battle))))
 
 (defpage-r winner {:keys [arena-shortname _id]}
-  (println ((session/get :battles) arena-shortname))
   (let [selected-battle ((session/get :battles) arena-shortname)
         selected-battle-fighter-ids (rest selected-battle)]
     (battle/record-winner! selected-battle-fighter-ids _id)

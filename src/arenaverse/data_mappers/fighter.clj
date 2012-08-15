@@ -83,7 +83,6 @@
             original-image))))
 
 (defn- store-image [image, record]
-  (println (bucket-name))
   (s3/put-object config/*aws-credentials*
                  (bucket-name)
                  (image-relative-path (:version image) record)
@@ -97,15 +96,25 @@
     (doseq [image (input->images input)]
       (store-image image db-fields))))
 
+(defn- input->team [input]
+  (let [new-team (:new-team input)]
+    (if (or (nil? new-team) (= "" new-team))
+      (:team input)
+      new-team)))
+
+;; TODO refactor the common dissoc merge pattern
 (defn- create-input->db-fields [input]
-  (let [object-id (ObjectId.)]
+  (let [object-id (ObjectId.)
+        team (input->team input)]
     (merge
-     (dissoc input :file)
-     {:_id object-id}
+     (dissoc input :file :team :new-team)
+     {:_id object-id
+      :team team}
      (image-fields (input->image-extension input)))))
 
 (defn- update-input->db-fields [input]
-  (let [db-fields (dissoc input :file)]
+  (let [team (input->team input)
+        db-fields (merge (dissoc input :file :team :new-team) {:team team})]
     (if (image-uploaded? input)
       (merge db-fields (image-fields (input->image-extension input)))
       db-fields)))

@@ -89,7 +89,7 @@
                 [:post (url-for-r :admin/fighters/create)]
                 (hidden-field :arena-id (:_id arena))
                 [:table
-                 (fighters/fighter-fields {})
+                 (fighters/fighter-fields {} (:_id arena))
                  [:tr
                   [:td]
                   [:td (submit-button "Create Fighter")]]])]
