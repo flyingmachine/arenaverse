@@ -3,6 +3,7 @@
             [monger.core :as mg]
             [cemerick.friend :as friend]
             [arenaverse.data-mappers.user :as user]
+
             (cemerick.friend [workflows :as workflows]
                              [credentials :as creds]
                              [openid :as openid])))
@@ -31,10 +32,10 @@
 
 (server/add-middleware admin-authorize)
 
-(server/add-middleware 
+(server/add-middleware
       friend/authenticate 
       {:credential-fn (partial creds/bcrypt-credential-fn credential-fn)
-       :workflows [(workflows/interactive-form)] 
-       :login-uri "/login" 
+       :workflows [(workflows/interactive-form), arenaverse.views.users/register]
+       :login-uri "/login"
        :unauthorized-redirect-uri "/login" 
        :default-landing-uri "/admin"})

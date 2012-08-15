@@ -19,7 +19,9 @@
 
 ;; TODO use threading macro
 (defn create [input]
-  (db-insert (create-input->db-fields input)))
+  (let [db-fields (create-input->db-fields input)]
+    (db-insert db-fields)
+    db-fields))
 
 (defn destroy [_id]
   (db-destroy (ObjectId. _id)))

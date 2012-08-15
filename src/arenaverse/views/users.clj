@@ -32,7 +32,7 @@
    (form-to [:post (url-for-r :users/create)]
             [:div
              [:div.control-group
-
+              (vali/on-error :username error-item)
               (label "username" "Username")
               [:span.help "Must be at least 4 characters"]
               [:div.controls (text-field "username" (:username user))]]
@@ -43,11 +43,11 @@
               [:div.controls (password-field "password")]]
              [:div.form-controls (submit-button "Sign Up")]])))
 
+(defn register [{:keys [uri request-method params]}]
+  (when (and (= uri "/users")
+             (= request-method :post))
+    (if (valid? params)
+      (workflows/make-auth (user/create params)))))
 
 (defpage-r create {:as user}
-  (if (valid? user)
-    (do
-      (user/create user)
-      (workflows/make-auth (user/one {:username (:username user)}))
-      (res/redirect (url-for-r :admin/arenas/listing)))
-    (render users-shiny user)))
+  (render users-shiny user))
