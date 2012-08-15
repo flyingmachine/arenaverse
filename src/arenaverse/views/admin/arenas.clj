@@ -71,29 +71,28 @@
      (permissions/modify-arena? arena)
      (common/admin-layout
       [:h1
-       "Arena Administration"
+       (:name arena)
        [:a {:href (url-for-r :battles/arena {:shortname shortname})} "View arena"]]
       (if-let [msg (session/flash-get)]
         [:p.info msg])
-      (form-to [:post (url-for-r :admin/arenas/update {:shortname shortname})]
-               [:div
-                (arena-fields arena)
-                [:div.form-actions (submit-button "Update Arena")]])
-
-
-      [:p [:a {:href (url-for-r :admin/arenas/edit arena)} "Delete arena (you will be asked to confirm)"]]
-
       [:div#new-fighter
        [:h2 "New Fighter"]
        (form-to {:enctype "multipart/form-data"}
                 [:post (url-for-r :admin/fighters/create)]
                 (hidden-field :arena-id (:_id arena))
-                [:table
+                [:div
                  (fighters/fighter-fields {} (:_id arena))
-                 [:tr
-                  [:td]
-                  [:td (submit-button "Create Fighter")]]])]
-      
+                 [:div.form-actions (submit-button "Create Fighter")]])]
+      [:div#edit-arena
+       [:h2 "Edit Arena"]
+       (form-to [:post (url-for-r :admin/arenas/update {:shortname shortname})]
+                [:div
+                 (arena-fields arena)
+                 [:div.form-actions (submit-button "Update Arena")]])
+
+
+       [:p [:a {:href (url-for-r :admin/arenas/edit arena)} "Delete arena (you will be asked to confirm)"]]]
+      [:hr]
       [:div#fighters
        [:h2 "Fighters"]
        (fighters/thumbs {:arena-id (:_id arena)})]))))

@@ -103,9 +103,9 @@ body {
 
 #arenaverse {
   @include container;
+  @include border-radius(0 0 10px 10px);
+  @include single-box-shadow($orange, 0, 4px, 0, 0);
   background: white;
-  border-left:1em dashed $orange;
-  border-right:1em dashed $orange;
 }
 
 // h1 {
@@ -161,6 +161,13 @@ p {
   height:96px;
 }
 
+hr {
+  @include trailer;
+  border-bottom: 2px dotted $orange;
+  border-top:none;
+  clear: both;
+}
+
 nav {
   @include clearfix;
   background: $light-green;
@@ -194,7 +201,6 @@ nav {
   @include padding-leader(1);
   @include padding-trailer(1);
   background:white;
-  border-bottom: 4px solid $dark-blue;
 }
 
 table {
@@ -220,7 +226,7 @@ form {
 }
 
 .help {
-  @include adjust-font-size-to(12px,1);
+  @include adjust-font-size-to(12px, 1);
   color: #999;
   text-align: right;
 }
@@ -390,6 +396,17 @@ form {
 // Admin stuff
 #admin  h1 {
   text-align:left;
+}
+
+#edit-arena {
+  @include span-columns(6 omega, 12);
+  border-left: 2px dotted $orange;
+  padding-left: 16px;
+  margin-left: -18px;
+}
+
+#new-fighter {
+  @include span-columns(6, 12);
 }
 
 .new-arena {

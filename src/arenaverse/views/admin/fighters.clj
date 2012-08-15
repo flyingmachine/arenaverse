@@ -42,18 +42,19 @@
   (map (partial team-selection selected) teams))
 
 (defpartial fighter-fields [record arena-id]
-  [:tr
-   [:td (label :name "Name")]
-   [:td (text-field :name (:name record))]]
-  [:tr
-   [:td (label :bio "Team")]
-   [:td
+  [:div.control-group
+   (label :name "Name")
+   [:div.controls (text-field :name (:name record))]]
+  [:div.control-group
+   (label :bio "Team")
+   [:span.help "Fighters on the same team don't face each other. If there are no teams, all fighters face each other."]
+   [:div.controls
     [:ul
      (team-selections (:team record) (all-teams (fighter/all {:arena-id (:arena-id arena-id)})))
      [:li (text-field {:placeholder "New team"} :new-team)]]]]
-  [:tr
-   [:td (label :file "Pic")]
-   [:td
+  [:div.control-group
+   (label :file "Pic")
+   [:div.controls
     (file-upload :file)
     [:br]
     (if (:_id record)
@@ -69,9 +70,8 @@
                [:post (url-for-r  :admin/fighters/update {:_id _id})]
                [:table
                 (fighter-fields fighter (:arena-id fighter))
-                [:tr
-                 [:td]
-                 [:td (submit-button "Update Fighter")]]])
+                [:div.form-actions (submit-button "Update Fighter")]])
+      [:hr]
       (form-to [:post (url-for-r :admin/fighters/destroy {:_id _id})]
                (hidden-field :arena-id (:arena-id fighter))
                (submit-button "Delete Fighter"))))))
