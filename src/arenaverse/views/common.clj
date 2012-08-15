@@ -20,7 +20,7 @@
 (defpartial common-layout [nav body-id & [content]]
   (html5
    [:head
-    [:title "OMG! SMACKDOWN!!!"]
+    [:title (str (nth (nth content 0) 1) " | OMG! SMACKDOWN!!!")]
     [:link {:href "http://fonts.googleapis.com/css?family=Bangers|Nothing+You+Could+Do" :rel "stylesheet" :type "text/css"}]
     (include-css
      "/stylesheets/screen/ie.css"
