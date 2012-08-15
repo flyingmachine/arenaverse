@@ -32,7 +32,7 @@
    (form-to [:post (url-for-r :users/create)]
             [:div
              [:div.control-group
-              (vali/on-error :username error-item)
+
               (label "username" "Username")
               [:span.help "Must be at least 4 characters"]
               [:div.controls (text-field "username" (:username user))]]

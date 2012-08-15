@@ -50,7 +50,7 @@
    [:span.help "Fighters on the same team don't face each other. If there are no teams, all fighters face each other."]
    [:div.controls
     [:ul
-     (team-selections (:team record) (all-teams (fighter/all {:arena-id (:arena-id arena-id)})))
+     (team-selections (:team record) (all-teams (fighter/all {:arena-id arena-id})))
      [:li (text-field {:placeholder "New team"} :new-team)]]]]
   [:div.control-group
    (label :file "Pic")

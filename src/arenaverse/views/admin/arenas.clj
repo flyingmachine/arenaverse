@@ -6,22 +6,37 @@
             [arenaverse.models.permissions :as permissions]
             [noir.session :as session]
             [noir.response :as res]
-            [cemerick.friend :as friend])
+            [cemerick.friend :as friend]
+            [noir.validation :as vali])
   
   (:use noir.core
         hiccup.core
         hiccup.form-helpers
         arenaverse.views.routes))
 
+(defn valid? [{:keys [name fight-text]}]
+  (vali/rule (vali/has-value? name)
+             [:name "You must enter a name"])
+  (vali/rule (vali/has-value? fight-text)
+             [:fight-text "You must enter some fight text"])
+  (vali/rule (vali/max-length? fight-text 35)
+             [:fight-text (str "Max 35 characters. You've entered " (count fight-text))])
+  (not (vali/errors? :name)))
+
+(defpartial error-item [[first-error]]
+  [:p.error first-error])
+
 (defpartial arena-fields [{:keys [name fight-text]}]
   [:div
    [:div.control-group
+    (vali/on-error :name error-item)
     (label "name" "Name")
     [:span.help "what you'll see when admin'ing your arena"]
     [:div.controls (text-field "name" name)]]
    [:div.control-group
+    (vali/on-error :fight-text error-item)
     (label "fight-text" "Fight Text")
-    [:span.help "The text above the battling photos, e.g.: &quot;Which creature is scarier?&quot;"]
+    [:span.help "The text above the battling photos, e.g.: &quot;Which creature is scarier?&quot;. Max 35 characters"]
     [:div.controls (text-field "fight-text" fight-text)]]])
 
 (defpartial arena-details [{:keys [name fight-text shortname]}]
@@ -107,5 +122,7 @@
      (admin-arenas-show {:shortname shortname}))))
 
 (defpage-r create {:as arena}
-  (let [new-arena (arena/create arena)]
-    (res/redirect (url-for-r :admin/arenas/show {:shortname (:shortname new-arena)}))))
+  (if (valid? arena)
+    (let [new-arena (arena/create arena)]
+      (res/redirect (url-for-r :admin/arenas/show {:shortname (:shortname new-arena)})))
+    (render admin-arenas-shiny arena)))
