@@ -4,7 +4,7 @@ $(function(){
     return false;
   })
 
-  $("img").error(function () {
+  $("#admin img").error(function () {
     $(this).unbind("error").attr("src", "/img/_ui/placeholder-amazon.png");
   });
 })

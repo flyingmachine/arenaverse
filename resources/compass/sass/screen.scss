@@ -28,6 +28,8 @@ $light-blue: lighten($medium-blue, 20%);
 $orange: #ffb57b;
 $light-orange: lighten($orange, 20%);
 
+$red: #ff857b;
+
 $dark-green: #88efa5;
 $light-green: #e2fbe9;
 
@@ -77,6 +79,12 @@ textarea {
 input[type="checkbox"] {
   display: inline; 
 }
+
+.error {
+  margin-bottom: 0;
+  color: $red;
+}
+  
 
 // #Oooh Custom
 // ================================= //
