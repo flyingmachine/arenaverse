@@ -361,7 +361,7 @@ form {
     @include leader(2);
     @include span-columns(5, 10);
     &:last-child {
-      @include span-columns(5 omega, 10);
+      margin-right:0;
     }
     
     .fighter {

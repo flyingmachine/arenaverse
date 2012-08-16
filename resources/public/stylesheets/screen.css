@@ -471,11 +471,7 @@ form .control-group input[type=submit] {
 }
 /* line 363, ../../compass/sass/screen.scss */
 #minor-battles .battle:last-child {
-  width: 48.97959%;
-  float: right;
   margin-right: 0;
-  #margin-left: -1em;
-  display: inline;
 }
 /* line 367, ../../compass/sass/screen.scss */
 #minor-battles .battle .fighter {
