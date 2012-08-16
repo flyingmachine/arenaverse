@@ -580,3 +580,8 @@ form .control-group input[type=submit] {
   -moz-box-shadow: 0 2px 0 0 #ffb57b;
   box-shadow: 0 2px 0 0 #ffb57b;
 }
+
+/* line 451, ../../compass/sass/screen.scss */
+.amzn_wdgt {
+  width: 150px !important;
+}

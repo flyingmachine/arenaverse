@@ -157,9 +157,25 @@
           (_minor-battles minor-battles)]
          [:div#secondary
           (previous-battle-results prev-fighter-id-a prev-fighter-id-b)
-          "<script type='text/javascript'><!--
-amazon_ad_tag = 'aflyingmachin-20'; amazon_ad_width = '120'; amazon_ad_height = '600'; amazon_color_border = 'FFFFFF'; amazon_color_link = '2493C8'; amazon_color_price = 'FFB57B'; amazon_color_logo = '2493C8';//--></script>
-<script type='text/javascript' src='http://www.assoc-amazon.com/s/ads.js'></script>"])))))
+          "<script type='text/javascript'>
+var amzn_wdgt={widget:'MyFavorites'};
+amzn_wdgt.tag='aflyingmachin-20';
+amzn_wdgt.columns='1';
+amzn_wdgt.rows='4';
+amzn_wdgt.title='OMG! Stuff!!!';
+amzn_wdgt.width='120';
+amzn_wdgt.ASIN='0061992704,0062113372,1440034044,B0054U53ZS,B0029LHWSQ,1455523429,B005HI4LLY,B0051QVESA,B008G33O0G,B001KVZ6HK,B0084IG7KC,B0044XV3QY,B000FZETI4,B000RPCJBG,B000I0RNVQ,B004SIP8OI,B00003CWOU,B000YN363G,B005LAZK8G';
+amzn_wdgt.showImage='True';
+amzn_wdgt.showPrice='True';
+amzn_wdgt.showRating='True';
+amzn_wdgt.design='2';
+amzn_wdgt.headerTextColor='#FFFFFF';
+amzn_wdgt.marketPlace='US';
+amzn_wdgt.outerBackgroundColor='#2493C8';
+amzn_wdgt.borderColor='#FFFFFF';
+</script>
+<script type='text/javascript' src='http://wms.assoc-amazon.com/20070822/US/js/AmazonWidgets.js'>
+</script>"])))))
 
 (defn session-battle->battle-map [session-battle]
   (let [[prev-main-arena-shortname prev-fighter-id-a prev-fighter-id-b] session-battle]

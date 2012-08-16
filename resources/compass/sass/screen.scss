@@ -446,3 +446,8 @@ form {
     @include single-box-shadow($orange, 0, 2px, 0, 0)
   }
 }
+
+// Amazon
+.amzn_wdgt {
+  width: 150px !important;
+}
