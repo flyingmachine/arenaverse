@@ -5,6 +5,8 @@
                            [com.novemberain/monger "1.0.0-rc1"]
                            [com.cemerick/friend "0.0.9"]
                            [clj-aws-s3 "0.3.1"]
-                           [org.imgscalr/imgscalr-lib "4.2"]]
+                           [org.imgscalr/imgscalr-lib "4.2"]
+                           [com.cemerick/drawbridge "0.0.3"]
+                           [ring-basic-authentication "1.0.1"]]
             :main arenaverse.server)
 

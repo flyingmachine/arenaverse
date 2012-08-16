@@ -3,10 +3,15 @@
             [monger.core :as mg]
             [cemerick.friend :as friend]
             [arenaverse.data-mappers.user :as user]
-
+            [cemerick.drawbridge :as drawbridge]
             (cemerick.friend [workflows :as workflows]
                              [credentials :as creds]
-                             [openid :as openid])))
+                             [openid :as openid])
+            [ring.middleware.params :as params]
+            [ring.middleware.keyword-params :as keyword-params]
+            [ring.middleware.nested-params :as nested-params]
+            [ring.middleware.session :as session]
+            [ring.middleware.basic-authentication :as basic]))
 
 (server/load-views "src/arenaverse/views/")
 
@@ -18,10 +23,30 @@
     (server/start port {:mode mode
                         :ns 'arenaverse})))
 
+;; Remote Repl
+(def drawbridge-handler
+  (-> (cemerick.drawbridge/ring-handler)
+      (keyword-params/wrap-keyword-params)
+      (nested-params/wrap-nested-params)
+      (params/wrap-params)
+      (session/wrap-session)))
 
+(defn authenticated? [name pass]
+  (= [name pass] [(System/getenv "AUTH_USER") (System/getenv "AUTH_PASS")]))
+
+(defn wrap-drawbridge [handler]
+  (fn [req]
+    (let [handler (if (= "/repl" (:uri req))
+                    (basic/wrap-basic-authentication
+                     drawbridge-handler authenticated?)
+                    handler)]
+      (handler req))))
+
+(server/add-middleware wrap-drawbridge)
+
+;; Authorization
 (defn credential-fn [username]
   (user/one {:username username}))
-
 
 (defn admin-authorize [handler]
   (fn [request]
