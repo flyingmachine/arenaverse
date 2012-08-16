@@ -11,7 +11,10 @@
             [ring.middleware.keyword-params :as keyword-params]
             [ring.middleware.nested-params :as nested-params]
             [ring.middleware.session :as session]
-            [ring.middleware.basic-authentication :as basic]))
+            [ring.middleware.basic-authentication :as basic]
+            [noir.session :as noir-session])
+
+  (:use [monger.ring.session-store :only (session-store)]))
 
 (server/load-views "src/arenaverse/views/")
 
@@ -21,7 +24,8 @@
     (let [uri (get (System/getenv) "MONGOLAB_URI" (str "mongodb://127.0.0.1/omgsmackdown-" (name mode)))]
       (monger.core/connect-via-uri! uri))
     (server/start port {:mode mode
-                        :ns 'arenaverse})))
+                        :ns 'arenaverse
+                        :session-store (session-store)})))
 
 ;; Remote Repl
 (def drawbridge-handler
@@ -57,10 +61,16 @@
 
 (server/add-middleware admin-authorize)
 
+;;
+(defn session-store-authorize [{:keys [uri request-method params session]}]
+  (when (nil? (:cemerick.friend/identity session))
+    (if-let [username (noir-session/get :username)]
+      (workflows/make-auth (user/one {:username username})))))
+
 (server/add-middleware
       friend/authenticate 
       {:credential-fn (partial creds/bcrypt-credential-fn credential-fn)
-       :workflows [(workflows/interactive-form), arenaverse.views.users/register]
+       :workflows [(workflows/interactive-form), arenaverse.views.users/register, session-store-authorize]
        :login-uri "/login"
        :unauthorized-redirect-uri "/login" 
        :default-landing-uri "/admin"})

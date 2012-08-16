@@ -6,6 +6,7 @@
             [arenaverse.models.permissions :as permissions]
             [noir.session :as session]
             [noir.response :as res]
+            [noir.request :as req]
             [cemerick.friend :as friend]
             [noir.validation :as vali])
   
@@ -47,6 +48,8 @@
    [:td [:a {:href (url-for-r :battles/arena {:shortname shortname})} "View"]]])
 
 (defpage-r listing []
+  (when (nil? (session/get :username))
+    (session/put! :username (permissions/current-username)))
   (common/admin-layout
    [:h1 "Your Arenas"]
    [:p
