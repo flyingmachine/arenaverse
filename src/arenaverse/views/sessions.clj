@@ -24,7 +24,8 @@
              [:tr
               [:td "Password"]
               [:td (password-field "password")]]
-             [:tr [:td] [:td (submit-button "Log In!!!")]]])))
+             [:tr [:td] [:td (submit-button "Log In!!!")]]])
+   [:p "If you don't remember your username or password please send a direct tweet to @omgsmackdown and we'll work things out"]))
 
 (defn clear-identity [response]
   (update-in response [:session] dissoc ::identity))
