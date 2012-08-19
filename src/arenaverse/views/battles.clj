@@ -63,7 +63,8 @@
   {:arena arena :fighters (random-fighters (arena/idstr arena))})
 
 (defn battle-filter [battles]
-  (filter #(not (empty? (:fighters %))) battles))
+  (println (map count (map :fighters battles)))
+  (filter #(>= (count (:fighters %)) 2) battles))
 
 (defn filtered-arenas []
   (arena/all {:hidden {$exists false}}))
@@ -108,22 +109,20 @@
 (defpartial _minor-battle [battle]
   (let [[left-f right-f] (:fighters battle)
         arena (:arena battle)]
-    (when (and left-f right-f)
-      [:div.battle
-       [:h2 (:fight-text (:arena battle))]
-       [:div.fighter.a (card arena left-f "card")]
-       [:div.fighter.b (card arena right-f "card")]])))
+    [:div.battle
+     [:h2 (:fight-text (:arena battle))]
+     [:div.fighter.a (card arena left-f "card")]
+     [:div.fighter.b (card arena right-f "card")]]))
+
+(defpartial _minor-battle-row [row]
+  (println row)
+  [:div.row
+   (map _minor-battle row)])
 
 (defpartial _minor-battles [minor-battles]
-  (loop [html [:div#minor-battles]
-         remaining-battles minor-battles]
-    (if (empty? remaining-battles)
-      html
-      (let [battle (first remaining-battles)]
-        (if-let [minor-battle-html (_minor-battle battle)]
-          (recur (conj html minor-battle-html)
-                 (rest remaining-battles))
-          (recur html (rest remaining-battles)))))))
+  (let [rows (partition 2 2 [nil] minor-battles)]
+    [:div#minor-battles
+     (map _minor-battle-row rows)]))
 
 (defpartial previous-battle-results [prev-fighter-id-a prev-fighter-id-b]
   (when (and prev-fighter-id-a prev-fighter-id-b)
