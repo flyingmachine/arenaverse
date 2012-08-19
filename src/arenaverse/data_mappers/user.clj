@@ -21,7 +21,7 @@
 (defn create [input]
   (let [db-fields (create-input->db-fields input)]
     (db-insert db-fields)
-    db-fields))
+    (object-id->idstr db-fields)))
 
 (defn destroy [_id]
   (db-destroy (ObjectId. _id)))
