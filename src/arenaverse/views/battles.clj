@@ -27,10 +27,10 @@
     [(nth fighters left) (nth fighters right)]))
 
 (defn random-team-fighters [fighters]
-  (let [teams (vals (group-by :team fighters))
-        left (rand-int (count (first teams)))
-        right (rand-int (count (second teams)))]
-    [(nth (first teams) left) (nth (second teams) right)]))
+  (let [randomer #(nth fighters (rand-int (count fighters)))
+        left (randomer)
+        right (first (filter #(not= (:team %) (:team left)) (repeatedly randomer)))]
+    [left right]))
 
 (defn random-fighters [arena-id]
   (let [fighters (fighter/all {:arena-id arena-id
