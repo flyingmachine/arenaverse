@@ -107,7 +107,7 @@
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
 (defpartial _minor-battle [battle]
-  (if battle
+  (when battle
     (let [[left-f right-f] (:fighters battle)
           arena (:arena battle)]
       [:div.battle
