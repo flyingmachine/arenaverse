@@ -107,12 +107,13 @@
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
 (defpartial _minor-battle [battle]
-  (let [[left-f right-f] (:fighters battle)
-        arena (:arena battle)]
-    [:div.battle
-     [:h2 (:fight-text (:arena battle))]
-     [:div.fighter.a (card arena left-f "card")]
-     [:div.fighter.b (card arena right-f "card")]]))
+  (if battle
+    (let [[left-f right-f] (:fighters battle)
+          arena (:arena battle)]
+      [:div.battle
+       [:h2 (:fight-text (:arena battle))]
+       [:div.fighter.a (card arena left-f "card")]
+       [:div.fighter.b (card arena right-f "card")]])))
 
 (defpartial _minor-battle-row [row]
   (println row)
