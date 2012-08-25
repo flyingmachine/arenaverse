@@ -18,21 +18,27 @@
 ;;------
 ;; Functions for setting up data for displaying a battle page
 ;;------
-
 ;; TODO how to test this?
+
+;; When there are no teams, it's everybody against everybody
 (defn random-teamless-fighters [fighters]
   (let [randomer #(rand-int (count fighters))
         left (randomer)
         right (first (filter #(not= % left) (repeatedly randomer)))]
     [(nth fighters left) (nth fighters right)]))
 
+;; When we're dealing with an arena that has teams, we need to ensure
+;; that we don't pit two fighters from the same team against each other
 (defn random-team-fighters [fighters]
   (let [randomer #(nth fighters (rand-int (count fighters)))
         left (randomer)
         right (first (filter #(not= (:team %) (:team left)) (repeatedly randomer)))]
     [left right]))
 
+;; Return a random list of fighters for a given arena id
 (defn random-fighters [arena-id]
+  ;; The image-extension filter ensures that we don't get fighters
+  ;; that are missing an image
   (let [fighters (fighter/all {:arena-id arena-id
                                :hidden {$exists false}
                                :image-extension {$exists true $ne ""}})]
@@ -42,13 +48,14 @@
         (random-teamless-fighters fighters))
       [])))
 
-
+;; Convert a battle record into the format we want to store in the session
 (defn battle->session-battle [battle]
   (let [shortname (:shortname (:arena battle))]
     (conj (map :_id (:fighters battle)) shortname)))
 
 ;; Takes a seq of battles, which are a map of arena and two fighters
-;; for that arena
+;; for that arena. Save all battles in the session so that we know who
+;; the loser was when the user selects a winner.
 (defn register-battles! [b]
   (let [battles-processed (apply hash-map
                                  (reduce (fn [list battle]
@@ -62,20 +69,28 @@
 (defn arena->battle [arena]
   {:arena arena :fighters (random-fighters (arena/idstr arena))})
 
+;; Ensure that we only deal with displayable battles
 (defn battle-filter [battles]
-  (println (map count (map :fighters battles)))
   (filter #(>= (count (:fighters %)) 2) battles))
 
+;; Arenas can be hidden through moderation
 (defn filtered-arenas []
   (arena/all {:hidden {$exists false}}))
 
+;; If the main arena isn't specified we don't have to do anything
+;; special to ensure the order of the battles returned
 (defn battles-without-main-arena-specified []
   (shuffle (battle-filter (map arena->battle (filtered-arenas)))))
 
+;; When the main arena is specified, then the battle in that arena
+;; needs to be at the head of the seq returned. This is because the
+;; battle partial designates the first battle as the "main" one
 (defn battles-with-main-arena-specified [main-arena]
   (let [arenas (remove #(= main-arena %) (filtered-arenas))]
     (reverse (conj (shuffle (battle-filter (map arena->battle arenas))) (arena->battle main-arena)))))
 
+;; This just calls one of the above two functions as appropriate and
+;; then registers the battles in the session
 (defn battles [main-arena]
   (let [b (if main-arena
             (battles-with-main-arena-specified main-arena)
@@ -86,13 +101,13 @@
 ;;----------
 ;; Partials for battle page
 ;;----------
-
 (defpartial card [arena record img-version]
   [:div.name (:name record)]
   [:div.pic
    [:a {:href (url-for-r :battles/winner {:_id (:_id record) :arena-shortname (:shortname arena)})}
     (fighters/fighter-img img-version record)]])
 
+;; I don't even remember what this is for
 (defpartial card-without-battle [record img-version]
   [:div.name (:name record)]
   [:div.pic
@@ -106,6 +121,8 @@
      (card-without-battle  fighter "card")
      [:div.win-ratio (str (format "%.1f" (double ratio)) "%")]]))
 
+;; Minor battles are all the battles displayed after the "main" one at
+;; the top
 (defpartial _minor-battle [battle]
   (when battle
     (let [[left-f right-f] (:fighters battle)
@@ -115,8 +132,8 @@
        [:div.fighter.a (card arena left-f "card")]
        [:div.fighter.b (card arena right-f "card")]])))
 
+;; Divide the minor battles into rows so that they show up correctly
 (defpartial _minor-battle-row [row]
-  (println row)
   [:div.row
    (map _minor-battle row)])
 
@@ -134,6 +151,7 @@
        (win-ratio (first previous-fighters) wins)
        (win-ratio (second previous-fighters) wins)])))
 
+;; This will display the main arena. Maybe it should be named main-arena
 (defpartial main-area [arena left-f right-f]
   [:div#battle
    [:div.fighter.a
@@ -177,15 +195,21 @@ amzn_wdgt.borderColor='#FFFFFF';
 <script type='text/javascript' src='http://wms.assoc-amazon.com/20070822/US/js/AmazonWidgets.js'>
 </script>"])))))
 
+;; This is used to convert the data stored in a session for a battle
+;; into something usable by the battle partial
 (defn session-battle->battle-map [session-battle]
   (let [[prev-main-arena-shortname prev-fighter-id-a prev-fighter-id-b] session-battle]
     {:prev-main-arena-shortname prev-main-arena-shortname
      :prev-fighter-id-a prev-fighter-id-a
      :prev-fighter-id-b prev-fighter-id-b}))
 
+;; The home page. Show completely random battles
 (defpage-r listing []
   (battle (session-battle->battle-map (session/get :main-battle))))
 
+;; When a user clicks on an image, determine which battle it's from so
+;; that you can record the winner and show that battle's arena in the
+;; main area
 (defpage-r winner {:keys [arena-shortname _id]}
   (let [selected-battle ((session/get :battles) arena-shortname)
         selected-battle-fighter-ids (rest selected-battle)]
@@ -193,5 +217,6 @@ amzn_wdgt.borderColor='#FFFFFF';
     (let [battle-map (session-battle->battle-map (or selected-battle (session/get :main-battle)))]
       (battle (assoc battle-map :main-arena-shortname (:prev-main-arena-shortname battle-map))))))
 
+;; When you want to show a specific arena
 (defpage-r arena {:keys [shortname]}
   (battle {:main-arena-shortname shortname}))
