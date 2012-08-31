@@ -41,7 +41,7 @@
   ;; that are missing an image
   (let [fighters (fighter/all {:arena-id arena-id
                                :hidden {$exists false}
-                               :image-extension {$exists true $and [{$ne ""} {$ne null}]}})]
+                               :image-extension {$exists true $ne [nil, ""]}})]
     (if (> (count fighters) 1)
       (if (some #(not (empty? (:team %))) fighters)
         (random-team-fighters fighters)
